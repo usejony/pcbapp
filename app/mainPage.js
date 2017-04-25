@@ -34,7 +34,7 @@ OrdersScreen.navigationOptions = {
     icon: ({tintColor,focused}) => (
       <Icon size={26} name={ focused ? "ios-paper" : "ios-paper-outline"} style={{color: tintColor}}/>
     )
-  }
+  },
 }
 
 //账户页面

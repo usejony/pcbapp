@@ -13,17 +13,19 @@ import {
 } from 'react-native';
 import Request from '../../common/request';
 import config from '../../common/config';
-
+import Login from '../../login';
 import Toast from 'react-native-easy-toast';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+
+import { NavigationActions, StackNavigator } from 'react-navigation';
 const cacheResult = {
   nextPage: 0,
   items: [],
   total: 0,
 }
 const { width, height } = Dimensions.get('window');
-export default class Orders extends Component {
+class Orders extends Component {
   constructor(props) {
     super(props);
     let ds = new ListView.DataSource({
@@ -34,6 +36,7 @@ export default class Orders extends Component {
       loadingOk: false,
       isLoading: false,
       refreshing: false,
+      loginInfo: null
     }
   }
   componentWillMount() {
@@ -178,7 +181,25 @@ export default class Orders extends Component {
     );
   }
 
+  login() {
+    const navigateAction = NavigationActions.navigate({
+      routeName: 'Login',
+      params: {},
+      action: NavigationActions.navigate({routeName: 'EnterScreen'})
+    });
+    this.props.navigation.dispatch(navigateAction);
+  }
   render() {
+    if(!this.state.loginInfo) {
+      return (
+        <View style={styles.hintCont}>
+          <Text style={styles.hintText}>登录可查看订单、账户信息</Text>
+          <TouchableHighlight style={styles.loginBtn} onPress={this.login.bind(this)}>
+            <Text style={styles.loginText}>登录</Text>
+          </TouchableHighlight>
+        </View>
+      );
+    }
     return (
       <View style={styles.container}>
         <ListView
@@ -213,6 +234,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  hintCont: {
+    flex: 1,
+    backgroundColor: '#eee',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  hintText: {
+    color: '#666',
+    fontSize: 14
+  },
+  loginBtn: {
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    backgroundColor: '#00d7a7',
+    marginTop: 15
+  },
+  loginText: {
+    fontSize: 14,
+    color: '#fff',
   },
   item: {
     paddingVertical: 10,

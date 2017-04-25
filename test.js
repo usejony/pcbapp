@@ -1,20 +1,27 @@
+//import liraries
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
+import { View, Text, StyleSheet } from 'react-native';
 
-} from 'react-native';
-import { StackNavigator } from 'react-navigation';
-export default class Test extends Component {
-  constructor(props) {
-    super(props)
-  }
+// create a component
+class MyClass extends Component {
   render() {
-    console.log("screenPorps:",this.props.screenProps)
     return (
-      <View>
-        <Text>卡惊世毒妃</Text>
+      <View style={styles.container}>
+        <Text>MyClass</Text>
       </View>
     );
   }
 }
+
+// define your styles
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#2c3e50',
+  },
+});
+
+//make this component available to the app
+export default MyClass;

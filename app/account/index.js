@@ -5,10 +5,12 @@ import {
   View,
   Text,
   Image,
+  Modal,
 } from 'react-native';
 import Request from '../../common/request';
 import config from '../../common/config';
 import Button from '../../common/button';
+import LoginModal from '../../common/loginModal';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -16,6 +18,7 @@ export default class Account extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      modalVisible: false,
       data: null
     }
   }
@@ -37,6 +40,12 @@ export default class Account extends Component {
         }
       })
   }
+  closeModal(boo) {
+    let _this = this;
+    _this.setState({
+      modalVisible: boo,
+    });
+  }
   render() {
     const data = this.state.data;
     console.log(data);
@@ -53,12 +62,17 @@ export default class Account extends Component {
               <View style={styles.headCont}>
                 <Text style={styles.nickName}>{data.nickName}</Text>
                 <View style={styles.headInfo}>
-                  <Button title="个人信息" size={12} tintColor="#fff" style={styles.infoBtn} onPress={() => null}/>
-                  <Icon name="ios-arrow-forward" size={14} color="#fff"/>
+                  <Button title="个人信息" size={12} tintColor="#fff" style={styles.infoBtn} onPress={() => null} />
+                  <Icon name="ios-arrow-forward" size={14} color="#fff" />
                 </View>
               </View>
             </View>
-            <Button title="go" onPress={() => this.props.navigation.navigate('Test')} />
+            <View style={styles.tools}>
+              <Text onPress={() => this.setState({modalVisible: true})}>打开</Text>
+              <Modal visible={this.state.modalVisible} animationType={'slide'} >
+                <LoginModal closeModal={this.closeModal.bind(this)} name="杜超"/>
+              </Modal>
+            </View>
           </ScrollView>
         </View>
       )

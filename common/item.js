@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+/*import React, { Component } from 'react';
 import {
   StyleSheet,
   PixelRatio,
@@ -47,4 +47,4 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'right'
   }
-});
+});*/

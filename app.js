@@ -12,6 +12,7 @@ import OrderDetail from './app/orders/detail';
 import Search from './app/orders/search';
 import Test from './test';
 import Button from './common/button';
+import Login from './login';
 
 const Nav = StackNavigator({
   MainPage: {
@@ -29,9 +30,17 @@ const Nav = StackNavigator({
   },
   Test: {
     screen: Test
+  },
+  Login: {
+    screen: Login,
+    navigationOptions: {
+      header: {
+        visible: false,
+      },
+    }
   }
 },{
-  // headerMode: 'screen',
+  headerMode: 'screen',
   navigationOptions: {
     header: {
       titleStyle: { fontSize: 17 },
