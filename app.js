@@ -10,14 +10,12 @@ import MainPages from './app/mainPage';
 import NewsDetail from './app/news/detail';
 import OrderDetail from './app/orders/detail';
 import Search from './app/orders/search';
-import Test from './test';
 import Button from './common/button';
-import Login from './login';
+import GearNav from './app/account/gear/gear';
 
 const Nav = StackNavigator({
   MainPage: {
     screen: MainPages,
-    
   },
   NewsDetail: {
     screen: NewsDetail
@@ -28,27 +26,20 @@ const Nav = StackNavigator({
   Search: {
     screen: Search
   },
-  Test: {
-    screen: Test
-  },
-  Login: {
-    screen: Login,
+  GearScreen: {
+    screen: GearNav,
     navigationOptions: {
-      header: {
-        visible: false,
-      },
+      headerVisible: false
     }
   }
-},{
-  headerMode: 'screen',
-  navigationOptions: {
-    header: {
-      titleStyle: { fontSize: 17 },
-      tintColor: '#fff',
-      style: {backgroundColor: '#00d7a7',shadowOpacity:0}
+}, {
+    headerMode: 'screen',
+    navigationOptions: {
+      headerTitleStyle: { fontSize: 17 },
+      headerTintColor: '#fff',
+      headerStyle: { backgroundColor: '#00d7a7', shadowOpacity: 0 }
     }
-  }
-});
+  });
 
 
 export default Nav;

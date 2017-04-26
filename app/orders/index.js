@@ -10,10 +10,12 @@ import {
   TouchableHighlight,
   PixelRatio,
   Alert,
+  Modal,
 } from 'react-native';
 import Request from '../../common/request';
 import config from '../../common/config';
-import Login from '../../login';
+// import Login from '../../login';
+import LoginModal from '../../common/loginModal';
 import Toast from 'react-native-easy-toast';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -25,13 +27,14 @@ const cacheResult = {
   total: 0,
 }
 const { width, height } = Dimensions.get('window');
-class Orders extends Component {
+export default class Orders extends Component {
   constructor(props) {
     super(props);
     let ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     })
     this.state = {
+      modalVisible: false,
       dataSource: ds.cloneWithRows([]),
       loadingOk: false,
       isLoading: false,
@@ -189,14 +192,23 @@ class Orders extends Component {
     });
     this.props.navigation.dispatch(navigateAction);
   }
+  modalVisible(boo) {
+    let _this = this;
+    _this.setState({
+      modalVisible: boo
+    })
+  }
   render() {
     if(!this.state.loginInfo) {
       return (
         <View style={styles.hintCont}>
-          <Text style={styles.hintText}>登录可查看订单、账户信息</Text>
-          <TouchableHighlight style={styles.loginBtn} onPress={this.login.bind(this)}>
+          <Text style={styles.hintText}>登录可查看订单、等详细信息</Text>
+          <TouchableHighlight style={styles.loginBtn} onPress={this.modalVisible.bind(this,true)}>
             <Text style={styles.loginText}>登录</Text>
           </TouchableHighlight>
+          <Modal visible={this.state.modalVisible} animationType="slide">
+            <LoginModal closeModal={this.modalVisible.bind(this)}/>
+          </Modal>
         </View>
       );
     }

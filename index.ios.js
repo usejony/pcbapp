@@ -1,7 +1,8 @@
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
- * const theme = '#00d7a7';
+ * '#00d7a7'; 主题色
+ * ‘#ededed’; 背景色
  * @flow
  */
 

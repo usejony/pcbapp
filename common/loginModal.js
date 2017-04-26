@@ -16,12 +16,17 @@ import Button from './button';
 
 const { width } = Dimensions.get('window');
 class Enter extends Component {
-  // static navigationOptions = {
-  //   title: '阿萨德飞机阿斯蒂芬',
-  //   header: {
-  //     left: <Text>asdf </Text>
-  //   }
-  // };
+  static navigationOptions = ({ navigation, screenProps }) => ({
+    title: "登录",
+    headerRight: (
+      <Button title="注册" onPress={() => navigation.navigate('EnrollScreen', { user: '独宠' })} style={{ marginRight: 15 }} tintColor="#FFF" size={15} />
+    ),
+    headerLeft: (
+      <Icon name={"ios-close"} size={35} color={'#fff'} style={{ marginLeft: 15 }} onPress={
+        () => screenProps.closeModal(false)
+      } />
+    )
+  });
   constructor(props) {
     super(props);
     this.state = {
@@ -33,10 +38,10 @@ class Enter extends Component {
     console.log("enter:", this.props)
   }
   loginIn() {
-
+    //登记登录后的逻辑处理
   }
   loginFail() {
-
+    //点击无法登录的的处理
   }
   render() {
     return (
@@ -67,13 +72,15 @@ class Enter extends Component {
         <TouchableOpacity style={styles.err} onPress={this.loginFail.bind(this)} activeOpacity={0.6}>
           <Text style={styles.errText}>无法登录？</Text>
         </TouchableOpacity>
-        <Text onPress={() => this.props.screenProps.closeModal(false)}>关闭</Text>
       </View>
     );
   }
 }
 
 class Enroll extends Component {
+  static navigationOptions = {
+    title: '注册',
+  }
   constructor(props) {
     super(props);
     this.state = {
@@ -117,47 +124,21 @@ class Enroll extends Component {
 const LoginNav = StackNavigator({
   EnterScreen: {
     screen: Enter,
-    /*navigationOptions: {
-      title: '登录',
-      header: (navigation) => ({
-        backTitle: null,
-        left: (
-          <Icon name={"ios-close"} size={35} color={'#fff'} style={{ marginLeft: 15 }} onPress={
-              () => console.log(navigation)
-            } />
-        ),
-        right: (
-          <Button title="注册" onPress={() => navigation.navigate('EnrollScreen',{user: '独宠'})} style={{ marginRight: 15 }} tintColor="#FFF" size={15} />
-        ),
-        style: { backgroundColor: '#00d7a7' },
-        titleStyle: { color: '#fff' }
-      })
-    }*/
   },
   EnrollScreen: {
-    screen: Enroll,
-    // navigationOptions: {
-    //   title: (screenProps) => `${screenProps.name}阿萨德`,
-    //   header: {
-    //     style: { backgroundColor: '#00d7a7' },
-    //     titleStyle: { color: '#fff', },
-    //     tintColor: '#fff'
-    //   }
-    // }
+    screen: Enroll
   }
 }, {
     initialRouteName: 'EnterScreen',
     mode: 'card',
     headerMode: 'screen',
     navigationOptions: {
-      header: {
-        backTitle: '返回',
-        style: {
-          backgroundColor: 'red'
-        },
-        titleStyle: {
-          color: 'green'
-        }
+      headerStyle: { backgroundColor: "#00d7a7" },
+      headerTintColor: '#fff',
+      headerTitleColor: '#fff',
+      headerBackTitle: null,
+      cardStack: {
+        gesturesEnabled: true
       }
     }
   });

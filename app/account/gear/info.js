@@ -3,11 +3,14 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 // create a component
-class MyClass extends Component {
+class Info extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: '个人信息',
+  });
   render() {
     return (
       <View style={styles.container}>
-        <Text>MyClass</Text>
+        <Text>个人信息</Text>
       </View>
     );
   }
@@ -19,9 +22,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#2c3e50',
+    backgroundColor: '#ededed',
   },
 });
 
 //make this component available to the app
-export default MyClass;
+export default Info;
