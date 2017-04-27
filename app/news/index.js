@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import config from '../../common/config';
 import Request from '../../common/request';
+import Header from '../../common/header';
 
 import { StackNavigator } from 'react-navigation';
 import Toast from 'react-native-easy-toast';
@@ -179,6 +180,7 @@ export default class News extends Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" animated={true}/>
+        <Header title="新闻"/>
         <ListView
           enableEmptySections={true}
           dataSource={this.state.dataSource}

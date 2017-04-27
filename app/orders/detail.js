@@ -8,6 +8,9 @@ import {
 } from 'react-native';
 import Button from '../../common/button';
 import Item from '../../common/item';
+import Header from '../../common/header';
+
+import FontIcon from 'react-native-vector-icons/FontAwesome';
 export default class OrderDetail extends Component {
   static navigationOptions = {
     title: '订单详情',
@@ -17,8 +20,10 @@ export default class OrderDetail extends Component {
   }
   render() {
     const data = this.props.navigation.state.params.data;
+    const { navigation } = this.props;
     return (
       <View style={styles.container}>
+        <Header title="订单详情" leftIcon={<FontIcon name="angle-left" size={28} color="#fff"/>} leftHandle={() => navigation.goBack() }/>
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollView}>
           <Item title={"拼客(甲方)："}>{data.partyA}</Item>
           <Item title={"供方(乙方)："}>{data.partyB}</Item>

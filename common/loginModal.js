@@ -130,8 +130,8 @@ const LoginNav = StackNavigator({
   }
 }, {
     initialRouteName: 'EnterScreen',
-    mode: 'card',
-    headerMode: 'screen',
+    // mode: 'card',
+    // headerMode: 'screen',
     navigationOptions: {
       headerStyle: { backgroundColor: "#00d7a7" },
       headerTintColor: '#fff',

@@ -33,7 +33,7 @@ const Nav = StackNavigator({
     }
   }
 }, {
-    headerMode: 'screen',
+    headerMode: 'none',
     navigationOptions: {
       headerTitleStyle: { fontSize: 17 },
       headerTintColor: '#fff',

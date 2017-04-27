@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import Request from '../../common/request';
 import config from '../../common/config';
-// import Login from '../../login';
+import Header from '../../common/header';
 import LoginModal from '../../common/loginModal';
 import Toast from 'react-native-easy-toast';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -39,7 +39,7 @@ export default class Orders extends Component {
       loadingOk: false,
       isLoading: false,
       refreshing: false,
-      loginInfo: null
+      loginInfo: []
     }
   }
   componentWillMount() {
@@ -203,7 +203,7 @@ export default class Orders extends Component {
       return (
         <View style={styles.hintCont}>
           <Text style={styles.hintText}>登录可查看订单、等详细信息</Text>
-          <TouchableHighlight style={styles.loginBtn} onPress={this.modalVisible.bind(this,true)}>
+          <TouchableHighlight underlayColor="#04bf95" style={styles.loginBtn} onPress={this.modalVisible.bind(this,true)}>
             <Text style={styles.loginText}>登录</Text>
           </TouchableHighlight>
           <Modal visible={this.state.modalVisible} animationType="slide">
@@ -214,6 +214,7 @@ export default class Orders extends Component {
     }
     return (
       <View style={styles.container}>
+        <Header title="订单"/>
         <ListView
           enableEmptySections={true}
           automaticallyAdjustContentInsets={false}

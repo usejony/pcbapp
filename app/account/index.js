@@ -14,22 +14,27 @@ import Request from '../../common/request';
 import config from '../../common/config';
 import Button from '../../common/button';
 import LoginModal from '../../common/loginModal';
+import Line from '../../common/line';
+import Item from './handleItem';
 
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 
 const { width } = Dimensions.get('window');
-/*export default class Account extends Component {
+export default class Account extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      scrollY: new Animated.Value(0),
       loginInfo: [],
       modalVisible: false,
       data: null
     }
   }
-  componentWillMount() {
+  componentDidMount() {
     this.fetchData();
   }
+
+  //fetch请求 
   fetchData() {
     const url = config.api.base + config.api.account;
     const params = {
@@ -38,150 +43,138 @@ const { width } = Dimensions.get('window');
     Request.Get(url, params)
       .then(data => {
         if (data && data.success) {
-          // console.log("获取的数据", data.data);
+          console.log("获取的数据", data.data);
           this.setState({
             data: data.data
-          })
+          });
         }
       })
   }
+
+  //控制注册登录页面的显示与影藏
   modalVisible(boo) {
     let _this = this;
     _this.setState({
       modalVisible: boo,
     });
   }
-  render() {
-    const data = this.state.data;
+
+  //点击设置按钮打开什么页面。当用户有登录的时候打开设置页面，当用户没有登录的时候打开登录注册页面
+  openWhereScreen() {
     const { navigate } = this.props.navigation;
-    // console.log(data);
-    if (this.state.data) {
-      return (
-        <View style={styles.container}>
-          <ScrollView showsVerticalScrollIndicator={false} onScroll={(e) => console.log(e)}>
-            <View style={styles.head}>
-              <FontIcon name="gear" size={20} style={{ paddingHorizontal: 15 }} color="#fff" onPress={() => {
-                if (this.state.loginInfo) {
-                  return navigate('GearScreen');
-                }
-                this.modalVisible(true);
-              }} />
-            </View>
-            <View style={styles.headerBox}>
-              {
-                !data.avatar
-                  ? <Image source={{ uri: data.avatar }} style={styles.avatar} />
-                  : <Image source={require("../../imgs/WechatIMG14.png")} style={styles.avatar} />
-              }
-          
-
-            </View>
-            <View style={styles.tools}>
-              <Text onPress={() => {
-                if (this.state.loginInfo) {
-                  return navigate('GearScreen');
-                }
-                this.modalVisible(true);
-              }}>打开</Text>
-              <Modal visible={this.state.modalVisible} animationType={'slide'} >
-                <LoginModal closeModal={this.modalVisible.bind(this)} />
-              </Modal>
-            </View>
-          </ScrollView>
-        </View>
-      )
-    } else {
-      return null
+    if (this.state.loginInfo) {
+      return navigate('GearScreen');
     }
+    this.modalVisible(true);
   }
-}*/
-
-export default class Account extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      scrollY: new Animated.Value(0)
-    }
-  }
-  _renderFixHeader() {
-    //固定Title
-    let title = this.state.scrollY.interpolate({
-      inputRange: [0, 50],
-      outputRange: [0, 0]
-    });
-    //根据滑动距离改变透明度
-    let opacity = this.state.scrollY.interpolate({
-      inputRange: [0, 250 - 50],
+  //固定渐变头部
+  renderFixedHeader() {
+    const opacity = this.state.scrollY.interpolate({
+      inputRange: [0, 60],
       outputRange: [0, 1]
     });
-    //收藏图标
-    
+    const title = this.state.scrollY.interpolate({
+      inputRange: [-150, 0, 150],
+      outputRange: [0, 0, 150]
+    })
     return (
-      <Animated.View
-        style={[styles.header, { transform: [{ translateY: title }], }]}>
-        {/*电影名称*/}
-        <Animated.View style={[styles.headerBackground, { opacity: opacity }]}>
-          <View style={styles.headerTitle}>
-            <View><Text style={styles.headerTitleText}>哈哈</Text></View>
-          </View>
-        </Animated.View>
-        <View style={styles.headerTitle}>
-          {/*返回*/}
-          <TouchableOpacity
-            style={{ position: "absolute", left: 10, }}
-          >
-            <FontIcon name={"angle-left"} size={25} color="red"/>
-          </TouchableOpacity>
-         
-         
-        </View>
+      <Animated.View style={[
+        styles.head,
+        {
+          transform: [
+            {
+              translateY: title
+            }
+          ]
+        }
+      ]}>
+        <Animated.View style={[
+          styles.header,
+          {
+            opacity: opacity
+          }
+        ]} />
+        <TouchableOpacity onPress={this.openWhereScreen.bind(this)} style={styles.gearBtn}>
+          <FontIcon name="gear" size={20} color="#fff" />
+        </TouchableOpacity>
       </Animated.View>
     );
   }
+
   render() {
+    const { navigate } = this.props.navigation;
+    let data = this.state.data;
+    console.log('render:', data)
     return (
-      <View style={{ flex: 1, backgroundColor: 'pink' }}>
+      <View style={styles.container}>
         <ScrollView
+          showsVerticalScrollIndicator={false}
           onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
+            [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }]
           )}
-          scrollEventThrottle={16}
-          style={{
-            flex:1,
-            backgroundColor: 'red',
-          }}
-        >
-          <View style={{height: 1000}}></View>
+          scrollEventThrottle={10}>
+          <View style={styles.headerBox}>
+            <TouchableOpacity activeOpacity={1} onPress={this.openWhereScreen.bind(this)}>
+              {
+                data
+                  ? <View style={styles.headCont}>
+                    {
+                      data.avatar
+                        ? <Image source={{ uri: data.avatar }} style={styles.avatar} />
+                        : <Image source={require('../../imgs/manAvatar.png')} style={styles.avatar}/>
+                    }
+                    <View>
+                      <Text style={styles.nickName}>{data.nickName}</Text>
+                      <View style={styles.headInfo}>
+                        <Text style={styles.extraText}>个人信息</Text>
+                        <FontIcon name="angle-right" size={16} color={'#fff'} />
+                      </View>
+                    </View>
+                  </View>
+                  : <View style={styles.headCont}>
+                    <Image source={require("../../imgs/manAvatar.png")} style={styles.avatar}/>
+                    <View>
+                      <Text style={styles.nickName}>点击登录</Text>
+                    </View>
+                  </View>
+              }
+            </TouchableOpacity>
+          </View>
+          <View style={styles.tools}>
+            <Item icon="bandcamp" iconColor="#f6af2d" title="余额" info={data ? "￥"+data.useableLimit: null} press={() => alert('3')}/>
+            <Line left={13}/>
+            <Item icon="server" iconColor="#b245f8" title="积分" info={data ? data.integral: null} press={() => null}/>
+            <Line left={13}/>
+            <Item icon="credit-card-alt" iconColor="#52db52" title="信用额度" info={data ? data.creditLimit: null} press={() => null}/>
+            <Line left={13}/>
+            <Item icon="credit-card-alt" iconColor="#52db52" title="信用额度" info={data ? data.creditLimit: null} press={() => null}/>
+          </View>
+          <View style={styles.tools}></View>
+          {this.renderFixedHeader()}
         </ScrollView>
-        {this._renderFixHeader()}
+        <Modal visible={this.state.modalVisible} animationType={'slide'} >
+          <LoginModal closeModal={this.modalVisible.bind(this)} />
+        </Modal>
       </View>
-    );
+    )
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#e9e9e9'
   },
-  head: {
-    height: 56,
-    width,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    backgroundColor: '#00d7a7',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    paddingRight: 15
-  },
   headerBox: {
-    height: 80,
     backgroundColor: '#00d7a7',
+    paddingHorizontal: 20,
+    paddingTop: 70,
+    paddingBottom: 20
+  },
+  headCont: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 30,
-    marginTop: 56
   },
   avatar: {
     width: 60,
@@ -189,48 +182,46 @@ const styles = StyleSheet.create({
     borderColor: '#8dffe6',
     borderWidth: 3,
     borderRadius: 30,
-    marginRight: 20
-  },
-  headInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 5
+    marginRight: 20,
   },
   nickName: {
     fontSize: 14,
     color: '#fff',
     fontWeight: 'bold',
   },
-  infoBtn: {
-    marginRight: 3
+  headInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 5
+  },
+  extraText: {
+    fontSize: 12,
+    color: '#fff',
+    marginRight: 5
+  },
+  head: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: 60,
   },
   header: {
-    position: "absolute",
-    left: 0,
-    top: 0,
-    right: 0,
-    bottom: 0,
-    height: 50,
+    flex: 1,
+    backgroundColor: '#00d7a7'
   },
-  headerTitle: {
-    position: "absolute",
-    left: 0,
-    top: 0,
+  gearBtn: {
+    width: 48,
+    height: 48,
+    position: 'absolute',
     right: 0,
-    bottom: 0,
+    top: 13,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'transparent'
   },
-  headerTitleText: {
-    color: 'white',
-    fontSize: 18,
-  },
-  headerBackground: {
-    backgroundColor: "#1d2635",
-    height: 50
-  },
-  headerIcon: {
-    width: 20,
-    height: 20,
-  },
+  tools: {
+    marginTop: 20
+  }
 });

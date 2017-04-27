@@ -6,14 +6,25 @@ import {
   ScrollView,
   Image,
   Dimensions,
+  TouchableOpacity
 } from 'react-native';
+import { StackNavigator } from 'react-navigation';
+import FontIcon from 'react-native-vector-icons/FontAwesome';
+
 import Footer from '../../common/newsFooter';
 
 const { width } = Dimensions.get('window');
-export default class Details extends Component {
-  static navigationOptions = {
-    title: '详情'
-  }
+class Details extends Component {
+  static navigationOptions = ({ navigation, screenProps }) => ({
+    title: '详情',
+    headerLeft: (
+      <TouchableOpacity activeOpacity={1} onPress={() => {
+        screenProps.goBack()
+      }} >
+        <FontIcon name="angle-left" size={28} color="#fff" style={{ paddingHorizontal: 15 }} />
+      </TouchableOpacity>
+    )
+  });
   constructor(props) {
     super(props);
     this.state = {
@@ -24,7 +35,7 @@ export default class Details extends Component {
     // this.props.navigation
   }
   render() {
-    const data = this.props.navigation.state.params.data;
+    const data = this.props.screenProps.state.params.data;
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -32,14 +43,30 @@ export default class Details extends Component {
         <View style={styles.container}>
           <Text style={styles.title}>{data.title}</Text>
           <Text style={styles.date}>{data.date}</Text>
-          <Image source={{uri:data.img}} style={styles.img}/>
+          <Image source={{ uri: data.img }} style={styles.img} />
           <Text style={styles.description}>{data.description}</Text>
         </View>
-        <Footer/>
+        <Footer />
       </ScrollView>
     );
   }
 }
+
+const DetailsNav = StackNavigator({
+  DetailsScreen: {
+    screen: Details
+  }
+}, {
+    navigationOptions: {
+      headerStyle: { backgroundColor: '#00d7a7' },
+      headerTitleStyle: { color: '#fff' },
+
+    }
+  });
+
+const DetailsStack = ({ navigation }) => (
+  <DetailsNav screenProps={navigation} />
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -68,3 +95,5 @@ const styles = StyleSheet.create({
     marginTop: 10,
   }
 });
+
+export default DetailsStack;
