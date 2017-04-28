@@ -146,10 +146,10 @@ export default class Account extends Component {
             <Item icon="server" iconColor="#b245f8" title="积分" info={data ? data.integral: null} press={() => null}/>
             <Line left={13}/>
             <Item icon="credit-card-alt" iconColor="#52db52" title="信用额度" info={data ? data.creditLimit: null} press={() => null}/>
-            <Line left={13}/>
-            <Item icon="credit-card-alt" iconColor="#52db52" title="信用额度" info={data ? data.creditLimit: null} press={() => null}/>
           </View>
-          <View style={styles.tools}></View>
+          <View style={styles.tools}>
+
+          </View>
           {this.renderFixedHeader()}
         </ScrollView>
         <Modal visible={this.state.modalVisible} animationType={'slide'} >
@@ -164,7 +164,7 @@ export default class Account extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#e9e9e9'
+    backgroundColor: '#efefef'
   },
   headerBox: {
     backgroundColor: '#00d7a7',
@@ -222,6 +222,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent'
   },
   tools: {
-    marginTop: 20
+    marginTop: 12
   }
 });

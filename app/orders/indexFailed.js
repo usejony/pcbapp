@@ -4,51 +4,52 @@ import {
   Dimensions,
   View,
   Text,
-  Button,
   ListView,
-  StatusBar,
+  RefreshControl,
+  ActivityIndicator,
   TouchableHighlight,
   PixelRatio,
-  ActivityIndicator,
-  RefreshControl,
   Alert,
-  Image,
+  Modal,
 } from 'react-native';
-import config from '../../common/config';
 import Request from '../../common/request';
+import config from '../../common/config';
 import Header from '../../common/header';
-
-import { StackNavigator } from 'react-navigation';
+import LoginModal from '../../common/loginModal';
 import Toast from 'react-native-easy-toast';
+import Icon from 'react-native-vector-icons/Ionicons';
 
+
+import { NavigationActions, StackNavigator } from 'react-navigation';
 const cacheResult = {
   nextPage: 0,
   items: [],
   total: 0,
 }
 const { width, height } = Dimensions.get('window');
-export default class News extends Component {
+export default class Orders extends Component {
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2,
+    let ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
     })
     this.state = {
+      modalVisible: false,
       dataSource: ds.cloneWithRows([]),
       loadingOk: false,
       isLoading: false,
       refreshing: false,
+      loginInfo: []
     }
   }
-  componentDidMount() {
+  componentWillMount() {
     this._fetchData(1);
   }
-
   _fetchData(page) {
     const params = {
       accessToken: 'duchao',
     }
-    const url = config.api.base + config.api.newsList;
+    const url = config.api.base + config.api.orderList;
     if (page !== 0) {
       this.setState({
         isLoading: true,
@@ -84,52 +85,47 @@ export default class News extends Component {
                 refreshing: false,
               })
             }
-          }, 2000);
+          }, 2000)
         }
       })
       .catch(e => {
         if (page !== 0) {
-          Alert.alert('一个不可预知的错误');
           this.setState({
             isLoading: false,
-          });
-        } else {
+          })
           Alert.alert('一个不可预知的错误');
+        } else {
           this.setState({
             refreshing: false,
-          });
+          })
+          Alert.alert('一个不可预知的错误');
         }
       });
   }
 
-  //前往新闻详细页面
-  _goDetail(data) {
-    this.props.navigation.navigate('NewsDetail', { data: data })
-  }
-
-  //新闻列表
   _renderRows(row, sectionID, rowID) {
+    const navigation = this.props.navigation;
     return (
-      <TouchableHighlight underlayColor="#d5d5d5" onPress={this._goDetail.bind(this, row)} key={rowID}>
-        <View style={styles.item} >
-          <View style={styles.article}>
-            <Text style={styles.title}>{row.title}</Text>
-            {
-              row.img
-                ? <Image source={{ uri: row.img }} style={styles.newImg} />
-                : null
-            }
+      <TouchableHighlight underlayColor="#dadada" onPress={() => navigation.navigate('OrderDetail', { data: row })}>
+        <View style={styles.item}>
+          <View style={styles.head}>
+            <Text style={styles.title} numberOfLines={1}>{row.orderNumber}</Text>
+            <Text style={styles.status}>{row.status}</Text>
           </View>
-          <View style={styles.extra}>
-            <Text style={styles.footer}>来源：{row.source}</Text>
-            <Text style={styles.footer}>{row.date}</Text>
-          </View>
+          <Text style={styles.text}>下单日期：{row.date}</Text>
+          <Text style={styles.text}>交期：{row.deliveryTime}天</Text>
+          <Text style={styles.text}>总价：￥{row.totalCharge}</Text>
         </View>
       </TouchableHighlight>
     );
   }
 
-  //上滑加载更多
+  _renderSeparator(sectionID, rowID) {
+    return (
+      <View key={rowID} style={styles.line} />
+    );
+  }
+
   _fetchMore() {
     if (this.state.isLoading) {
       return;
@@ -145,12 +141,12 @@ export default class News extends Component {
   //上滑显示的列表底部的加载视图
   _renderFooter() {
     if (!this._hasMore() && cacheResult.total !== 0) {
-      return 
+      return;
       /*(
         <View style={styles.indicator}>
           <Text style={styles.indicatorText}>没有更多了</Text>
         </View>
-      );*/ 
+      );*/
     }
     return (
       <View style={styles.indicator}>
@@ -161,7 +157,7 @@ export default class News extends Component {
   }
 
   _hasMore() {
-    return cacheResult.items.length < cacheResult.total
+    return cacheResult.items.length < cacheResult.total;
   }
 
   //下拉刷新
@@ -171,24 +167,65 @@ export default class News extends Component {
     }
     // if (!this._hasMore()) {
     //   this.refs.toast.show('没有更多了!');
-    //   return
+    //   return;
     // }
     this._fetchData(0)
   }
 
+  _renderHeader() {
+    const navigate = this.props.navigation.navigate;
+    return (
+      <TouchableHighlight underlayColor="#eee" onPress={() => navigate('Search')}>
+        <View style={styles.search}>
+          <Icon name="ios-search" size={18} style={styles.searchIcon} />
+          <Text style={styles.searchText}>搜索订单编号</Text>
+        </View>
+      </TouchableHighlight>
+    );
+  }
+
+  login() {
+    const navigateAction = NavigationActions.navigate({
+      routeName: 'Login',
+      params: {},
+      action: NavigationActions.navigate({routeName: 'EnterScreen'})
+    });
+    this.props.navigation.dispatch(navigateAction);
+  }
+  modalVisible(boo) {
+    let _this = this;
+    _this.setState({
+      modalVisible: boo
+    })
+  }
   render() {
+    if(!this.state.loginInfo) {
+      return (
+        <View style={styles.hintCont}>
+          <Text style={styles.hintText}>登录可查看订单、等详细信息</Text>
+          <TouchableHighlight underlayColor="#04bf95" style={styles.loginBtn} onPress={this.modalVisible.bind(this,true)}>
+            <Text style={styles.loginText}>登录</Text>
+          </TouchableHighlight>
+          <Modal visible={this.state.modalVisible} animationType="slide">
+            <LoginModal closeModal={this.modalVisible.bind(this)}/>
+          </Modal>
+        </View>
+      );
+    }
     return (
       <View style={styles.container}>
-        <StatusBar barStyle="light-content" animated={true}/>
-        <Header title="新闻"/>
+        <Header title="订单"/>
+        {this._renderHeader()}
         <ListView
           enableEmptySections={true}
+          automaticallyAdjustContentInsets={false}
           dataSource={this.state.dataSource}
           renderRow={this._renderRows.bind(this)}
           onEndReachedThreshold={50}
           onEndReached={this._fetchMore.bind(this)}
           renderFooter={this._renderFooter.bind(this)}
           showsVerticalScrollIndicator={false}
+          renderSeparator={this._renderSeparator.bind(this)}
           refreshControl={
             this.state.loadingOk
               ? <RefreshControl
@@ -206,44 +243,61 @@ export default class News extends Component {
   }
 }
 
+class NoLogin extends Component {
+  
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#efefef'
+    backgroundColor: '#fff',
   },
-  center: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  item: {
-    marginHorizontal: 10,
-    paddingVertical: 15,
-    borderColor: '#d9d9d9',
-    borderBottomWidth: 1 / PixelRatio.get()
-  },
-  article: {
-    flexDirection: 'row',
-  },
-  newImg: {
-    width: width * 0.3,
-    height: width * 0.3 * 0.56,
-  },
-  title: {
+  hintCont: {
     flex: 1,
-    color: '#000',
-    fontSize: 14,
-    lineHeight: 20
+    backgroundColor: '#eee',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  footer: {
-    color: '#aaa',
-    fontSize: 10,
+  hintText: {
+    color: '#666',
+    fontSize: 14
+  },
+  loginBtn: {
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    backgroundColor: '#00d7a7',
     marginTop: 15
   },
-  extra: {
+  loginText: {
+    fontSize: 14,
+    color: '#fff',
+  },
+  item: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+  },
+  line: {
+    width,
+    height: 1 / PixelRatio.get(),
+    backgroundColor: '#eee'
+  },
+  head: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 10
+    alignItems: 'center',
+  },
+  title: {
+    color: '#000',
+    fontSize: 15,
+  },
+  status: {
+    color: '#00d7a7',
+    fontSize: 12,
+  },
+  text: {
+    marginTop: 5,
+    fontSize: 12,
+    color: '#aaa',
   },
   indicator: {
     flexDirection: "row",
@@ -255,5 +309,24 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     color: '#666',
     fontSize: 12
+  },
+  search: {
+    width: width - 40,
+    alignSelf: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ededed',
+    height: 25,
+    borderRadius: 8,
+    marginVertical: 10
+  },
+  searchIcon: {
+    color: '#aeaeae'
+  },
+  searchText: {
+    color: '#aeaeae',
+    fontSize: 12,
+    marginLeft: 5
   }
 });
