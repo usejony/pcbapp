@@ -18,36 +18,43 @@ import Line from '../../../common/line';
 import Safety from './safety';
 
 const { width } = Dimensions.get('window');
-const Gear = ({ navigation }) => (
-  <View style={styles.container}>
+
+const Gear = ({ navigation, screenProps }) => {
+  logoutHandle = () => {
+    // navigation.state.params.logout();
+    storage.remove({ key: 'loginInfo' });
+    const backAction = NavigationActions.back({
+      key: null
+    });
+    screenProps.dispatch(backAction)
+  }
+  return (<View style={styles.container}>
     <ScrollView>
-    <View style={styles.itemList}>
-      <TouchableHighlight underlayColor="#ededed" onPress={() => {
+      <View style={styles.itemList}>
+        <TouchableHighlight underlayColor="#ededed" onPress={() => {
           navigation.navigate('InfoScreen');
         }}>
-        <View style={styles.item}>
-          <Text style={styles.title}>个人信息</Text>
-          <FontIcon name="angle-right" size={18} color="#999" />
-        </View>
-      </TouchableHighlight>
-      <Line left={12} />
-      <TouchableHighlight underlayColor="#ededed" onPress={() => {
+          <View style={styles.item}>
+            <Text style={styles.title}>个人信息</Text>
+            <FontIcon name="angle-right" size={18} color="#999" />
+          </View>
+        </TouchableHighlight>
+        <Line left={12} />
+        <TouchableHighlight underlayColor="#ededed" onPress={() => {
           navigation.navigate('SafetyScreen');
         }}>
-        <View style={styles.item}>
-          <Text style={styles.title}>账户与安全</Text>
-          <FontIcon name="angle-right" size={18} color="#999" />
-        </View>
-      </TouchableHighlight>
-    </View>
-    <TouchableHighlight>
-      <View style={styles.logoutBtn}>
-        <Text style={styles.logoutText}>退出登录</Text>
+          <View style={styles.item}>
+            <Text style={styles.title}>账户与安全</Text>
+            <FontIcon name="angle-right" size={18} color="#999" />
+          </View>
+        </TouchableHighlight>
       </View>
-    </TouchableHighlight>
+      <TouchableHighlight underlayColor="#f9f9f9" onPress={this.logoutHandle.bind(this)} style={styles.logoutBtn}>
+        <Text style={styles.logoutText}>退出登录</Text>
+      </TouchableHighlight>
     </ScrollView>
-  </View>
-);
+  </View>)
+};
 Gear.navigationOptions = ({ navigation, screenProps }) => ({
   title: '设置',
   headerLeft: (

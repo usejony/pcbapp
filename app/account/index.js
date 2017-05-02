@@ -25,30 +25,24 @@ export default class Account extends Component {
     super(props);
     this.state = {
       scrollY: new Animated.Value(0),
-      loginInfo: [],
       modalVisible: false,
       data: null
     }
   }
+componentWillMount() {
+  // console.log('account screen:',this.props.screenProps);
+}
+  //在页面将要加载的时候去本地查询是否有用户登录的信息
   componentDidMount() {
-    this.fetchData();
-  }
-
-  //fetch请求 
-  fetchData() {
-    const url = config.api.base + config.api.account;
-    const params = {
-      accessToken: '杜超'
-    }
-    Request.Get(url, params)
-      .then(data => {
-        if (data && data.success) {
-          console.log("获取的数据", data.data);
-          this.setState({
-            data: data.data
-          });
-        }
-      })
+    storage.load({
+      key: 'loginInfo'
+    }).then(data => {
+      this.setState({
+        data: data.data
+      });
+    }).catch(err => {
+      console.log('没有在本地获取到用户的登录信息:', err.message);
+    });
   }
 
   //控制注册登录页面的显示与影藏
@@ -62,8 +56,9 @@ export default class Account extends Component {
   //点击设置按钮打开什么页面。当用户有登录的时候打开设置页面，当用户没有登录的时候打开登录注册页面
   openWhereScreen() {
     const { navigate } = this.props.navigation;
-    if (this.state.loginInfo) {
-      return navigate('GearScreen');
+    let that = this;
+    if (this.state.data) {
+      return navigate('GearScreen',{logout:() => {that.setState({data: null})}});
     }
     this.modalVisible(true);
   }
@@ -74,8 +69,8 @@ export default class Account extends Component {
       outputRange: [0, 1]
     });
     const title = this.state.scrollY.interpolate({
-      inputRange: [-150, 0, 150],
-      outputRange: [0, 0, 150]
+      inputRange: [-300, 0, 300],
+      outputRange: [0, 0, 300]
     })
     return (
       <Animated.View style={[
@@ -104,7 +99,6 @@ export default class Account extends Component {
   render() {
     const { navigate } = this.props.navigation;
     let data = this.state.data;
-    console.log('render:', data)
     return (
       <View style={styles.container}>
         <ScrollView
@@ -121,7 +115,7 @@ export default class Account extends Component {
                     {
                       data.avatar
                         ? <Image source={{ uri: data.avatar }} style={styles.avatar} />
-                        : <Image source={require('../../imgs/manAvatar.png')} style={styles.avatar}/>
+                        : <Image source={require('../../imgs/manAvatar.png')} style={styles.avatar} />
                     }
                     <View>
                       <Text style={styles.nickName}>{data.nickName}</Text>
@@ -132,7 +126,7 @@ export default class Account extends Component {
                     </View>
                   </View>
                   : <View style={styles.headCont}>
-                    <Image source={require("../../imgs/manAvatar.png")} style={styles.avatar}/>
+                    <Image source={require("../../imgs/manAvatar.png")} style={styles.avatar} />
                     <View>
                       <Text style={styles.nickName}>点击登录</Text>
                     </View>
@@ -141,11 +135,11 @@ export default class Account extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.tools}>
-            <Item icon="bandcamp" iconColor="#f6af2d" title="余额" info={data ? "￥"+data.useableLimit: null} press={() => alert('3')}/>
-            <Line left={13}/>
-            <Item icon="server" iconColor="#b245f8" title="积分" info={data ? data.integral: null} press={() => null}/>
-            <Line left={13}/>
-            <Item icon="credit-card-alt" iconColor="#52db52" title="信用额度" info={data ? data.creditLimit: null} press={() => null}/>
+            <Item icon="bandcamp" iconColor="#f6af2d" title="余额" info={data ? "￥" + data.useableLimit : null} press={() => alert('3')} />
+            <Line left={13} />
+            <Item icon="server" iconColor="#b245f8" title="积分" info={data ? data.integral : null} press={() => null} />
+            <Line left={13} />
+            <Item icon="credit-card-alt" iconColor="#52db52" title="信用额度" info={data ? data.creditLimit : null} press={() => null} />
           </View>
           <View style={styles.tools}>
 
@@ -155,6 +149,9 @@ export default class Account extends Component {
         <Modal visible={this.state.modalVisible} animationType={'slide'} >
           <LoginModal closeModal={this.modalVisible.bind(this)} />
         </Modal>
+         <Text onPress={() => {
+            console.log(this.props.screenProps)
+           }}>获取数据</Text>
       </View>
     )
   }

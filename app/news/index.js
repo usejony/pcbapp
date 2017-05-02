@@ -13,6 +13,7 @@ import {
   RefreshControl,
   Alert,
   Image,
+  LayoutAnimation
 } from 'react-native';
 import config from '../../common/config';
 import Request from '../../common/request';
@@ -45,6 +46,16 @@ export default class News extends Component {
   }
 
   _fetchData(page) {
+    LayoutAnimation.configureNext({
+      duration: 500,
+      create: {
+        type: LayoutAnimation.Types.linear,
+        property: LayoutAnimation.Properties.opacity,
+      },
+      update: {
+        type: LayoutAnimation.Types.linear
+      }
+    });
     const params = {
       accessToken: 'duchao',
     }
@@ -67,7 +78,7 @@ export default class News extends Component {
             cacheResult.nextPage += 1;
             items = items.concat(data.data);
           } else {
-            items = data.data;
+            items = data.data
           }
           cacheResult.total = data.total;
           cacheResult.items = items;
@@ -84,17 +95,17 @@ export default class News extends Component {
                 refreshing: false,
               })
             }
-          }, 2000);
+          }, 1000);
         }
       })
       .catch(e => {
         if (page !== 0) {
-          Alert.alert('一个不可预知的错误');
+          Alert.alert('获取新闻列表失败');
           this.setState({
             isLoading: false,
           });
         } else {
-          Alert.alert('一个不可预知的错误');
+          Alert.alert('获取新闻列表失败');
           this.setState({
             refreshing: false,
           });
@@ -115,9 +126,9 @@ export default class News extends Component {
           <View style={styles.article}>
             <Text style={styles.title}>{row.title}</Text>
             {
-              row.img
-                ? <Image source={{ uri: row.img }} style={styles.newImg} />
-                : null
+              !row.img
+              ? <Image source={{ uri: row.img }} style={styles.newImg} />
+              : <Image source={require('../../imgs/eg.jpeg')} style={styles.newImg}/>
             }
           </View>
           <View style={styles.extra}>
@@ -145,12 +156,7 @@ export default class News extends Component {
   //上滑显示的列表底部的加载视图
   _renderFooter() {
     if (!this._hasMore() && cacheResult.total !== 0) {
-      return 
-      /*(
-        <View style={styles.indicator}>
-          <Text style={styles.indicatorText}>没有更多了</Text>
-        </View>
-      );*/ 
+      return
     }
     return (
       <View style={styles.indicator}>
@@ -169,18 +175,14 @@ export default class News extends Component {
     if (this.state.refreshing) {
       return;
     }
-    // if (!this._hasMore()) {
-    //   this.refs.toast.show('没有更多了!');
-    //   return
-    // }
     this._fetchData(0)
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar barStyle="light-content" animated={true}/>
-        <Header title="新闻"/>
+        <StatusBar barStyle="light-content" animated={true} />
+        <Header title="新闻" />
         <ListView
           enableEmptySections={true}
           dataSource={this.state.dataSource}
@@ -238,12 +240,11 @@ const styles = StyleSheet.create({
   footer: {
     color: '#aaa',
     fontSize: 10,
-    marginTop: 15
   },
   extra: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 10
+    marginTop: 10
   },
   indicator: {
     flexDirection: "row",

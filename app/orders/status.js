@@ -1,4 +1,4 @@
-//import liraries
+// 订单主页面里面的待确认、待付款、待收货、退款/售后 自定义按钮组件 
 import React, { Component, PropTypes } from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 

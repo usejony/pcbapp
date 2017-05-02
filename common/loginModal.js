@@ -8,11 +8,15 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-
+//第三方组件
 import Icon from 'react-native-vector-icons/Ionicons';
 import { StackNavigator } from 'react-navigation';
+import Toast from 'react-native-easy-toast';
 
+//自定义组件
 import Button from './button';
+import Request from './request';
+import config from './config';
 
 const { width } = Dimensions.get('window');
 class Enter extends Component {
@@ -34,12 +38,50 @@ class Enter extends Component {
       password: '',
     }
   }
+  componentWillMount() {
+    // alert()
+  }
   componentDidMount() {
-    console.log("enter:", this.props)
+    storage.remove({key: 'loginInfo'});
+    console.log("enter:", this.props);
   }
+
+  /**
+   * loginIn: 点击登录成功后将登录信息保存到本地storage里面
+   */
   loginIn() {
-    //登记登录后的逻辑处理
+    let that = this;
+    let { userName, password } = this.state;
+    if(userName === '') {
+      this.refs.toast.show('账户名不能为空');
+      return;
+    }
+    if(password === '') {
+      this.refs.toast.show('密码不能为空');
+      return;
+    }
+    const params = {
+      userName,
+      password
+    }
+    const url = config.api.base + config.api.account;
+    Request.Post(url,params)
+      .then(data => {
+        if(data && data.success) {
+          //当成功获取到用户信息的时候，将用户的信息保存到本地storage;
+          storage.save({
+            key: 'loginInfo',
+            rawData: data
+          });
+          that.props.screenProps.logined(data);
+          // console.log('成功获取到的数据：',data.data);
+        }
+      })
+      .catch(err => {
+        console.log('登录失败！没有获取到用户信息:',err);
+      });
   }
+
   loginFail() {
     //点击无法登录的的处理
   }
@@ -72,6 +114,7 @@ class Enter extends Component {
         <TouchableOpacity style={styles.err} onPress={this.loginFail.bind(this)} activeOpacity={0.6}>
           <Text style={styles.errText}>无法登录？</Text>
         </TouchableOpacity>
+         <Toast ref="toast" opacity={0.5} position="top" positionValue={250} style={{ padding: 5 }} />
       </View>
     );
   }
@@ -88,6 +131,9 @@ class Enroll extends Component {
       password: ''
     }
   }
+  /**
+   * onEnroll：点击注册的事件
+   */
   onEnroll() {
 
   }

@@ -6,8 +6,19 @@
  * @flow
  */
 
-import { AppRegistry } from 'react-native';
+import { AppRegistry, AsyncStorage } from 'react-native';
+import Storage from 'react-native-storage';
 import App from './app';
+const storage = new Storage({
+  size: 1000,
+  storageBackend: AsyncStorage,
+  defaultExpores: 1000 * 3600 * 24,
+  enableCache: true,
+  sync: () => {
+    console.log('我是storage里面自定义的方法')
+  }
+});
+global.storage = storage;
 // import App from './login';
 
 AppRegistry.registerComponent('pcbApp', () => App);

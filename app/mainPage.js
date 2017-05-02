@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 //自定义组件
 import News from './news/index';
 import Orders from './orders/index';
 import Account from './account/index';
-import Button from '../common/button';
 
 //第三方组件
 import { TabNavigator } from "react-navigation";
@@ -61,6 +60,45 @@ const Tab = TabNavigator({
 }, {
     tabBarOptions: {
       activeTintColor: '#00d7a7'
-    }
+    },
+    lazy: false
   });
+
+class TabNav extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      logined: false,
+    }
+  }
+  componentDidMount() {
+    storage.load({
+      key: 'loginInfo',
+    }).then(data => {
+      this.setState({
+        logined: true,
+      });
+    }).catch(err => {
+      console.log('main没有找到loginInfo:',err.message);
+    })
+  }
+
+  /**
+   * loginStatus: 改变登录状态
+   * @param {boolean} boo 
+   */
+  loginStatus(boo) {
+    this.setState({
+      logined: boo
+    });
+  }
+  
+
+  render() {
+    return (
+      <Tab navigation={this.props.navigation}/>
+    );
+  }
+}
+
 export default Tab;
