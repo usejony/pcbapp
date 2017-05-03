@@ -69,8 +69,8 @@ componentWillMount() {
       outputRange: [0, 1]
     });
     const title = this.state.scrollY.interpolate({
-      inputRange: [0, 300],
-      outputRange: [0, 0]
+      inputRange: [-200, 0, 300],
+      outputRange: [0, 0, 300]
     })
     return (
       <Animated.View style={[
@@ -102,10 +102,12 @@ componentWillMount() {
     return (
       <View style={styles.container}>
         <ScrollView
+				scrollIndicatorInsets={{top: 50}}
+          showsVerticalScrollIndicator={false}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }]
           )}
-          scrollEventThrottle={10}>
+          scrollEventThrottle={5}>
           <View style={styles.headerBox}>
             <TouchableOpacity activeOpacity={1} onPress={this.openWhereScreen.bind(this)}>
               {
@@ -201,7 +203,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    height: 60,
+    height: 160,
   },
   header: {
     flex: 1,
@@ -219,6 +221,8 @@ const styles = StyleSheet.create({
   },
   tools: {
     marginTop: 12,
-    height: 500
+    height: 500,
+		backgroundColor: '#fff'
+
   }
 });
