@@ -36,7 +36,7 @@ class HandleItem extends Component {
 // define your styles
 const styles = StyleSheet.create({
   item: {
-    height: 35,
+    height: 40,
     backgroundColor: '#fff',
     paddingHorizontal: 15,
     flexDirection: 'row',

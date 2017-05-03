@@ -69,8 +69,8 @@ componentWillMount() {
       outputRange: [0, 1]
     });
     const title = this.state.scrollY.interpolate({
-      inputRange: [-300, 0, 300],
-      outputRange: [0, 0, 300]
+      inputRange: [0, 300],
+      outputRange: [0, 0]
     })
     return (
       <Animated.View style={[
@@ -102,7 +102,6 @@ componentWillMount() {
     return (
       <View style={styles.container}>
         <ScrollView
-          showsVerticalScrollIndicator={false}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }]
           )}
@@ -219,6 +218,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent'
   },
   tools: {
-    marginTop: 12
+    marginTop: 12,
+    height: 500
   }
 });

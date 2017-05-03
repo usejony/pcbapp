@@ -106,7 +106,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#ededed',
   },
   itemList: {
-    marginTop: 15
+    marginTop: 15,
+    backgroundColor: '#fff'
   },
   item: {
     paddingHorizontal: 12,
