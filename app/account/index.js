@@ -8,12 +8,12 @@ import {
   Image,
   Modal,
   Animated,
-  TouchableOpacity
+  TouchableOpacity,
+  DeviceEventEmitter
 } from 'react-native';
 import Request from '../../common/request';
 import config from '../../common/config';
 import Button from '../../common/button';
-import LoginModal from '../../common/loginModal';
 import Line from '../../common/line';
 import Item from './handleItem';
 
@@ -25,15 +25,11 @@ export default class Account extends Component {
     super(props);
     this.state = {
       scrollY: new Animated.Value(0),
-      modalVisible: false,
+      // modalVisible: false,
       data: null
     }
   }
-componentWillMount() {
-  // console.log('account screen:',this.props.screenProps);
-}
-  //在页面将要加载的时候去本地查询是否有用户登录的信息
-  componentDidMount() {
+  componentWillMount() {
     storage.load({
       key: 'loginInfo'
     }).then(data => {
@@ -44,23 +40,33 @@ componentWillMount() {
       console.log('没有在本地获取到用户的登录信息:', err.message);
     });
   }
-
-  //控制注册登录页面的显示与影藏
-  modalVisible(boo) {
-    let _this = this;
-    _this.setState({
-      modalVisible: boo,
+  //在页面将要加载的时候去本地查询是否有用户登录的信息
+  componentDidMount() {
+    DeviceEventEmitter.addListener('logined', () => {
+      storage.load({
+        key: 'loginInfo'
+      }).then(data => {
+        this.setState({
+          data: data.data
+        });
+      }).catch(err => {
+        console.log('没有在本地获取到用户的登录信息:', err.message);
+      });
     });
   }
 
+  //在组件销毁的时候需要移除的事件
+  componentWillUnmount() {
+    DeviceEventEmitter.remove();
+  }
   //点击设置按钮打开什么页面。当用户有登录的时候打开设置页面，当用户没有登录的时候打开登录注册页面
   openWhereScreen() {
-    const { navigate } = this.props.navigation;
+    const { navigate } = this.props.screenProps;
     let that = this;
     if (this.state.data) {
-      return navigate('GearScreen',{logout:() => {that.setState({data: null})}});
+      return this.props.navigation.navigate('GearScreen', { logout: () => { that.setState({ data: null }) } });
     }
-    this.modalVisible(true);
+    navigate('LoginScreen');
   }
   //固定渐变头部
   renderFixedHeader() {
@@ -69,8 +75,8 @@ componentWillMount() {
       outputRange: [0, 1]
     });
     const title = this.state.scrollY.interpolate({
-      inputRange: [-200, 0, 300],
-      outputRange: [0, 0, 300]
+      inputRange: [-100, 0, 200],
+      outputRange: [0, 0, 200]
     })
     return (
       <Animated.View style={[
@@ -80,7 +86,7 @@ componentWillMount() {
             {
               translateY: title
             }
-          ]
+          ],
         }
       ]}>
         <Animated.View style={[
@@ -99,15 +105,18 @@ componentWillMount() {
   render() {
     const { navigate } = this.props.navigation;
     let data = this.state.data;
+    // if(!STATUS){
+    //   return null;
+    // }
     return (
       <View style={styles.container}>
         <ScrollView
-				scrollIndicatorInsets={{top: 50}}
+          scrollIndicatorInsets={{ top: 50 }}
           showsVerticalScrollIndicator={false}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }]
           )}
-          scrollEventThrottle={5}>
+          scrollEventThrottle={8}>
           <View style={styles.headerBox}>
             <TouchableOpacity activeOpacity={1} onPress={this.openWhereScreen.bind(this)}>
               {
@@ -122,7 +131,7 @@ componentWillMount() {
                       <Text style={styles.nickName}>{data.nickName}</Text>
                       <View style={styles.headInfo}>
                         <Text style={styles.extraText}>个人信息</Text>
-                        <FontIcon name="angle-right" size={16} color={'#fff'} />
+                        <FontIcon name="angle-right" size={12} color={'#fff'} />
                       </View>
                     </View>
                   </View>
@@ -147,12 +156,6 @@ componentWillMount() {
           </View>
           {this.renderFixedHeader()}
         </ScrollView>
-        <Modal visible={this.state.modalVisible} animationType={'slide'} >
-          <LoginModal closeModal={this.modalVisible.bind(this)} />
-        </Modal>
-         <Text onPress={() => {
-            console.log(this.props.screenProps)
-           }}>获取数据</Text>
       </View>
     )
   }
@@ -199,11 +202,10 @@ const styles = StyleSheet.create({
   },
   head: {
     position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    height: 160,
+    // top: 0,
+    width,
+    height: 60,
+    backgroundColor: "transparent"
   },
   header: {
     flex: 1,
@@ -217,12 +219,11 @@ const styles = StyleSheet.create({
     top: 13,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    zIndex: 10
   },
   tools: {
     marginTop: 12,
-    height: 500,
-		backgroundColor: '#fff'
-
+    backgroundColor: '#fff'
   }
 });

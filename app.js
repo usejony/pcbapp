@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View,
 } from 'react-native';
@@ -12,6 +12,7 @@ import OrderDetail from './app/orders/detail';
 import Search from './app/orders/search';
 import Button from './common/button';
 import GearNav from './app/account/gear/gear';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 const Nav = StackNavigator({
   MainPage: {
@@ -41,6 +42,26 @@ const Nav = StackNavigator({
     }
   });
 
+ export default class App extends Component {
+   constructor(props) {
+     super(props);
+     this.state = {
 
-export default Nav;
+     }
+   }
+   componentDidMount() {
+     this.loginRefresh = RCTDeviceEventEmitter.addListener('loginRefresh',()=>{
+      //这里实现你需要刷新的东西
+      
+    });
+   }
+   render() {
+     return (
+       <Nav screenProps={this.props.navigation}/>
+     );
+   }
+ } 
+
+
+// export default Nav;
 

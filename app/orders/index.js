@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   LayoutAnimation,
   Modal,
+  DeviceEventEmitter
 } from 'react-native';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 
@@ -17,7 +18,6 @@ import Line from '../../common/line';
 import Status from './status';
 import Request from '../../common/request';
 import config from '../../common/config';
-import LoginModal from '../../common/loginModal';
 
 // create a component
 class Order extends Component {
@@ -30,25 +30,44 @@ class Order extends Component {
       modalVisible: false,
     }
   }
-  componentDidMount() {
-    //当页面将要加载的时候从本地读取用户是否有登录，如果有则将登录信息保存在state中
+
+  componentWillMount() {
     storage.load({
       key: 'loginInfo',
     }).then(data => {
       console.log('找到了注册用户的userId:', data.userId);
       this.setState({
         loginInfo: data
-      },() =>{
+      }, () => {
         this.fetchData();
       });
     }).catch(err => {
       console.log('没有找到用户的注册信息:', err);
     });
   }
-  // componentDidMount() {
-  //   console.log('didmount')
-  //   this.fetchData();
-  // }
+  componentDidMount() {
+    DeviceEventEmitter.addListener("logined", () => {
+      //当页面将要加载的时候从本地读取用户是否有登录，如果有则将登录信息保存在state中
+      storage.load({
+        key: 'loginInfo',
+      }).then(data => {
+        console.log('找到了注册用户的userId:', data.userId);
+        this.setState({
+          loginInfo: data
+        }, () => {
+          this.fetchData();
+        });
+      }).catch(err => {
+        console.log('没有找到用户的注册信息:', err);
+      });
+    });
+  }
+
+  //在组件销毁的时候需要移除的事件
+  componentWillUnmount() {
+    DeviceEventEmitter.remove();
+  }
+
   fetchData(page) {
     const params = {
       accessToken: this.state.loginInfo.userId,
@@ -68,24 +87,13 @@ class Order extends Component {
         console.log('个人订单列表请求失败：', err.message);
       });
   }
-  /**
-   * modalVisible: 控制登录注册页面的显示影藏
-   * @param {boolean} boo 
-   */
-  modalVisible(boo, ) {
-    let _this = this;
-    _this.setState({
-      modalVisible: boo,
-    })
-  }
 
-  logined(data) {
-    let that = this;
-    that.setState({
-      modalVisible: false,
-      loginInfo: data
-    });
-    this.fetchData()
+  /**
+   * 点击登录/注册按钮的事件
+   */
+  login() {
+    const { navigate } = this.props.screenProps;
+    navigate('LoginScreen');
   }
   /**
    * loadListData: 指定在订单首页要显示的订单列表，可通过更多按钮加载更多列表项
@@ -151,12 +159,9 @@ class Order extends Component {
           <Header title="订单" />
           <View style={styles.hintCont}>
             <Text style={styles.hintText}>登录可查看订单、等详细信息</Text>
-            <TouchableHighlight underlayColor="#04bf95" style={styles.loginBtn} onPress={this.modalVisible.bind(this, true)}>
-              <Text style={styles.loginText}>登录</Text>
+            <TouchableHighlight underlayColor="#04bf95" style={styles.loginBtn} onPress={this.login.bind(this)}>
+              <Text style={styles.loginText}>登录/注册</Text>
             </TouchableHighlight>
-            <Modal visible={this.state.modalVisible} animationType="slide">
-              <LoginModal closeModal={this.modalVisible.bind(this)} logined={this.logined.bind(this)} />
-            </Modal>
           </View>
         </View>
       );

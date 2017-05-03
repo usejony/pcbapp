@@ -9,6 +9,7 @@
 import { AppRegistry, AsyncStorage } from 'react-native';
 import Storage from 'react-native-storage';
 import App from './app';
+import Root from './root';
 const storage = new Storage({
   size: 1000,
   storageBackend: AsyncStorage,
@@ -21,4 +22,4 @@ const storage = new Storage({
 global.storage = storage;
 // import App from './login';
 
-AppRegistry.registerComponent('pcbApp', () => App);
+AppRegistry.registerComponent('pcbApp', () => Root);

@@ -22,8 +22,8 @@ NewsScreen.navigationOptions = {
 }
 
 //订单页
-const OrdersScreen = ({ navigation }) => (
-  <Orders navigation={navigation} />
+const OrdersScreen = ({ navigation, screenProps }) => (
+  <Orders navigation={navigation} screenProps={screenProps}/>
 );
 OrdersScreen.navigationOptions = {
   title: '订单',
@@ -34,8 +34,8 @@ OrdersScreen.navigationOptions = {
 }
 
 //账户页面
-const AccountScreen = ({ navigation }) => (
-  <Account navigation={navigation} />
+const AccountScreen = ({ navigation,screenProps }) => (
+  <Account navigation={navigation} screenProps={screenProps}/>
 );
 AccountScreen.navigationOptions = ({ navigation }) => ({
   title: '我',
@@ -72,15 +72,16 @@ class TabNav extends Component {
     }
   }
   componentDidMount() {
-    storage.load({
-      key: 'loginInfo',
-    }).then(data => {
-      this.setState({
-        logined: true,
-      });
-    }).catch(err => {
-      console.log('main没有找到loginInfo:',err.message);
-    })
+    // storage.load({
+    //   key: 'loginInfo',
+    // }).then(data => {
+    //   this.setState({
+    //     logined: true,
+    //   });
+    // }).catch(err => {
+    //   console.log('main没有找到loginInfo:',err.message);
+    // });
+    storage.remove({key: 'loginInfo'})
   }
 
   /**
@@ -91,12 +92,13 @@ class TabNav extends Component {
     this.setState({
       logined: boo
     });
+    console.log('改变了状态')
   }
   
 
   render() {
     return (
-      <Tab navigation={this.props.navigation}/>
+      <Tab screenProps={this.props.screenProps}/>
     );
   }
 }

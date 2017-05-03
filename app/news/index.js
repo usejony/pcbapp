@@ -41,6 +41,7 @@ export default class News extends Component {
       refreshing: false,
     }
   }
+  
   componentDidMount() {
     this._fetchData(1);
   }
@@ -184,6 +185,7 @@ export default class News extends Component {
         <StatusBar barStyle="light-content" animated={true} />
         <Header title="新闻" />
         <ListView
+          style={{flex:1}}
           enableEmptySections={true}
           dataSource={this.state.dataSource}
           renderRow={this._renderRows.bind(this)}

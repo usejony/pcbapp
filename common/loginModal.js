@@ -7,6 +7,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  DeviceEventEmitter,
 } from 'react-native';
 //第三方组件
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -27,7 +28,7 @@ class Enter extends Component {
     ),
     headerLeft: (
       <Icon name={"ios-close"} size={35} color={'#fff'} style={{ marginLeft: 15 }} onPress={
-        () => screenProps.closeModal(false)
+        () => navigation.goBack(null)
       } />
     )
   });
@@ -50,6 +51,7 @@ class Enter extends Component {
    * loginIn: 点击登录成功后将登录信息保存到本地storage里面
    */
   loginIn() {
+    const { navigate } = this.props.navigation;
     let that = this;
     let { userName, password } = this.state;
     if(userName === '') {
@@ -73,8 +75,9 @@ class Enter extends Component {
             key: 'loginInfo',
             rawData: data
           });
-          that.props.screenProps.logined(data);
-          // console.log('成功获取到的数据：',data.data);
+          console.log('成功获取到的数据：',data);
+          DeviceEventEmitter.emit('logined');
+          this.props.navigation.goBack(null);
         }
       })
       .catch(err => {
@@ -93,7 +96,6 @@ class Enter extends Component {
             <Text style={styles.title}>账号</Text>
             <TextInput
               style={styles.input}
-              autoFocus={true}
               keyboardType="email-address"
               onChangeText={(userName) => this.setState({ userName })}
               placeholder="请输入账号" />
@@ -189,16 +191,16 @@ const LoginNav = StackNavigator({
     }
   });
 
-class LoginStack extends Component {
-  componentDidMount() {
-    console.log('阿斯蒂芬：', this.props)
-  }
-  render() {
-    return (
-      <LoginNav screenProps={{...this.props}} />
-    );
-  }
-}
+// class LoginStack extends Component {
+//   componentDidMount() {
+//     console.log('阿斯蒂芬：', this.props)
+//   }
+//   render() {
+//     return (
+//       <LoginNav screenProps={{...this.props}} />
+//     );
+//   }
+// }
 
 const styles = StyleSheet.create({
   container: {
@@ -249,4 +251,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LoginStack;
+export default LoginNav;
