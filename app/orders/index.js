@@ -37,7 +37,7 @@ class Order extends Component {
     }).then(data => {
       console.log('找到了注册用户的userId:', data.userId);
       this.setState({
-        loginInfo: data
+        loginInfo: data.data
       }, () => {
         this.fetchData();
       });
@@ -53,7 +53,7 @@ class Order extends Component {
       }).then(data => {
         console.log('找到了注册用户的userId:', data.userId);
         this.setState({
-          loginInfo: data
+          loginInfo: data.data
         }, () => {
           this.fetchData();
         });

@@ -33,6 +33,7 @@ export default class Account extends Component {
     storage.load({
       key: 'loginInfo'
     }).then(data => {
+      console.log('找到了注册用户的userId:', data.userId);
       this.setState({
         data: data.data
       });
@@ -46,6 +47,7 @@ export default class Account extends Component {
       storage.load({
         key: 'loginInfo'
       }).then(data => {
+        console.log('找到了注册用户的userId:', data.userId);
         this.setState({
           data: data.data
         });

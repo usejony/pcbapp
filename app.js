@@ -7,7 +7,7 @@ import { StackNavigator } from 'react-navigation';
 
 //路由
 import MainPages from './app/mainPage';
-import NewsDetail from './app/news/detail';
+import NewsDetailNav from './app/news/newsDetailNav';
 import OrderDetail from './app/orders/detail';
 import Search from './app/orders/search';
 import Button from './common/button';
@@ -15,16 +15,16 @@ import GearNav from './app/account/gear/gear';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 const Nav = StackNavigator({
-  MainPage: {
+  MainPageScreen: {
     screen: MainPages,
   },
-  NewsDetail: {
-    screen: NewsDetail
+  NewsDetailNavScreen: {
+    screen: NewsDetailNav
   },
   OrderDetail: {
     screen: OrderDetail
   },
-  Search: {
+  SearchScreen: {
     screen: Search
   },
   GearScreen: {

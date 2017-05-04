@@ -21,6 +21,7 @@ import Header from '../../common/header';
 
 import { StackNavigator } from 'react-navigation';
 import Toast from 'react-native-easy-toast';
+import FontIcon from 'react-native-vector-icons/FontAwesome';
 
 const cacheResult = {
   nextPage: 0,
@@ -116,7 +117,7 @@ export default class News extends Component {
 
   //前往新闻详细页面
   _goDetail(data) {
-    this.props.navigation.navigate('NewsDetail', { data: data })
+    this.props.navigation.navigate('NewsDetailNavScreen', { data: data })
   }
 
   //新闻列表
@@ -192,7 +193,6 @@ export default class News extends Component {
           onEndReachedThreshold={50}
           onEndReached={this._fetchMore.bind(this)}
           renderFooter={this._renderFooter.bind(this)}
-          showsVerticalScrollIndicator={false}
           refreshControl={
             this.state.loadingOk
               ? <RefreshControl
@@ -214,7 +214,7 @@ export default class News extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#efefef'
+    backgroundColor: '#fafafa'
   },
   center: {
     justifyContent: 'center',
