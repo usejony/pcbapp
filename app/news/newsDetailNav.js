@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, StyleSheet, TextInput } from 'react-native';
+import { View, Text, StatusBar, StyleSheet, TextInput, keyboard } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modalbox';
@@ -41,17 +41,17 @@ const NewsDetailStack = StackNavigator({
       headerTitleStyle: { fontSize: 15, color: '#333', fontWeight: 'normal' },
       headerLeft: (
         <FontIcon name="angle-left" size={25} color="#00d7a7" style={{ padding: 20 }} onPress={() => {
-          screenProps.navigation.goBack(null);
+          navigation.goBack(null);
         }} />
       ),
       headerRight: (
         <Button title={'打印'} onPress={() => {
-          screenProps.modalVisible(true)
+          navigation.modalVisible(true)
           }}/>
       )
     })
   });
-class NewsDetailNav extends Component {
+/*class NewsDetailNav extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -68,7 +68,7 @@ class NewsDetailNav extends Component {
     return (
       <View style={{ flex: 1 }}>
         <StatusBar barStyle="dark-content" animated={true} />
-        <NewsDetailStack name="开机速度快解放军" screenProps={{navigation: this.props.navigation,modalVisible: this.modalVisible.bind(this), name: '杜超'}} />
+        <NewsDetailStack screenProps={{navigation: this.props.navigation,modalVisible: this.modalVisible.bind(this), name: '杜超'}} />
         <Modal isOpen={this.state.modalVisible} style={styles.modal} position={"bottom"}>
           <Text>发撒会计分录看见爱上咖啡了</Text>
           <TextInput autoFocus={true}/>
@@ -76,7 +76,7 @@ class NewsDetailNav extends Component {
       </View>
     );
   }
-}
+}*/
 const styles = StyleSheet.create({
   modal: {
     height: 200,
@@ -89,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 //make this component available to the app
-export default NewsDetailNav;
+export default NewsDetailStack;

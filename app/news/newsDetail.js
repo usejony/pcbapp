@@ -32,10 +32,10 @@ export default class NewsDetails extends Component {
     }
   }
   componentDidMount() {
-    console.log('newsDetail:',this.props.screenProps.name)
+    console.log('newsDetail:',this.props.navigation.name)
   }
   render() {
-    const data = this.props.screenProps.navigation.state.params.data;
+    const data = this.props.navigation.state.params.data;
     return (
       <View style={styles.container}>
         <ScrollView>

@@ -2,8 +2,16 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
+import FontIcon from 'react-native-vector-icons/FontAwesome';
 // create a component
 class NewsComment extends Component {
+	/*static navigationOptions = ({navigation}) => ({
+		headerLeft: (
+			<FontIcon name="angle-left" size={25} color="#00d7a7" style={{ padding: 20 }} onPress={() => {
+          navigation.goBack(null);
+        }} />
+		)
+	});*/
   render() {
     return (
       <View style={styles.container}>
