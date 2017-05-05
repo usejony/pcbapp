@@ -61,7 +61,7 @@ const Tab = TabNavigator({
     tabBarOptions: {
       activeTintColor: '#00d7a7'
     },
-    lazy: false
+    lazy: true
   });
 
 class TabNav extends Component {

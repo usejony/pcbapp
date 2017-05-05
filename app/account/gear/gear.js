@@ -8,10 +8,11 @@ import {
   StatusBar,
   TouchableHighlight,
   ScrollView,
+  DeviceEventEmitter,
 } from 'react-native';
 
 import FontIcon from 'react-native-vector-icons/FontAwesome';
-import { StackNavigator, NavigationActions } from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
 
 import Info from './info';
 import Line from '../../../common/line';
@@ -21,48 +22,45 @@ const { width } = Dimensions.get('window');
 
 const Gear = ({ navigation, screenProps }) => {
   logoutHandle = () => {
-    // navigation.state.params.logout();
     storage.remove({ key: 'loginInfo' });
-    const backAction = NavigationActions.back({
-      key: null
-    });
-    screenProps.dispatch(backAction)
+    navigation.goBack(null);
+    DeviceEventEmitter.emit('loginOut');
   }
-  return (<View style={styles.container}>
-    <ScrollView>
-      <View style={styles.itemList}>
-        <TouchableHighlight underlayColor="#ededed" onPress={() => {
-          navigation.navigate('InfoScreen');
-        }}>
-          <View style={styles.item}>
-            <Text style={styles.title}>个人信息</Text>
-            <FontIcon name="angle-right" size={18} color="#999" />
-          </View>
+  return (
+    <View style={styles.container}>
+      <StatusBar barStyle="default" animated={true} />
+      <ScrollView>
+        <View style={styles.itemList}>
+          <TouchableHighlight underlayColor="#ededed" onPress={() => {
+            navigation.navigate('InfoScreen');
+          }}>
+            <View style={styles.item}>
+              <Text style={styles.title}>个人信息</Text>
+              <FontIcon name="angle-right" size={18} color="#d5d5d5" />
+            </View>
+          </TouchableHighlight>
+          <Line left={12} />
+          <TouchableHighlight underlayColor="#ededed" onPress={() => {
+            navigation.navigate('SafetyScreen');
+          }}>
+            <View style={styles.item}>
+              <Text style={styles.title}>账户与安全</Text>
+              <FontIcon name="angle-right" size={18} color="#d5d5d5" />
+            </View>
+          </TouchableHighlight>
+        </View>
+        <TouchableHighlight underlayColor="#f9f9f9" onPress={this.logoutHandle.bind(this)} style={styles.logoutBtn}>
+          <Text style={styles.logoutText}>退出登录</Text>
         </TouchableHighlight>
-        <Line left={12} />
-        <TouchableHighlight underlayColor="#ededed" onPress={() => {
-          navigation.navigate('SafetyScreen');
-        }}>
-          <View style={styles.item}>
-            <Text style={styles.title}>账户与安全</Text>
-            <FontIcon name="angle-right" size={18} color="#999" />
-          </View>
-        </TouchableHighlight>
-      </View>
-      <TouchableHighlight underlayColor="#f9f9f9" onPress={this.logoutHandle.bind(this)} style={styles.logoutBtn}>
-        <Text style={styles.logoutText}>退出登录</Text>
-      </TouchableHighlight>
-    </ScrollView>
-  </View>)
+      </ScrollView>
+    </View>
+  );
 };
 Gear.navigationOptions = ({ navigation, screenProps }) => ({
   title: '设置',
   headerLeft: (
     <FontIcon name="angle-left" size={28} color="#00d7a7" style={{ paddingHorizontal: 15 }} onPress={() => {
-      const backAction = NavigationActions.back({
-        key: null
-      });
-      screenProps.dispatch(backAction)
+      navigation.goBack(null);
     }} />
   )
 });
@@ -88,17 +86,17 @@ const GearStack = StackNavigator({
       headerTitleStyle: { color: '#333', fontSize: 16 },
       headerLeft: (
         <FontIcon name="angle-left" size={28} color="#00d7a7" style={{ paddingHorizontal: 15 }} onPress={() => {
-          navigation.goBack()
+          navigation.goBack(null)
         }} />
       )
     })
   });
-const GearNav = ({ navigation }) => (
+/*const GearNav = ({navigation}) => (
   <View style={{ flex: 1 }}>
-    <StatusBar animated={true} barStyle={'dark-content'} />
-    <GearStack screenProps={navigation} />
-  </View>
-)
+        <StatusBar animated={true} barStyle={'dark-content'} />
+        <GearStack screenProps={navigation} />
+      </View>
+      )*/
 // define your styles
 const styles = StyleSheet.create({
   container: {
@@ -118,8 +116,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   title: {
-    fontSize: 12,
-    color: '#444'
+    fontSize: 13,
+    color: '#333'
   },
   logoutBtn: {
     width: width - 40,
@@ -139,4 +137,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default GearNav;
+export default GearStack;

@@ -10,6 +10,7 @@ export default {
     base: "http://rap.taobao.org/mockjs/16148",
     newsList: "/api/newsList",
     orderList: "/api/orderList",
-    account: "/api/account"
+    account: "/api/account",
+    comment: "/api/commentList"
   }
 }

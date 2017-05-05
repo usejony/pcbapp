@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions, Animated, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Animated, TouchableOpacity, DeviceEventEmitter } from 'react-native';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modalbox';
 
@@ -22,7 +22,7 @@ class DetailTabBar extends Component {
       }
     ).start();
     this.props.navigation.navigate('NewsCommentScreen');
-    console.log('comment.navigation:',this.props.navigation);
+    console.log('comment.navigation:', this.props.navigation);
   }
   goNewsComment() {
     Animated.timing(
@@ -33,13 +33,23 @@ class DetailTabBar extends Component {
     ).start();
     this.props.navigation.navigate('NewsDetailScreen');
   }
+  goComment() {
+    this.props.navigation.navigate('CommentScreen');
+  }
   componentDidMount() {
-    console.log('tabbar:',this.props.modal)
+    DeviceEventEmitter.addListener('tabBarBack', () => {
+      Animated.timing(
+        this.state.translate,
+        {
+          toValue: 0,
+        }
+      ).start();
+    });
   }
   render() {
     return (
       <View style={styles.commentInp}>
-        <TouchableOpacity activeOpacity={0.9} style={styles.inp}>
+        <TouchableOpacity activeOpacity={0.9} style={styles.inp} onPress={this.goComment.bind(this)}>
           <FontIcon name="pencil" size={15} />
           <Text style={styles.commentText}>评论一下</Text>
         </TouchableOpacity>
@@ -56,8 +66,8 @@ class DetailTabBar extends Component {
                 }
               ],
               opacity: this.state.translate.interpolate({
-                inputRange: [0,0.5,1],
-                outputRange: [1,0,1]
+                inputRange: [0, 0.5, 1],
+                outputRange: [1, 0, 1]
               })
             }]}>
             <TouchableOpacity activeOpacity={0.9} style={styles.commentIcon} onPress={this.goNewsDetail.bind(this)}>

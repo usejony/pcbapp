@@ -18,6 +18,7 @@ import Line from '../../common/line';
 import Item from './handleItem';
 
 import FontIcon from 'react-native-vector-icons/FontAwesome';
+import { NavigationActions } from 'react-navigation';
 
 const { width } = Dimensions.get('window');
 export default class Account extends Component {
@@ -25,7 +26,6 @@ export default class Account extends Component {
     super(props);
     this.state = {
       scrollY: new Animated.Value(0),
-      // modalVisible: false,
       data: null
     }
   }
@@ -43,6 +43,7 @@ export default class Account extends Component {
   }
   //在页面将要加载的时候去本地查询是否有用户登录的信息
   componentDidMount() {
+    //当登录成功后通知页面刷新
     DeviceEventEmitter.addListener('logined', () => {
       storage.load({
         key: 'loginInfo'
@@ -55,21 +56,44 @@ export default class Account extends Component {
         console.log('没有在本地获取到用户的登录信息:', err.message);
       });
     });
+    //当退出登录后通知页面刷新并删除data数据
+    DeviceEventEmitter.addListener('loginOut', () => {
+      this.setState({
+        data: null
+      })
+    });
   }
 
   //在组件销毁的时候需要移除的事件
   componentWillUnmount() {
-    DeviceEventEmitter.remove();
+    DeviceEventEmitter.removeAllListeners();
   }
   //点击设置按钮打开什么页面。当用户有登录的时候打开设置页面，当用户没有登录的时候打开登录注册页面
-  openWhereScreen() {
+  gearTouch() {
     const { navigate } = this.props.screenProps;
     let that = this;
     if (this.state.data) {
-      return this.props.navigation.navigate('GearScreen', { logout: () => { that.setState({ data: null }) } });
+      return this.props.navigation.navigate('GearScreen');
     }
     navigate('LoginScreen');
   }
+
+  /**
+   * 点击账户页面的顶部个人信息栏，当用户有登录。跳转到个人信息页面。否则跳转到登录注册页面
+   */
+  personInfo() {
+    if (this.state.data) {
+      const actions = NavigationActions.navigate({
+        routeName: "GearScreen",
+        params: {},
+        action: NavigationActions.navigate({ routeName: 'InfoScreen' })
+      });
+      this.props.navigation.dispatch(actions);
+    } else {
+      this.props.screenProps.navigate('LoginScreen');
+    }
+  }
+
   //固定渐变头部
   renderFixedHeader() {
     const opacity = this.state.scrollY.interpolate({
@@ -78,7 +102,7 @@ export default class Account extends Component {
     });
     const title = this.state.scrollY.interpolate({
       inputRange: [-100, 0, 200],
-      outputRange: [0, 0, 200]
+      outputRange: [100, 0, 0]
     })
     return (
       <Animated.View style={[
@@ -97,7 +121,7 @@ export default class Account extends Component {
             opacity: opacity
           }
         ]} />
-        <TouchableOpacity onPress={this.openWhereScreen.bind(this)} style={styles.gearBtn}>
+        <TouchableOpacity onPress={this.gearTouch.bind(this)} style={styles.gearBtn}>
           <FontIcon name="gear" size={20} color="#fff" />
         </TouchableOpacity>
       </Animated.View>
@@ -107,11 +131,9 @@ export default class Account extends Component {
   render() {
     const { navigate } = this.props.navigation;
     let data = this.state.data;
-    // if(!STATUS){
-    //   return null;
-    // }
     return (
       <View style={styles.container}>
+        {this.renderFixedHeader()}
         <ScrollView
           scrollIndicatorInsets={{ top: 50 }}
           showsVerticalScrollIndicator={false}
@@ -120,7 +142,7 @@ export default class Account extends Component {
           )}
           scrollEventThrottle={8}>
           <View style={styles.headerBox}>
-            <TouchableOpacity activeOpacity={1} onPress={this.openWhereScreen.bind(this)}>
+            <TouchableOpacity activeOpacity={1} onPress={this.personInfo.bind(this)}>
               {
                 data
                   ? <View style={styles.headCont}>
@@ -154,9 +176,8 @@ export default class Account extends Component {
             <Item icon="credit-card-alt" iconColor="#52db52" title="信用额度" info={data ? data.creditLimit : null} press={() => null} />
           </View>
           <View style={styles.tools}>
-
+            {/*code...*/}
           </View>
-          {this.renderFixedHeader()}
         </ScrollView>
       </View>
     )
@@ -204,10 +225,12 @@ const styles = StyleSheet.create({
   },
   head: {
     position: 'absolute',
-    // top: 0,
+    top: 0,
+    left: 0,
     width,
     height: 60,
-    backgroundColor: "transparent"
+    backgroundColor: "transparent",
+    zIndex: 5
   },
   header: {
     flex: 1,

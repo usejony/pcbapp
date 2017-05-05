@@ -9,10 +9,9 @@ import { StackNavigator } from 'react-navigation';
 import MainPages from './app/mainPage';
 import NewsDetailNav from './app/news/newsDetailNav';
 import OrderDetail from './app/orders/detail';
-import Search from './app/orders/search';
 import Button from './common/button';
 import GearNav from './app/account/gear/gear';
-import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
+import OrderStatus from './app/orders/orderstatus/orderStatus';
 
 const Nav = StackNavigator({
   MainPageScreen: {
@@ -24,8 +23,8 @@ const Nav = StackNavigator({
   OrderDetail: {
     screen: OrderDetail
   },
-  SearchScreen: {
-    screen: Search
+  OrderStatusScreen: {
+    screen: OrderStatus
   },
   GearScreen: {
     screen: GearNav,

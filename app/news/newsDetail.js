@@ -6,7 +6,8 @@ import {
   ScrollView,
   Image,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  StatusBar
 } from 'react-native';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 
@@ -31,13 +32,11 @@ export default class NewsDetails extends Component {
 
     }
   }
-  componentDidMount() {
-    console.log('newsDetail:',this.props.navigation.name)
-  }
   render() {
     const data = this.props.navigation.state.params.data;
     return (
       <View style={styles.container}>
+        <StatusBar barStyle="default" animated={true}/>
         <ScrollView>
           <View style={styles.scrollView}>
             <Text style={styles.title}>{data.title}</Text>

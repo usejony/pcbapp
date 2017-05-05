@@ -46,6 +46,7 @@ class Order extends Component {
     });
   }
   componentDidMount() {
+    //当登录成功后通知页面从本地获取用户的登录信息并刷新
     DeviceEventEmitter.addListener("logined", () => {
       //当页面将要加载的时候从本地读取用户是否有登录，如果有则将登录信息保存在state中
       storage.load({
@@ -60,6 +61,12 @@ class Order extends Component {
       }).catch(err => {
         console.log('没有找到用户的注册信息:', err);
       });
+    });
+    //当退出登录后通知页面刷新并删除data数据
+     DeviceEventEmitter.addListener('loginOut',() => {
+      this.setState({
+        loginInfo: null
+      })
     });
   }
 
@@ -176,7 +183,7 @@ class Order extends Component {
                 <Text style={styles.leftText}>我的订单</Text>
                 <View style={styles.linkRight}>
                   <Text style={styles.rightText}>全部订单</Text>
-                  <FontIcon name="angle-right" size={16} color="#ddd" />
+                  <FontIcon name="angle-right" size={16} color="#d5d5d5" />
                 </View>
               </View>
             </TouchableHighlight>

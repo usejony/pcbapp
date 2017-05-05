@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, StyleSheet, TextInput, keyboard } from 'react-native';
+import { View, Text, StatusBar, StyleSheet, TextInput, keyboard, DeviceEventEmitter } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modalbox';
@@ -8,6 +8,7 @@ import NewsDetail from './newsDetail';
 import NewsComment from './newsComment';
 import Button from '../../common/button';
 import TabBar from './detailNavTabBar';
+import Comment from './comment';
 
 const NewsDetailTab = TabNavigator({
   NewsDetailScreen: {
@@ -19,7 +20,7 @@ const NewsDetailTab = TabNavigator({
   NewsCommentScreen: {
     screen: NewsComment,
     navigationOptions: {
-      title: '评论'
+      title: '评论详情'
     }
   }
 }, {
@@ -34,21 +35,21 @@ const NewsDetailTab = TabNavigator({
 const NewsDetailStack = StackNavigator({
   NewsDetailTabScreen: {
     screen: NewsDetailTab
+  },
+  CommentScreen: {
+    screen: Comment
   }
 }, {
-    navigationOptions: ({ navigation, screenProps }) => ({
+      mode: 'modal',
+      navigationOptions: ({ navigation, screenProps }) => ({
       headerStyle: { backgroundColor: '#f9f9f9' },
       headerTitleStyle: { fontSize: 15, color: '#333', fontWeight: 'normal' },
       headerLeft: (
         <FontIcon name="angle-left" size={25} color="#00d7a7" style={{ padding: 20 }} onPress={() => {
           navigation.goBack(null);
+          DeviceEventEmitter.emit('tabBarBack');
         }} />
       ),
-      headerRight: (
-        <Button title={'打印'} onPress={() => {
-          navigation.modalVisible(true)
-          }}/>
-      )
     })
   });
 /*class NewsDetailNav extends Component {

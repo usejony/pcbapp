@@ -23,7 +23,7 @@ import { StackNavigator } from 'react-navigation';
 import Toast from 'react-native-easy-toast';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 
-const cacheResult = {
+let cacheResult = {
   nextPage: 0,
   items: [],
   total: 0,
@@ -34,7 +34,7 @@ export default class News extends Component {
     super(props);
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2,
-    })
+    });
     this.state = {
       dataSource: ds.cloneWithRows([]),
       loadingOk: false,
@@ -186,7 +186,6 @@ export default class News extends Component {
         <StatusBar barStyle="light-content" animated={true} />
         <Header title="新闻" />
         <ListView
-          style={{flex:1}}
           enableEmptySections={true}
           dataSource={this.state.dataSource}
           renderRow={this._renderRows.bind(this)}
@@ -216,13 +215,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fafafa'
   },
-  center: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   item: {
     marginHorizontal: 10,
-    paddingVertical: 15,
+    paddingVertical: 8,
     borderColor: '#d9d9d9',
     borderBottomWidth: 1 / PixelRatio.get()
   },
