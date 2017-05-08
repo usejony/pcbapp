@@ -1,7 +1,7 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { TabNavigator, TabBarView } from 'react-navigation';
+import { TabNavigator, TabBarTop } from 'react-navigation';
 
 import Total from './totalOrder';
 import Ok from './waitOk';
@@ -11,33 +11,49 @@ import Sale from './afterSale';
 
 const tabNav = TabNavigator({
   TotalScreen: {
-    screen: Total
+    screen: Total,
+    navigationOptions: {
+      title: '全部'
+    }
   },
   OkScreen: {
-    screen: Ok
+    screen: Ok,
+    navigationOptions: {
+      title: '待确认'
+    }
   },
   PayScreen: {
-    screen: Pay
+    screen: Pay,
+    navigationOptions: {
+      title: '待付款'
+    }
   },
   ReceiveScreen: {
-    screen: Receive
+    screen: Receive,
+    navigationOptions: {
+      title: '待收货'
+    }
   },
   SaleScreen: {
-    screen: Sale
+    screen: Sale,
+    navigationOptions: {
+      title: '退款/售后'
+    }
   }
 },{
-  // tabBarPosition: 
+  tabBarComponent: TabBarTop,
+  tabBarPosition: 'top',
+  swipeEnabled: true,
+  animationEnabled: true,
+  tabBarOptions: {
+    activeTintColor: '#47B2EA',
+    inactiveTintColor: '#222',
+    pressOpacity: 0.8,
+    scrollEnabled: true,
+    tabStyle: {width: 80,height: 35,paddingHorizontal:0},
+    indicatorStyle: {backgroundColor: "#47B2EA"},
+    style: { backgroundColor: '#f6f6f6'}
+  }
 });
 
-// define your styles
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#2c3e50',
-  },
-});
-
-//make this component available to the app
-export default TabNav;
+export default tabNav;

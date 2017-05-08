@@ -187,6 +187,7 @@ export default class News extends Component {
         <Header title="新闻" />
         <ListView
           enableEmptySections={true}
+          removeClippedSubviews={false}
           dataSource={this.state.dataSource}
           renderRow={this._renderRows.bind(this)}
           onEndReachedThreshold={50}
@@ -196,7 +197,7 @@ export default class News extends Component {
             this.state.loadingOk
               ? <RefreshControl
                 refreshing={this.state.refreshing}
-                tintColor="#00d7a7"
+                tintColor={theme6}
                 title="刷新中..."
                 onRefresh={this._onRefresh.bind(this)}
               />

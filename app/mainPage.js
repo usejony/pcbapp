@@ -59,48 +59,10 @@ const Tab = TabNavigator({
   AccountTab: { screen: AccountScreen }
 }, {
     tabBarOptions: {
-      activeTintColor: '#00d7a7'
+      activeTintColor: '#47B2EA'
     },
     lazy: true
   });
 
-class TabNav extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      logined: false,
-    }
-  }
-  componentDidMount() {
-    // storage.load({
-    //   key: 'loginInfo',
-    // }).then(data => {
-    //   this.setState({
-    //     logined: true,
-    //   });
-    // }).catch(err => {
-    //   console.log('main没有找到loginInfo:',err.message);
-    // });
-    storage.remove({key: 'loginInfo'})
-  }
-
-  /**
-   * loginStatus: 改变登录状态
-   * @param {boolean} boo 
-   */
-  loginStatus(boo) {
-    this.setState({
-      logined: boo
-    });
-    console.log('改变了状态')
-  }
-  
-
-  render() {
-    return (
-      <Tab screenProps={this.props.screenProps}/>
-    );
-  }
-}
 
 export default Tab;

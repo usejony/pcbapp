@@ -1,7 +1,7 @@
 //import liraries
 import React, { Component, PropTypes } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
-
+import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 const { width } = Dimensions.get('window');
 // create a component
 class Header extends Component {
@@ -33,9 +33,9 @@ class Header extends Component {
 }
 
 // define your styles
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   header: {
-    backgroundColor: '#00d7a7',
+    backgroundColor: '$theme6',
     height: 64,
     justifyContent: 'flex-end',
     paddingBottom: 15,
@@ -52,6 +52,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 18,
     left: 0
+  },
+  rightBtn: {
+    height: 48,
+    width: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 18,
+    right: 0
   }
 });
 

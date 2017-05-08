@@ -1,13 +1,17 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image, } from 'react-native';
 
 // create a component
 class WaitOk extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>WaitOk</Text>
+        <View style={styles.touch}>
+          <Image source={require('../../../imgs/noData.png')} style={styles.loadImg} />
+          <Text style={styles.largeText}>您还没有相关订单</Text>
+          <Text style={styles.smallText}>去下一单试试吧</Text>
+        </View>
       </View>
     );
   }
@@ -17,10 +21,28 @@ class WaitOk extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#2c3e50',
+    backgroundColor: '#efefef',
   },
+  touch: {
+    flex: 1,
+    marginTop: -80,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  largeText: {
+    fontSize: 12,
+    color: '#222',
+  },
+  smallText: {
+    fontSize: 10,
+    color: '#888',
+    marginTop: 8
+  },
+  loadImg: {
+    resizeMode: 'contain',
+    width: 150,
+    height: 150
+  }
 });
 
 //make this component available to the app

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
   Dimensions,
-  StyleSheet,
   ScrollView,
   View,
   Text,
@@ -11,15 +10,16 @@ import {
   TouchableOpacity,
   DeviceEventEmitter
 } from 'react-native';
+
+import FontIcon from 'react-native-vector-icons/FontAwesome';
+import { NavigationActions } from 'react-navigation';
+import EStyleSheet from 'react-native-extended-stylesheet';
+
 import Request from '../../common/request';
 import config from '../../common/config';
 import Button from '../../common/button';
 import Line from '../../common/line';
 import Item from './handleItem';
-
-import FontIcon from 'react-native-vector-icons/FontAwesome';
-import { NavigationActions } from 'react-navigation';
-
 const { width } = Dimensions.get('window');
 export default class Account extends Component {
   constructor(props) {
@@ -185,13 +185,13 @@ export default class Account extends Component {
 }
 
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#efefef'
   },
   headerBox: {
-    backgroundColor: '#00d7a7',
+    backgroundColor: '$theme6',
     paddingHorizontal: 20,
     paddingTop: 70,
     paddingBottom: 20
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: 60,
     height: 60,
-    borderColor: '#8dffe6',
+    borderColor: '$theme4',
     borderWidth: 3,
     borderRadius: 30,
     marginRight: 20,
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1,
-    backgroundColor: '#00d7a7'
+    backgroundColor: '$theme6'
   },
   gearBtn: {
     width: 48,

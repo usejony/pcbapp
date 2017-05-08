@@ -1,6 +1,7 @@
 //评论页面
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, StatusBar, TextInput, ScrollView, Alert } from 'react-native';
+import { View, Text, StatusBar, TextInput, ScrollView, Alert } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 import Button from '../../common/button';
 
@@ -10,7 +11,7 @@ class Comment extends Component {
     headerLeft: (
       <Button title="关闭" onPress={() => {
         navigation.goBack(null);
-      }} style={{padding: 15}}/>
+      }} style={{padding: 15}} tintColor={theme6}/>
     )
   });
   constructor(props) {
@@ -59,7 +60,7 @@ class Comment extends Component {
 }
 
 // define your styles
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f6f6f6',
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
   submit: {
     height: 35,
     marginHorizontal: 30,
-    backgroundColor: '#00d7a7',
+    backgroundColor: '$theme6',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5,

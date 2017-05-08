@@ -12,6 +12,8 @@ import {
   DeviceEventEmitter
 } from 'react-native';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
+import { NavigationActions } from 'react-navigation';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 import Header from '../../common/header';
 import Line from '../../common/line';
@@ -37,7 +39,7 @@ class Order extends Component {
     }).then(data => {
       console.log('找到了注册用户的userId:', data.userId);
       this.setState({
-        loginInfo: data.data
+        loginInfo: data
       }, () => {
         this.fetchData();
       });
@@ -54,7 +56,7 @@ class Order extends Component {
       }).then(data => {
         console.log('找到了注册用户的userId:', data.userId);
         this.setState({
-          loginInfo: data.data
+          loginInfo: data
         }, () => {
           this.fetchData();
         });
@@ -63,7 +65,7 @@ class Order extends Component {
       });
     });
     //当退出登录后通知页面刷新并删除data数据
-     DeviceEventEmitter.addListener('loginOut',() => {
+    DeviceEventEmitter.addListener('loginOut', () => {
       this.setState({
         loginInfo: null
       })
@@ -74,6 +76,7 @@ class Order extends Component {
   componentWillUnmount() {
     DeviceEventEmitter.remove();
   }
+
 
   fetchData(page) {
     const params = {
@@ -102,6 +105,7 @@ class Order extends Component {
     const { navigate } = this.props.screenProps;
     navigate('LoginScreen');
   }
+
   /**
    * loadListData: 指定在订单首页要显示的订单列表，可通过更多按钮加载更多列表项
    * @param {需要再加的个数} num 
@@ -158,6 +162,44 @@ class Order extends Component {
   lookTotal() {
     // code...
   }
+
+  /**
+   * @param  {打开的订单页面类型} category
+   */
+  openOrderStatus(category) {
+    const { navigation } = this.props;
+    let nav = {
+      routeName: 'OrderStatusScreen',
+      params: {},
+    };
+    let navAction = null;
+    switch (category) {
+      case 'total':
+        nav.action = NavigationActions.navigate({ routeName: 'TotalScreen' });
+        navAction = NavigationActions.navigate(nav);
+        navigation.dispatch(navAction);
+        break;
+      case 'ok':
+        nav.action = NavigationActions.navigate({ routeName: 'OkScreen'});
+        navAction = NavigationActions.navigate(nav);
+        navigation.dispatch(navAction);
+        break;
+      case 'pay':
+        nav.action = NavigationActions.navigate({ routeName: 'PayScreen'});
+        navAction = NavigationActions.navigate(nav);
+        navigation.dispatch(navAction);
+        break;
+      case 'receive':
+        nav.action = NavigationActions.navigate({ routeName: 'ReceiveScreen'});
+        navAction = NavigationActions.navigate(nav);
+        navigation.dispatch(navAction);
+        break;
+      default:
+        nav.action = NavigationActions.navigate({ routeName: 'SaleScreen'});
+        navAction = NavigationActions.navigate(nav);
+        navigation.dispatch(navAction);
+    }
+  }
   render() {
     const { navigate } = this.props.navigation;
     if (!this.state.loginInfo) {
@@ -178,7 +220,7 @@ class Order extends Component {
         <Header title="订单" />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.head}>
-            <TouchableHighlight underlayColor="#e9e9e9" onPress={() => null/*difined handle code..*/}>
+            <TouchableHighlight underlayColor="#e9e9e9" onPress={this.openOrderStatus.bind(this, 'total')}>
               <View style={styles.orderLink}>
                 <Text style={styles.leftText}>我的订单</Text>
                 <View style={styles.linkRight}>
@@ -189,10 +231,10 @@ class Order extends Component {
             </TouchableHighlight>
             <Line />
             <View style={styles.statusBox}>
-              <Status icon="handshake-o" title="待确认" iconColor="#6cc0f1" />
-              <Status icon="cc-paypal" title="待付款" iconColor="#a358f7" />
-              <Status icon="truck" title="待收货" iconColor="#edd867" />
-              <Status icon="institution" title="退款/售后" iconColor="#ec7979" />
+              <Status icon="handshake-o" title="待确认" iconColor="#6cc0f1" press={this.openOrderStatus.bind(this, 'ok')} />
+              <Status icon="cc-paypal" title="待付款" iconColor="#a358f7" press={this.openOrderStatus.bind(this, 'pay')} />
+              <Status icon="truck" title="待收货" iconColor="#edd867" press={this.openOrderStatus.bind(this, 'receive')} />
+              <Status icon="institution" title="退款/售后" iconColor="#ec7979" press={this.openOrderStatus.bind(this, 'sale')} />
             </View>
           </View>
           <View>
@@ -212,7 +254,7 @@ class Order extends Component {
                             <FontIcon name="angle-down" size={13} color="#00d7a7" />
                           </View>
                         </TouchableHighlight>
-                        : <TouchableHighlight underlayColor="#efefef" onPress={this.lookTotal.bind(this)}>
+                        : <TouchableHighlight underlayColor="#efefef" onPress={this.openOrderStatus.bind(this,'total')}>
                           <View style={styles.moreBox}>
                             <Text style={styles.more}>查看全部</Text>
                             <FontIcon name="angle-right" size={13} color="#00d7a7" />
@@ -231,7 +273,7 @@ class Order extends Component {
 }
 
 // define your styles
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#efefef',
@@ -249,7 +291,7 @@ const styles = StyleSheet.create({
   loginBtn: {
     paddingHorizontal: 15,
     paddingVertical: 8,
-    backgroundColor: '#00d7a7',
+    backgroundColor: '$theme6',
     marginTop: 15
   },
   loginText: {
@@ -309,7 +351,7 @@ const styles = StyleSheet.create({
   },
   more: {
     fontSize: 13,
-    color: '#00d7a7',
+    color: '$theme6',
     marginRight: 3
   },
   list: {
@@ -326,7 +368,7 @@ const styles = StyleSheet.create({
   },
   status: {
     fontSize: 12,
-    color: '#00d7a7'
+    color: '$theme6'
   },
   text: {
     fontSize: 12,

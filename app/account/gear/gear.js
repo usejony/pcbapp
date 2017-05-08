@@ -13,6 +13,7 @@ import {
 
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 import { StackNavigator } from 'react-navigation';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 import Info from './info';
 import Line from '../../../common/line';
@@ -59,7 +60,7 @@ const Gear = ({ navigation, screenProps }) => {
 Gear.navigationOptions = ({ navigation, screenProps }) => ({
   title: '设置',
   headerLeft: (
-    <FontIcon name="angle-left" size={28} color="#00d7a7" style={{ paddingHorizontal: 15 }} onPress={() => {
+    <FontIcon name="angle-left" size={28} color={theme6} style={{ paddingHorizontal: 15 }} onPress={() => {
       navigation.goBack(null);
     }} />
   )
@@ -85,7 +86,7 @@ const GearStack = StackNavigator({
       headerTintColor: '#00d7a7',
       headerTitleStyle: { color: '#333', fontSize: 16 },
       headerLeft: (
-        <FontIcon name="angle-left" size={28} color="#00d7a7" style={{ paddingHorizontal: 15 }} onPress={() => {
+        <FontIcon name="angle-left" size={28} color={theme6} style={{ paddingHorizontal: 15 }} onPress={() => {
           navigation.goBack(null)
         }} />
       )
@@ -98,7 +99,7 @@ const GearStack = StackNavigator({
       </View>
       )*/
 // define your styles
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ededed',

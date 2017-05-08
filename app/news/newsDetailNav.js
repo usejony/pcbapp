@@ -45,7 +45,7 @@ const NewsDetailStack = StackNavigator({
       headerStyle: { backgroundColor: '#f9f9f9' },
       headerTitleStyle: { fontSize: 15, color: '#333', fontWeight: 'normal' },
       headerLeft: (
-        <FontIcon name="angle-left" size={25} color="#00d7a7" style={{ padding: 20 }} onPress={() => {
+        <FontIcon name="angle-left" size={25} color={theme6} style={{ padding: 20 }} onPress={() => {
           navigation.goBack(null);
           DeviceEventEmitter.emit('tabBarBack');
         }} />

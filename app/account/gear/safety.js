@@ -9,10 +9,16 @@ class Safety extends Component {
   static navigationOptions = ({navigation}) => ({
     title: '账户与安全'
   });
-  showPhone() {
-    let str = '15971057587';
-    str.slice
+  showPhone(phone) {
+    let ary = phone.split('');
+    ary.splice(3,4,'*','*','*','*');
+    let str = '';
+    for(let i = 0; i < ary.length; i++) {
+      str += ary[i];
+    }
+    return str;
   }
+
   render() {
     return (
       <View style={styles.container}>
@@ -22,7 +28,7 @@ class Safety extends Component {
                 <View style={styles.item}>
                   <View style={styles.cont}>
                     <Text style={styles.title}>换绑手机</Text>
-                    <Text style={styles.text}>15971057587</Text>
+                    <Text style={styles.text}>{this.showPhone('15971057587')}</Text>
                   </View>
                   <FontIcon name="angle-right" size={18} color="#d5d5d5" />
                 </View>

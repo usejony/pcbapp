@@ -71,11 +71,11 @@ class DetailTabBar extends Component {
               })
             }]}>
             <TouchableOpacity activeOpacity={0.9} style={styles.commentIcon} onPress={this.goNewsDetail.bind(this)}>
-              <FontIcon name="commenting-o" size={18} color="#00d7a7" />
+              <FontIcon name="commenting-o" size={18} color={theme6} />
               <Text style={styles.commentText}>202</Text>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.9} style={styles.commentIcon} onPress={this.goNewsComment.bind(this)}>
-              <FontIcon name="file-text-o" size={18} color="#00d7a7" />
+              <FontIcon name="file-text-o" size={18} color={theme6} />
               <Text style={styles.commentText}>正文</Text>
             </TouchableOpacity>
           </Animated.View>

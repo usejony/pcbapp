@@ -19,7 +19,7 @@ export default class Button extends Component {
   render() {
     return (
       <TouchableOpacity activeOpacity={0.9} onPress={this.props.onPress} style={this.props.style}>
-        <Text style={{color: this.props.tintColor ? this.props.tintColor : '#00d7a7',fontSize: this.props.size ? this.props.size : 14}}>{this.props.title}</Text>
+        <Text style={{color: this.props.tintColor ? this.props.tintColor : theme6,fontSize: this.props.size ? this.props.size : 14}}>{this.props.title}</Text>
       </TouchableOpacity>
     );
   }
