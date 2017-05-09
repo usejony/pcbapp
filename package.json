@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "bundle-ios": "react-native bundle --entry-file index.ios.js --platform ios --dev false --bundle-output ios/ios.jsbundle"
+    "bundle-ios": "react-native bundle --entry-file index.ios.js --platform ios --dev false --bundle-output ios/iosBundle/index.ios.jsbundle --assets-dest ./ios/iosBundle"
   },
   "dependencies": {
     "lodash": "^4.17.4",

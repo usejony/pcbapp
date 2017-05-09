@@ -41,6 +41,8 @@
 		527D03F8D0B442AA8E2FCCBD /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2295D5C080574C74B3FD3D6B /* libRNVectorIcons.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		6702A1578FA7411E8F78BC4A /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FFCA430AB6BA409B81CA0AE5 /* Foundation.ttf */; };
+		7C096CD91EC1916800F26F55 /* iosBundle in Resources */ = {isa = PBXBuildFile; fileRef = 7C096CD81EC1916800F26F55 /* iosBundle */; };
+		7C2B82C41EC084F700291077 /* bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7C2B82C31EC084F700291077 /* bundle */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		A107A0FEC9E34A55AAED19DE /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BDEDB229FEC54586BC9F5C93 /* Entypo.ttf */; };
 		A55C115B5E5143D88C30A036 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1CFAC524D6A4013B44F2503 /* EvilIcons.ttf */; };
@@ -274,6 +276,8 @@
 		2D02E4901E0B4A5D006451C7 /* pcbApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "pcbApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
+		7C096CD81EC1916800F26F55 /* iosBundle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iosBundle; sourceTree = "<group>"; };
+		7C2B82C31EC084F700291077 /* bundle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bundle; sourceTree = "<group>"; };
 		7EAB9C1F9FAB4774A1B8FABC /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		922B60DF4E464FE7BADE9620 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
@@ -437,6 +441,8 @@
 		13B07FAE1A68108700A75B9A /* pcbApp */ = {
 			isa = PBXGroup;
 			children = (
+				7C096CD81EC1916800F26F55 /* iosBundle */,
+				7C2B82C31EC084F700291077 /* bundle */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -627,12 +633,12 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = HXD4PY44ZX;
+						DevelopmentTeam = 96FWK8GR7C;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = HXD4PY44ZX;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = 96FWK8GR7C;
+						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -913,6 +919,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C096CD91EC1916800F26F55 /* iosBundle in Resources */,
+				7C2B82C41EC084F700291077 /* bundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				A107A0FEC9E34A55AAED19DE /* Entypo.ttf in Resources */,
@@ -1043,7 +1051,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = HXD4PY44ZX;
+				DEVELOPMENT_TEAM = 96FWK8GR7C;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1074,7 +1082,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = HXD4PY44ZX;
+				DEVELOPMENT_TEAM = 96FWK8GR7C;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
@@ -1103,7 +1111,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = HXD4PY44ZX;
+				DEVELOPMENT_TEAM = 96FWK8GR7C;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
@@ -1116,9 +1124,11 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.pcbApp;
+				PRODUCT_BUNDLE_IDENTIFIER = native.example.pcbApp;
 				PRODUCT_NAME = pcbApp;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "e42ea6ba-346a-49d9-8279-612e286ca8b8";
+				PROVISIONING_PROFILE_SPECIFIER = DevelopmentPP;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1129,7 +1139,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = HXD4PY44ZX;
+				DEVELOPMENT_TEAM = 96FWK8GR7C;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
@@ -1142,9 +1152,11 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.pcbApp;
+				PRODUCT_BUNDLE_IDENTIFIER = native.example.pcbApp;
 				PRODUCT_NAME = pcbApp;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "e42ea6ba-346a-49d9-8279-612e286ca8b8";
+				PROVISIONING_PROFILE_SPECIFIER = DevelopmentPP;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
