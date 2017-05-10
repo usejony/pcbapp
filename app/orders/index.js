@@ -3,12 +3,11 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
+  Image,
   ScrollView,
   TouchableHighlight,
   ActivityIndicator,
   LayoutAnimation,
-  Modal,
   DeviceEventEmitter
 } from 'react-native';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
@@ -74,7 +73,7 @@ class Order extends Component {
 
   //在组件销毁的时候需要移除的事件
   componentWillUnmount() {
-    DeviceEventEmitter.remove();
+      DeviceEventEmitter.removeAllListeners();
   }
 
 
@@ -82,7 +81,6 @@ class Order extends Component {
     const params = {
       accessToken: this.state.loginInfo.userId,
     };
-    let that = this;
     const url = config.api.base + config.api.orderList;
 
     Request.Get(url, params)
@@ -108,7 +106,7 @@ class Order extends Component {
 
   /**
    * loadListData: 指定在订单首页要显示的订单列表，可通过更多按钮加载更多列表项
-   * @param {需要再加的个数} num 
+   * @param {需要再加的个数} num
    */
   loadListData(num) {
     let itemsData = this.state.orderData.slice(0, num);
@@ -120,7 +118,7 @@ class Order extends Component {
   renderRow() {
     let { itemsData } = this.state;
     let { navigate } = this.props.navigation;
-    let items = itemsData.map((item, index) => {
+    return itemsData.map((item, index) => {
       return (
         <View key={index}>
           <TouchableHighlight underlayColor={"#f9f9f9"} onPress={() => navigate('OrderDetail', { data: item })}>
@@ -137,7 +135,6 @@ class Order extends Component {
         </View>
       );
     });
-    return items;
   }
 
   //查看更多
@@ -201,14 +198,14 @@ class Order extends Component {
     }
   }
   render() {
-    const { navigate } = this.props.navigation;
     if (!this.state.loginInfo) {
       return (
         <View style={styles.container}>
           <Header title="订单" />
           <View style={styles.hintCont}>
+            <Image source={require('../../imgs/fetchFailed.png')} style={styles.statusImg}/>
             <Text style={styles.hintText}>登录可查看订单、等详细信息</Text>
-            <TouchableHighlight underlayColor="#04bf95" style={styles.loginBtn} onPress={this.login.bind(this)}>
+            <TouchableHighlight underlayColor={theme7} style={styles.loginBtn} onPress={this.login.bind(this)}>
               <Text style={styles.loginText}>登录/注册</Text>
             </TouchableHighlight>
           </View>
@@ -282,11 +279,16 @@ const styles = EStyleSheet.create({
     flex: 1,
     backgroundColor: '#eee',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    
   },
   hintText: {
     color: '#666',
     fontSize: 14
+  },
+  statusImg: {
+    width: 150,
+    height: 150
   },
   loginBtn: {
     paddingHorizontal: 15,

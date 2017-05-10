@@ -9,6 +9,7 @@ import NewsComment from './newsComment';
 import Button from '../../common/button';
 import TabBar from './detailNavTabBar';
 import Comment from './comment';
+import LoginModal from '../../common/loginModal';
 
 const NewsDetailTab = TabNavigator({
   NewsDetailScreen: {
@@ -38,6 +39,12 @@ const NewsDetailStack = StackNavigator({
   },
   CommentScreen: {
     screen: Comment
+  },
+  LoginScreen: {
+    screen: LoginModal,
+    navigationOptions:{
+      header: null
+    }
   }
 }, {
       mode: 'modal',

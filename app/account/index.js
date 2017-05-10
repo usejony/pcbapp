@@ -169,7 +169,7 @@ export default class Account extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.tools}>
-            <Item icon="bandcamp" iconColor="#f6af2d" title="余额" info={data ? "￥" + data.useableLimit : null} press={() => alert('3')} />
+            <Item icon="bandcamp" iconColor="#f6af2d" title="余额" info={data ? "￥" + data.useableLimit : null} press={() => null} />
             <Line left={13} />
             <Item icon="server" iconColor="#b245f8" title="积分" info={data ? data.integral : null} press={() => null} />
             <Line left={13} />

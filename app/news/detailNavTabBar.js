@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions, Animated, TouchableOpacity, DeviceEventEmitter } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Animated, TouchableOpacity, DeviceEventEmitter, } from 'react-native';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modalbox';
 
@@ -14,6 +14,20 @@ class DetailTabBar extends Component {
       modalVisible: false
     }
   }
+
+  componentWillMount() {
+    storage.load({ key: 'loginInfo' })
+      .then(data => {
+        this.setState({
+          loginInfo: data
+        });
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
+  }
+
+
   goNewsDetail() {
     Animated.timing(
       this.state.translate,
@@ -24,6 +38,7 @@ class DetailTabBar extends Component {
     this.props.navigation.navigate('NewsCommentScreen');
     console.log('comment.navigation:', this.props.navigation);
   }
+
   goNewsComment() {
     Animated.timing(
       this.state.translate,
@@ -33,9 +48,17 @@ class DetailTabBar extends Component {
     ).start();
     this.props.navigation.navigate('NewsDetailScreen');
   }
+
   goComment() {
-    this.props.navigation.navigate('CommentScreen');
+    storage.load({
+      key: 'loginInfo'
+    }).then(data => {
+      this.props.navigation.navigate('CommentScreen');
+    }).catch(err => {
+      this.props.navigation.navigate('LoginScreen');
+    });
   }
+
   componentDidMount() {
     DeviceEventEmitter.addListener('tabBarBack', () => {
       Animated.timing(
@@ -46,6 +69,7 @@ class DetailTabBar extends Component {
       ).start();
     });
   }
+
   render() {
     return (
       <View style={styles.commentInp}>
