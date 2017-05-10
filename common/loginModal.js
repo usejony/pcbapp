@@ -13,6 +13,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import { StackNavigator } from 'react-navigation';
 import Toast from 'react-native-easy-toast';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 //自定义组件
 import Button from './button';
@@ -51,8 +52,6 @@ class Enter extends Component {
    * loginIn: 点击登录成功后将登录信息保存到本地storage里面
    */
   loginIn() {
-    const { navigate } = this.props.navigation;
-    let that = this;
     let { userName, password } = this.state;
     if(userName === '') {
       this.refs.toast.show('账户名不能为空');
@@ -65,7 +64,7 @@ class Enter extends Component {
     const params = {
       userName,
       password
-    }
+    };
     const url = config.api.base + config.api.account;
     Request.Post(url,params)
       .then(data => {
@@ -125,7 +124,7 @@ class Enter extends Component {
 class Enroll extends Component {
   static navigationOptions = {
     title: '注册',
-  }
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -181,7 +180,7 @@ const LoginNav = StackNavigator({
     // mode: 'card',
     // headerMode: 'screen',
     navigationOptions: {
-      headerStyle: { backgroundColor: "#00d7a7" },
+      headerStyle: { backgroundColor: "#47B2EA" },
       headerTintColor: '#fff',
       headerTitleColor: '#fff',
       headerBackTitle: null,
@@ -202,7 +201,7 @@ const LoginNav = StackNavigator({
 //   }
 // }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -231,7 +230,7 @@ const styles = StyleSheet.create({
   loginBtn: {
     width: width - 40,
     alignSelf: 'center',
-    backgroundColor: '#00d7a7',
+    backgroundColor: '$theme6',
     paddingVertical: 10,
     borderRadius: 5,
     marginTop: 20,
