@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  Image,
   ScrollView,
   TouchableHighlight,
   ActivityIndicator,
@@ -202,6 +203,7 @@ class Order extends Component {
         <View style={styles.container}>
           <Header title="订单" />
           <View style={styles.hintCont}>
+            <Image source={require('../../imgs/fetchFailed.png')} style={styles.statusImg}/>
             <Text style={styles.hintText}>登录可查看订单、等详细信息</Text>
             <TouchableHighlight underlayColor={theme7} style={styles.loginBtn} onPress={this.login.bind(this)}>
               <Text style={styles.loginText}>登录/注册</Text>
@@ -277,11 +279,16 @@ const styles = EStyleSheet.create({
     flex: 1,
     backgroundColor: '#eee',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    
   },
   hintText: {
     color: '#666',
     fontSize: 14
+  },
+  statusImg: {
+    width: 150,
+    height: 150
   },
   loginBtn: {
     paddingHorizontal: 15,

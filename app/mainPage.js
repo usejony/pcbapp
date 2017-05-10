@@ -10,8 +10,8 @@ import { TabNavigator } from "react-navigation";
 import Icon from 'react-native-vector-icons/Ionicons';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 //新闻页
-const NewsScreen = ({ navigation }) => (
-  <News navigation={navigation} />
+const NewsScreen = ({ navigation, screenProps }) => (
+  <News navigation={navigation} screenProps={screenProps}/>
 );
 NewsScreen.navigationOptions = {
   title: '新闻',

@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   DeviceEventEmitter,
+  StatusBar
 } from 'react-native';
 //第三方组件
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -44,7 +45,6 @@ class Enter extends Component {
     // alert()
   }
   componentDidMount() {
-    storage.remove({key: 'loginInfo'});
     console.log("enter:", this.props);
   }
 
@@ -90,6 +90,7 @@ class Enter extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar barStyle='light-content' animated={true}/>
         <View style={styles.loginBox}>
           <View style={[styles.inpBox, { borderBottomWidth: StyleSheet.hairlineWidth }]}>
             <Text style={styles.title}>账号</Text>
@@ -141,6 +142,7 @@ class Enroll extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar barStyle='light-content' animated={true}/>
         <View style={styles.loginBox}>
           <View style={[styles.inpBox, { borderBottomWidth: StyleSheet.hairlineWidth }]}>
             <Text style={styles.title}>账号</Text>
