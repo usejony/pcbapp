@@ -5,10 +5,8 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-/**
- * onPress 是必须要的属性
- * 通过titleStyle设置文本样式
- */
+
+import Font from '../common/normSize';
 export default class Button extends Component {
   static propTypes = {
     onPress: React.PropTypes.func.isRequired,
@@ -19,11 +17,8 @@ export default class Button extends Component {
   render() {
     return (
       <TouchableOpacity activeOpacity={0.9} onPress={this.props.onPress} style={this.props.style}>
-        <Text style={{color: this.props.tintColor ? this.props.tintColor : theme6,fontSize: this.props.size ? this.props.size : 14}}>{this.props.title}</Text>
+        <Text style={{color: this.props.tintColor ? this.props.tintColor : theme6,fontSize: this.props.size ? this.props.size : Font(14)}}>{this.props.title}</Text>
       </TouchableOpacity>
     );
   }
 }
-
-const styles = StyleSheet.create({
-});

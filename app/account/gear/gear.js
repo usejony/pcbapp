@@ -14,10 +14,15 @@ import {
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 import { StackNavigator } from 'react-navigation';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import LinearGradient from 'react-native-linear-gradient';
 
 import Info from './info';
 import Line from '../../../common/line';
 import Safety from './safety';
+import Font from '../../../common/normSize';
+import Nickname from './nickName';
+import Gender from './gender';
+import Address from './address';
 
 const { width } = Dimensions.get('window');
 
@@ -37,7 +42,7 @@ const Gear = ({ navigation, screenProps }) => {
           }}>
             <View style={styles.item}>
               <Text style={styles.title}>个人信息</Text>
-              <FontIcon name="angle-right" size={18} color="#d5d5d5" />
+              <FontIcon name="angle-right" size={Font(18)} color="#d5d5d5" />
             </View>
           </TouchableHighlight>
           <Line left={12} />
@@ -46,12 +51,17 @@ const Gear = ({ navigation, screenProps }) => {
           }}>
             <View style={styles.item}>
               <Text style={styles.title}>账户与安全</Text>
-              <FontIcon name="angle-right" size={18} color="#d5d5d5" />
+              <FontIcon name="angle-right" size={Font(18)} color="#d5d5d5" />
             </View>
           </TouchableHighlight>
         </View>
-        <TouchableHighlight underlayColor="#f9f9f9" onPress={this.logoutHandle.bind(this)} style={styles.logoutBtn}>
+        {/*<TouchableHighlight underlayColor="#f9f9f9" onPress={this.logoutHandle.bind(this)} style={styles.logoutBtn}>
           <Text style={styles.logoutText}>退出登录</Text>
+        </TouchableHighlight>*/}
+        <TouchableHighlight onPress={this.logoutHandle.bind(this)} style={styles.logoutBtn}>
+          <LinearGradient colors={['#cd8282', '#cd5050', '#c93333']} style={styles.touchBox} >
+            <Text style={styles.logoutText}>退出登录</Text>
+          </LinearGradient>
         </TouchableHighlight>
       </ScrollView>
     </View>
@@ -60,7 +70,7 @@ const Gear = ({ navigation, screenProps }) => {
 Gear.navigationOptions = ({ navigation, screenProps }) => ({
   title: '设置',
   headerLeft: (
-    <FontIcon name="angle-left" size={28} color={theme6} style={{ paddingHorizontal: 15 }} onPress={() => {
+    <FontIcon name="angle-left" size={Font(25)} color={theme6} style={{ paddingHorizontal: Font(15) }} onPress={() => {
       navigation.goBack(null);
     }} />
   )
@@ -76,6 +86,15 @@ const GearStack = StackNavigator({
   },
   SafetyScreen: {
     screen: Safety
+  },
+  NicknameScreen: {
+    screen: Nickname
+  },
+  GenderScreen: {
+    screen: Gender
+  },
+  AddressScreen: {
+    screen: Address,
   }
 }, {
     initialRouteName: 'GearScreen',
@@ -84,7 +103,7 @@ const GearStack = StackNavigator({
       headerBackTitle: null,
       headerStyle: { backgroundColor: '#fff' },
       headerTintColor: '#00d7a7',
-      headerTitleStyle: { color: '#333', fontSize: 16 },
+      headerTitleStyle: { color: '#333', fontSize: Font(16) },
       headerLeft: (
         <FontIcon name="angle-left" size={28} color={theme6} style={{ paddingHorizontal: 15 }} onPress={() => {
           navigation.goBack(null)
@@ -117,23 +136,28 @@ const styles = EStyleSheet.create({
     justifyContent: 'space-between'
   },
   title: {
-    fontSize: 13,
+    fontSize: Font(13),
     color: '#333'
   },
   logoutBtn: {
-    width: width - 40,
+    width: width - 100,
     alignSelf: 'center',
     height: 35,
+    marginTop: 30,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#ddd',
+    borderRadius: 5,
+    overflow: 'hidden'
+  },
+  touchBox: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-    marginTop: 20,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#ddd',
-    borderRadius: 5
   },
   logoutText: {
-    color: '#333'
+    color: '#fff',
+    backgroundColor: 'transparent'
   }
 });
 

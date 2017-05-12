@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, } from 'react-native';
 
+import Font from '../../../common/normSize';
 // create a component
 class WaitOk extends Component {
   render() {
@@ -30,11 +31,11 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   largeText: {
-    fontSize: 12,
+    fontSize: Font(12),
     color: '#222',
   },
   smallText: {
-    fontSize: 10,
+    fontSize: Font(10),
     color: '#888',
     marginTop: 8
   },

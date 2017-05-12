@@ -8,6 +8,7 @@ import Ok from './waitOk';
 import Pay from './waitPay';
 import Receive from './waitReceive';
 import Sale from './afterSale'; 
+import Font from '../../../common/normSize';
 
 const tabNav = TabNavigator({
   TotalScreen: {
@@ -52,7 +53,10 @@ const tabNav = TabNavigator({
     scrollEnabled: true,
     tabStyle: {width: 80,height: 35,paddingHorizontal:0},
     indicatorStyle: {backgroundColor: "#47B2EA"},
-    style: { backgroundColor: '#f6f6f6'}
+    style: { backgroundColor: '#f6f6f6'},
+    labelStyle: {
+      fontSize: Font(12)
+    }
   }
 });
 

@@ -13,6 +13,7 @@ import FontIcon from 'react-native-vector-icons/FontAwesome';
 
 import Footer from '../../common/newsFooter';
 import BottomTabBar from './detailNavTabBar'
+import Font from '../../common/normSize';
 
 const { width } = Dimensions.get('window');
 export default class NewsDetails extends Component {
@@ -63,14 +64,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10
   },
   title: {
-    fontSize: 18,
+    fontSize: Font(18),
     color: '#000',
     fontWeight: 'bold',
     lineHeight: 25
   },
   date: {
     color: '#666',
-    fontSize: 12,
+    fontSize: Font(12),
     marginTop: 10
   },
   img: {
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   description: {
-    fontSize: 14,
+    fontSize: Font(14),
     color: '#333',
     lineHeight: 20,
     marginTop: 10,

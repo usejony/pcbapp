@@ -7,6 +7,8 @@ import {
   Image,
 } from 'react-native';
 
+import Font from './normSize'
+
 const { width } = Dimensions.get('window');
 const Footer = () => (
   <View style={styles.container}>
@@ -22,10 +24,10 @@ const styles = StyleSheet.create({
     paddingBottom: 30
   },
   title: {
-    fontSize: 15,
-    color: '#222',
+    fontSize: Font(14),
+    color: '#666',
     paddingVertical:15,
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
     lineHeight: 20,
   },
   img: {

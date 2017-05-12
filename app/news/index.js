@@ -13,11 +13,12 @@ import {
   RefreshControl,
   Alert,
   Image,
-  LayoutAnimation
+  LayoutAnimation,
 } from 'react-native';
 import config from '../../common/config';
 import Request from '../../common/request';
 import Header from '../../common/header';
+import Font from '../../common/normSize';
 
 import { StackNavigator } from 'react-navigation';
 import Toast from 'react-native-easy-toast';
@@ -231,13 +232,14 @@ const styles = StyleSheet.create({
   },
   title: {
     flex: 1,
-    color: '#000',
-    fontSize: 14,
-    lineHeight: 20
+    color: '#222',
+    fontSize: Font(13),
+    lineHeight: 20,
+    marginRight: 5
   },
   footer: {
     color: '#aaa',
-    fontSize: 10,
+    fontSize: Font(10),
   },
   extra: {
     flexDirection: 'row',
@@ -253,6 +255,6 @@ const styles = StyleSheet.create({
   indicatorText: {
     marginLeft: 10,
     color: '#666',
-    fontSize: 12
+    fontSize: Font(12)
   }
 });

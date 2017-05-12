@@ -3,6 +3,8 @@ import React, { Component, PropTypes } from 'react';
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
 
 import FontIcon from 'react-native-vector-icons/FontAwesome';
+
+import Font from '../../common/normSize';
 // create a component
 class HandleItem extends Component {
   static PropTypes = {
@@ -15,7 +17,7 @@ class HandleItem extends Component {
       <View style={styles.item}>
         <View style={styles.leftCont}>
           <View style={styles.iconBox}>
-          <FontIcon name={this.props.icon} size={20} color={this.props.iconColor} />
+          <FontIcon name={this.props.icon} size={Font(20)} color={this.props.iconColor} />
           </View>
           <Text style={styles.title}>{this.props.title}</Text>
         </View>
@@ -25,7 +27,7 @@ class HandleItem extends Component {
               ? <Text style={styles.rightText}>{this.props.info}</Text>
               : null
           }
-          <FontIcon name="angle-right" size={15} color="#aaa" />
+          <FontIcon name="angle-right" size={Font(15)} color="#aaa" />
         </View>
       </View>
       </TouchableHighlight>
@@ -52,7 +54,7 @@ const styles = StyleSheet.create({
     
   },
   title: {
-    fontSize: 13,
+    fontSize: Font(13),
     color: '#666',
     marginLeft: 15
   },
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   rightText: {
-    fontSize: 12,
+    fontSize: Font(12),
     color: '#888',
     marginRight: 10,
   }

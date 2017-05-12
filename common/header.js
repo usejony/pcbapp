@@ -2,6 +2,8 @@
 import React, { Component, PropTypes } from 'react';
 import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+
+import Font from './normSize';
 const { width } = Dimensions.get('window');
 // create a component
 class Header extends Component {
@@ -15,14 +17,14 @@ class Header extends Component {
         }
         {
           this.props.leftIcon
-            ? <TouchableOpacity activeOpacity={1} onPress={this.props.leftHandle} style={styles.leftBtn}>
+            ? <TouchableOpacity onPress={this.props.leftHandle} style={styles.leftBtn}>
               {this.props.leftIcon}
             </TouchableOpacity>
             : null
         }
         {
           this.props.rightIcon
-            ? <TouchableOpacity activeOpacity={1} onPress={this.props.rightHandle} style={styles.rightBtn}>
+            ? <TouchableOpacity onPress={this.props.rightHandle} style={styles.rightBtn}>
               {this.props.rightIcon}
             </TouchableOpacity>
             : null
@@ -36,30 +38,30 @@ class Header extends Component {
 const styles = EStyleSheet.create({
   header: {
     backgroundColor: '$theme6',
-    height: 64,
+    height: 56,
     justifyContent: 'flex-end',
-    paddingBottom: 15,
+    paddingBottom: 10,
     alignItems: 'center'
   },
   title: {
-    fontSize: 16,
+    fontSize: Font(16),
   },
   leftBtn: {
-    height: 48,
-    width: 48,
+    height: 40,
+    width: 40,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: 18,
+    top: 16,
     left: 0
   },
   rightBtn: {
-    height: 48,
-    width: 48,
+    height: 40,
+    width: 40,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: 18,
+    top: 16,
     right: 0
   }
 });

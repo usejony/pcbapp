@@ -6,6 +6,7 @@ import {
   Text,
 } from 'react-native';
 
+import Font from './normSize';
 export default class Item extends Component {
   constructor(props) {
     super(props);
@@ -38,12 +39,12 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#333',
-    fontSize: 14,
+    fontSize: Font(14),
     marginRight: 10,
   },
   content: {
     color: '#555',
-    fontSize: 13,
+    fontSize: Font(13),
     flex: 1,
     textAlign: 'right'
   }

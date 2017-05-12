@@ -13,6 +13,7 @@ import Button from './common/button';
 import GearNav from './app/account/gear/gear';
 import OrderStatus from './app/orders/orderstatus/orderStatus';
 import Header from './common/header';
+import Font from './common/normSize';
 
 const Nav = StackNavigator({
   MainPageScreen: {
@@ -27,7 +28,7 @@ const Nav = StackNavigator({
   OrderStatusScreen: {
     screen: OrderStatus,
     navigationOptions: ({ navigation }) => ({
-      header: (<Header title="订单状态" leftIcon={<FontIcon name="angle-left" size={25} color="#fff"/>} leftHandle={() => {
+      header: (<Header title="订单状态" leftIcon={<FontIcon name="angle-left" size={Font(25)} color="#fff"/>} leftHandle={() => {
         navigation.goBack();
       }}/>),
     })
@@ -38,7 +39,7 @@ const Nav = StackNavigator({
 }, {
     headerMode: 'screen',
     navigationOptions: {
-      headerTitleStyle: { fontSize: 17 },
+      headerTitleStyle: { fontSize: Font(17) },
       headerTintColor: '#fff',
       headerStyle: { backgroundColor: '#00d7a7', shadowOpacity: 0 },
       header: null,

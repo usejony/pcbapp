@@ -5,6 +5,7 @@ import { View, Text, StyleSheet, StatusBar, TouchableHighlight } from 'react-nat
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 
 import Line from '../../../common/line';
+import Font from '../../../common/normSize';
 class Safety extends Component {
   static navigationOptions = ({navigation}) => ({
     title: '账户与安全'
@@ -30,7 +31,7 @@ class Safety extends Component {
                     <Text style={styles.title}>换绑手机</Text>
                     <Text style={styles.text}>{this.showPhone('15971057587')}</Text>
                   </View>
-                  <FontIcon name="angle-right" size={18} color="#d5d5d5" />
+                  <FontIcon name="angle-right" size={Font(18)} color="#d5d5d5" />
                 </View>
               </TouchableHighlight>
               <Line left={12} />
@@ -40,7 +41,7 @@ class Safety extends Component {
                     <Text style={styles.title}>登录密码</Text>
                     <Text style={styles.text}>修改</Text>
                   </View>
-                  <FontIcon name="angle-right" size={18} color="#d5d5d5" />
+                  <FontIcon name="angle-right" size={Font(18)} color="#d5d5d5" />
                 </View>
               </TouchableHighlight>
             </View>
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   title: {
-    fontSize: 13,
+    fontSize: Font(13),
     color: '#333'
   },
   cont: {
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
     marginRight: 8
   },
   text: {
-    fontSize: 12,
+    fontSize: Font(12),
     color: '#888'
   }
 });

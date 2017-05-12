@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Request from '../../common/request';
 import config from '../../common/config';
+import Font from '../../common/normSize';
 
 let cacheResult = {
   page: 0,
@@ -163,17 +164,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   nickName: {
-    fontSize: 13,
+    fontSize: Font(13),
     color: '#49aae3'
   },
   commentInfo: {
-    fontSize: 14,
+    fontSize: Font(14),
     color: '#333',
     marginTop: 8,
     lineHeight: 18
   },
   commentDate: {
-    fontSize: 12,
+    fontSize: Font(12),
     color: '#888',
     textAlign: 'right',
     marginTop: 8
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   indicatorText: {
-    fontSize: 12,
+    fontSize: Font(12),
     color: '#888',
     marginLeft: 8
   },

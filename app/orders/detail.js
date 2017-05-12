@@ -9,6 +9,7 @@ import {
 import Button from '../../common/button';
 import Item from '../../common/item';
 import Header from '../../common/header';
+import Font from '../../common/normSize';
 
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 export default class OrderDetail extends Component {
@@ -23,7 +24,7 @@ export default class OrderDetail extends Component {
     const { navigation } = this.props;
     return (
       <View style={styles.container}>
-        <Header title="订单详情" leftIcon={<FontIcon name="angle-left" size={28} color="#fff"/>} leftHandle={() => navigation.goBack() }/>
+        <Header title="订单详情" leftIcon={<FontIcon name="angle-left" size={Font(25)} color="#fff"/>} leftHandle={() => navigation.goBack() }/>
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollView}>
           <Item title={"拼客(甲方)："}>{data.partyA}</Item>
           <Item title={"供方(乙方)："}>{data.partyB}</Item>
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerText: {
-    fontSize: 15,
+    fontSize: Font(15),
     color: '#111'
   },
   noteBox: {
@@ -126,12 +127,12 @@ const styles = StyleSheet.create({
     paddingVertical: 10
   },
   noteTitle: {
-    fontSize: 14,
+    fontSize: Font(14),
     color: '#333',
     marginRight: 10,
   },
   notes: {
-    fontSize: 13,
+    fontSize: Font(13),
     color: '#555',
     flex: 1,
     marginTop: 0,
@@ -143,11 +144,11 @@ const styles = StyleSheet.create({
   },
   footHead: {
     color: '#222',
-    fontSize: 14,
+    fontSize: Font(14),
     fontWeight: 'bold',
   },
   footText: {
-    fontSize: 12,
+    fontSize: Font(12),
     color: '#666',
     marginTop:10,
     lineHeight: 16

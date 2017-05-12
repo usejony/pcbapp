@@ -8,7 +8,8 @@ import {
   TextInput,
   TouchableOpacity,
   DeviceEventEmitter,
-  StatusBar
+  StatusBar,
+  Alert,
 } from 'react-native';
 //第三方组件
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -20,16 +21,17 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import Button from './button';
 import Request from './request';
 import config from './config';
+import Font from './normSize';
 
 const { width } = Dimensions.get('window');
 class Enter extends Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: "登录",
     headerRight: (
-      <Button title="注册" onPress={() => navigation.navigate('EnrollScreen', { user: '独宠' })} style={{ marginRight: 15 }} tintColor="#FFF" size={15} />
+      <Button title="注册" onPress={() => navigation.navigate('EnrollScreen', { user: '独宠' })} style={{ marginRight: 15 }} tintColor="#FFF" size={Font(15)} />
     ),
     headerLeft: (
-      <Icon name={"ios-close"} size={35} color={'#fff'} style={{ marginLeft: 15 }} onPress={
+      <Icon name={"ios-close"} size={Font(35)} color={'#fff'} style={{ marginLeft: 15 }} onPress={
         () => navigation.goBack(null)
       } />
     )
@@ -53,12 +55,8 @@ class Enter extends Component {
    */
   loginIn() {
     let { userName, password } = this.state;
-    if(userName === '') {
-      this.refs.toast.show('账户名不能为空');
-      return;
-    }
-    if(password === '') {
-      this.refs.toast.show('密码不能为空');
+    if(userName === '' || password === '') {
+      Alert.alert('账户名或密码不能为空');
       return;
     }
     const params = {
@@ -72,7 +70,7 @@ class Enter extends Component {
           //当成功获取到用户信息的时候，将用户的信息保存到本地storage;
           storage.save({
             key: 'loginInfo',
-            rawData: data
+            data: data
           });
           console.log('成功获取到的数据：',data);
           DeviceEventEmitter.emit('logined');
@@ -223,11 +221,11 @@ const styles = EStyleSheet.create({
   input: {
     flex: 1,
     marginLeft: 15,
-    fontSize: 13
+    fontSize: Font(13)
   },
   title: {
     color: '#555',
-    fontSize: 14,
+    fontSize: Font(14),
   },
   loginBtn: {
     width: width - 40,
@@ -238,7 +236,7 @@ const styles = EStyleSheet.create({
     marginTop: 20,
   },
   loginText: {
-    fontSize: 14,
+    fontSize: Font(14),
     color: '#fff',
     textAlign: 'center'
   },
@@ -247,7 +245,7 @@ const styles = EStyleSheet.create({
   },
   errText: {
     color: '#666',
-    fontSize: 12,
+    fontSize: Font(12),
     textAlign: 'center'
   }
 });

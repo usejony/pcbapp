@@ -14,6 +14,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import config from '../../../common/config';
 import Request from '../../../common/request';
 import Line from '../../../common/line';
+import Font from '../../../common/normSize';
 
 
 const { width, } = Dimensions.get('window');
@@ -169,14 +170,14 @@ const styles = EStyleSheet.create({
     alignItems: 'center'
   },
   title: {
-    fontSize: 14,
+    fontSize: Font(14),
   },
   status: {
-    fontSize: 12,
+    fontSize: Font(12),
     color: '$theme6'
   },
   text: {
-    fontSize: 12,
+    fontSize: Font(12),
     color: '#999',
     marginTop: 5
   },
@@ -187,11 +188,11 @@ const styles = EStyleSheet.create({
     alignItems: 'center'
   },
   largeText: {
-    fontSize: 12,
+    fontSize: Font(12),
     color: '#222',
   },
   smallText: {
-    fontSize: 10,
+    fontSize: Font(10),
     color: '#888',
     marginTop: 8
   },

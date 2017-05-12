@@ -2,7 +2,9 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions, Animated, TouchableOpacity, DeviceEventEmitter, } from 'react-native';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
-import Modal from 'react-native-modalbox';
+
+import Button from '../../common/button';
+import Font from '../../common/normSize';
 
 const { width } = Dimensions.get('window');
 // create a component
@@ -59,22 +61,29 @@ class DetailTabBar extends Component {
     });
   }
 
-  componentDidMount() {
-    DeviceEventEmitter.addListener('tabBarBack', () => {
-      Animated.timing(
+  /**
+   * 返回
+   */
+  goback() {
+    Animated.timing(
         this.state.translate,
         {
           toValue: 0,
         }
       ).start();
-    });
+    this.props.navigation.goBack(null);
   }
+
 
   render() {
     return (
       <View style={styles.commentInp}>
+        
+        <TouchableOpacity activeOpacity={0.9} style={styles.back} onPress={this.goback.bind(this)}>
+          <FontIcon name="angle-left" size={Font(28)} color={theme6}/>
+        </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.9} style={styles.inp} onPress={this.goComment.bind(this)}>
-          <FontIcon name="pencil" size={15} />
+          <FontIcon name="pencil" size={Font(15)} />
           <Text style={styles.commentText}>评论一下</Text>
         </TouchableOpacity>
         <View style={styles.tabBar}>
@@ -95,11 +104,11 @@ class DetailTabBar extends Component {
               })
             }]}>
             <TouchableOpacity activeOpacity={0.9} style={styles.commentIcon} onPress={this.goNewsDetail.bind(this)}>
-              <FontIcon name="commenting-o" size={18} color={theme6} />
+              <FontIcon name="commenting-o" size={Font(18)} color={theme6} />
               <Text style={styles.commentText}>202</Text>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.9} style={styles.commentIcon} onPress={this.goNewsComment.bind(this)}>
-              <FontIcon name="file-text-o" size={18} color={theme6} />
+              <FontIcon name="file-text-o" size={Font(18)} color={theme6} />
               <Text style={styles.commentText}>正文</Text>
             </TouchableOpacity>
           </Animated.View>
@@ -111,13 +120,15 @@ class DetailTabBar extends Component {
 
 // define your styles
 const styles = StyleSheet.create({
-  commentInp: {
-    position: 'absolute',
-    left: 0,
-    bottom: 0,
-    width,
+  back: {
+    width: 40,
     height: 40,
-    paddingHorizontal: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  commentInp: {
+    height: 40,
+    paddingHorizontal: 10,
     backgroundColor: '#fff',
     flexDirection: 'row',
     alignItems: 'center',
@@ -126,10 +137,13 @@ const styles = StyleSheet.create({
   },
   inp: {
     flex: 1,
-    height: 40,
+    height: 25,
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 10
+    marginHorizontal: 6,
+    paddingHorizontal: 8,
+    backgroundColor: '#rgba(0,0,0,.1)',
+    borderRadius: 12
   },
   commentIcon: {
     height: 40,
@@ -140,7 +154,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   commentText: {
-    fontSize: 12,
+    fontSize: Font(12),
     color: '#666',
     marginLeft: 5
   },

@@ -3,6 +3,8 @@ import React, { Component, PropTypes } from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
 import FontIcon from 'react-native-vector-icons/FontAwesome';
+
+import Font from '../../common/normSize';
 // create a component
 class Status extends Component {
   static PropTypes = {
@@ -12,7 +14,7 @@ class Status extends Component {
     return (
       <TouchableWithoutFeedback onPress={this.props.press}>
         <View style={styles.container}>
-          <FontIcon name={this.props.icon} color={this.props.iconColor} size={16} />
+          <FontIcon name={this.props.icon} color={this.props.iconColor} size={Font(16)} />
           <Text style={styles.title}>{this.props.title}</Text>
         </View>
       </TouchableWithoutFeedback>
@@ -26,7 +28,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 11,
+    fontSize: Font(11),
     color: '#666',
     marginTop: 8
   }

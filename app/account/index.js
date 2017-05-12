@@ -20,6 +20,7 @@ import config from '../../common/config';
 import Button from '../../common/button';
 import Line from '../../common/line';
 import Item from './handleItem';
+import Font from '../../common/normSize';
 const { width } = Dimensions.get('window');
 export default class Account extends Component {
   constructor(props) {
@@ -122,7 +123,7 @@ export default class Account extends Component {
           }
         ]} />
         <TouchableOpacity onPress={this.gearTouch.bind(this)} style={styles.gearBtn}>
-          <FontIcon name="gear" size={20} color="#fff" />
+          <FontIcon name="gear" size={Font(20)} color="#fff" />
         </TouchableOpacity>
       </Animated.View>
     );
@@ -155,7 +156,7 @@ export default class Account extends Component {
                       <Text style={styles.nickName}>{data.nickName}</Text>
                       <View style={styles.headInfo}>
                         <Text style={styles.extraText}>个人信息</Text>
-                        <FontIcon name="angle-right" size={12} color={'#fff'} />
+                        <FontIcon name="angle-right" size={Font(12)} color={'#fff'} />
                       </View>
                     </View>
                   </View>
@@ -209,7 +210,7 @@ const styles = EStyleSheet.create({
     marginRight: 20,
   },
   nickName: {
-    fontSize: 14,
+    fontSize: Font(14),
     color: '#fff',
     fontWeight: 'bold',
   },
@@ -219,7 +220,7 @@ const styles = EStyleSheet.create({
     marginTop: 5
   },
   extraText: {
-    fontSize: 12,
+    fontSize: Font(12),
     color: '#fff',
     marginRight: 5
   },

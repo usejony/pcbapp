@@ -19,6 +19,7 @@ import Line from '../../common/line';
 import Status from './status';
 import Request from '../../common/request';
 import config from '../../common/config';
+import Font from '../../common/normSize';
 
 // create a component
 class Order extends Component {
@@ -222,7 +223,7 @@ class Order extends Component {
                 <Text style={styles.leftText}>我的订单</Text>
                 <View style={styles.linkRight}>
                   <Text style={styles.rightText}>全部订单</Text>
-                  <FontIcon name="angle-right" size={16} color="#d5d5d5" />
+                  <FontIcon name="angle-right" size={Font(16)} color="#d5d5d5" />
                 </View>
               </View>
             </TouchableHighlight>
@@ -248,13 +249,13 @@ class Order extends Component {
                         ? <TouchableHighlight underlayColor="#efefef" onPress={this.fetchMore.bind(this)}>
                           <View style={styles.moreBox}>
                             <Text style={styles.more}>更多</Text>
-                            <FontIcon name="angle-down" size={13} color="#00d7a7" />
+                            <FontIcon name="angle-down" size={Font(13)} color="#00d7a7" />
                           </View>
                         </TouchableHighlight>
                         : <TouchableHighlight underlayColor="#efefef" onPress={this.openOrderStatus.bind(this,'total')}>
                           <View style={styles.moreBox}>
                             <Text style={styles.more}>查看全部</Text>
-                            <FontIcon name="angle-right" size={13} color="#00d7a7" />
+                            <FontIcon name="angle-right" size={Font(13)} color="#00d7a7" />
                           </View>
                         </TouchableHighlight>
                     }
@@ -284,7 +285,7 @@ const styles = EStyleSheet.create({
   },
   hintText: {
     color: '#666',
-    fontSize: 14
+    fontSize: Font(14)
   },
   statusImg: {
     width: 150,
@@ -297,7 +298,7 @@ const styles = EStyleSheet.create({
     marginTop: 15
   },
   loginText: {
-    fontSize: 14,
+    fontSize: Font(14),
     color: '#fff',
   },
   head: {
@@ -310,7 +311,7 @@ const styles = EStyleSheet.create({
     alignItems: 'center',
   },
   leftText: {
-    fontSize: 13,
+    fontSize: Font(13),
     fontWeight: 'bold',
     color: '#222',
   },
@@ -321,7 +322,7 @@ const styles = EStyleSheet.create({
     alignItems: 'center'
   },
   rightText: {
-    fontSize: 11,
+    fontSize: Font(11),
     color: '#888',
     marginRight: 3
   },
@@ -336,7 +337,7 @@ const styles = EStyleSheet.create({
     paddingVertical: 5,
   },
   latelyText: {
-    fontSize: 11,
+    fontSize: Font(11),
     color: '#888',
   },
   indicatorBox: {
@@ -352,7 +353,7 @@ const styles = EStyleSheet.create({
     alignItems: 'center',
   },
   more: {
-    fontSize: 13,
+    fontSize: Font(13),
     color: '$theme6',
     marginRight: 3
   },
@@ -366,14 +367,14 @@ const styles = EStyleSheet.create({
     alignItems: 'center'
   },
   title: {
-    fontSize: 14,
+    fontSize: Font(14),
   },
   status: {
-    fontSize: 12,
+    fontSize: Font(12),
     color: '$theme6'
   },
   text: {
-    fontSize: 12,
+    fontSize: Font(12),
     color: '#999',
     marginTop: 5
   },

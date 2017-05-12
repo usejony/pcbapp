@@ -4,7 +4,7 @@ import { View, Text, StatusBar, TextInput, ScrollView, Alert } from 'react-nativ
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 import Button from '../../common/button';
-
+import Font from '../../common/normSize';
 class Comment extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: '评论',
@@ -52,7 +52,7 @@ class Comment extends Component {
               });
             }}
           />
-          <Button title={this.state.submiting ? "评论提交中..." : "提交评论"} size={14} tintColor="#fff" onPress={this.submit.bind(this)} style={styles.submit} />
+          <Button title={this.state.submiting ? "评论提交中..." : "提交评论"} size={Font(14)} tintColor="#fff" onPress={this.submit.bind(this)} style={styles.submit} />
         </ScrollView>
       </View>
     );
@@ -67,7 +67,7 @@ const styles = EStyleSheet.create({
   },
   textInp: {
     padding: 10,
-    fontSize: 13,
+    fontSize: Font(13),
     color: '#444',
     borderColor: '#ddd',
     borderWidth: 1,

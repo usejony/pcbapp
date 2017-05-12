@@ -10,9 +10,10 @@ import {
   Animated,
   TouchableOpacity
 } from 'react-native';
-import Button from '../../common/button';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 
+import Button from '../../common/button';
+import Font from '../../common/normSize';
 const { width, height } = Dimensions.get('window');
 
 export default class Search extends Component {
@@ -39,10 +40,10 @@ export default class Search extends Component {
     return (
       <Animated.View style={[styles.head,{transform: [{translateY: this.state.scrollY}]}]}>
         <Animated.View style={[styles.header, { opacity: opacity }]}>
-          <Text style={{ fontSize: 16, color: '#fff' }}>水电费</Text>
+          <Text style={{ fontSize: Font(16), color: '#fff' }}>水电费</Text>
         </Animated.View>
         <TouchableOpacity style={styles.icon} activeOpacity={1} onPress={() => null}>
-          <FontIcon name="gear" size={28} color="#fff"/>
+          <FontIcon name="gear" size={Font(28)} color="#fff"/>
         </TouchableOpacity>
       </Animated.View>
     );
