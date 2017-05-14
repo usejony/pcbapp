@@ -38,7 +38,7 @@ class Header extends Component {
 const styles = EStyleSheet.create({
   header: {
     backgroundColor: '$theme6',
-    height: 56,
+    height: 64,
     justifyContent: 'flex-end',
     paddingBottom: 10,
     alignItems: 'center'
@@ -52,7 +52,7 @@ const styles = EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: 16,
+    top: 24,
     left: 0
   },
   rightBtn: {
@@ -61,7 +61,7 @@ const styles = EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: 16,
+    top: 24,
     right: 0
   }
 });

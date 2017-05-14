@@ -16,7 +16,7 @@ import Font from '../../../common/normSize';
 const options = {
   pickerConfirmBtnText: '完成',
   pickerCancelBtnText: '取消',
-  pickerTitleText: '选择日期',
+  pickerTitleText: '选择性别',
   pickerConfirmBtnColor: [71, 178, 250, 1],
   pickerCancelBtnColor: [71, 185, 250, 1],
   pickerTitleColor: [0, 0, 53, 1],

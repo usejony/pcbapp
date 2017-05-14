@@ -121,14 +121,14 @@ class DetailTabBar extends Component {
 // define your styles
 const styles = StyleSheet.create({
   back: {
-    width: 40,
-    height: 40,
+    width: 46,
+    height: 46,
     justifyContent: 'center',
     alignItems: 'center',
   },
   commentInp: {
-    height: 40,
-    paddingHorizontal: 10,
+    height: 46,
+    paddingHorizontal: 5,
     backgroundColor: '#fff',
     flexDirection: 'row',
     alignItems: 'center',
@@ -137,11 +137,11 @@ const styles = StyleSheet.create({
   },
   inp: {
     flex: 1,
-    height: 25,
+    height: 30,
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 6,
-    paddingHorizontal: 8,
+    marginHorizontal: 3,
+    paddingHorizontal: 15,
     backgroundColor: '#rgba(0,0,0,.1)',
     borderRadius: 12
   },

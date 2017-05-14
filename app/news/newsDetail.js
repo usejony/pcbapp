@@ -55,7 +55,6 @@ export default class NewsDetails extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom: 40,
     backgroundColor: '#f6f6f6',
   },
   scrollView: {
