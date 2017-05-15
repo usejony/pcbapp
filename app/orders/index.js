@@ -21,6 +21,7 @@ import Status from './status';
 import Request from '../../common/request';
 import config from '../../common/config';
 import Font from '../../common/normSize';
+import Button from '../../common/button';
 
 // create a component
 class Order extends Component {
@@ -31,6 +32,7 @@ class Order extends Component {
       itemsData: [],
       pressMore: false,
       modalVisible: false,
+      selectedIndex: 0
     }
   }
 
@@ -126,11 +128,17 @@ class Order extends Component {
           <TouchableHighlight underlayColor={"#f9f9f9"} onPress={() => navigate('OrderDetail', { data: item })}>
             <View style={styles.list}>
               <View style={styles.itemHead}>
-                <Text style={styles.title}>{item.orderNumber}</Text>
+                <View style={styles.headLeft}>
+                  <Text style={styles.title}>{item.orderNumber}</Text>
+                  <FontIcon name="angle-right" size={18} color="#cecece" style={{marginLeft: 15}}/>
+                </View>
                 <Text style={styles.status}>{item.status}</Text>
               </View>
               <Text style={[styles.text]}>下单日期：{item.date}</Text>
               <Text style={[styles.text]}>总价：￥{item.totalCharge}</Text>
+              <View>
+                <Button title={'新建返单'} onPress={() => null}/>
+              </View>
             </View>
           </TouchableHighlight>
           <Line />
@@ -199,6 +207,110 @@ class Order extends Component {
         navigation.dispatch(navAction);
     }
   }
+
+  /**
+   * PCB页面
+   */
+  renderPCB() {
+    return (
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <TouchableHighlight underlayColor={'#e9e9e9'} onPress={() => null}>
+          <View style={styles.inquireBox}>
+            <FontIcon name="rocket" size={25} color={theme6}/>
+            <Text style={styles.inquire}>询价！给出你心中完美的价格</Text>
+          </View>
+        </TouchableHighlight>
+        <Line/>
+        <View style={styles.head}>
+          <TouchableHighlight underlayColor="#e9e9e9" onPress={this.openOrderStatus.bind(this, 'total')}>
+            <View style={styles.orderLink}>
+              <Text style={styles.leftText}>我的订单</Text>
+              <View style={styles.linkRight}>
+                <Text style={styles.rightText}>全部订单</Text>
+                <FontIcon name="angle-right" size={Font(16)} color="#d5d5d5" />
+              </View>
+            </View>
+          </TouchableHighlight>
+          <Line />
+        </View>
+        <View>
+          <View style={styles.latelyList}>
+            {
+              this.state.orderData
+                ? <View>
+                  {this.renderRow()}
+                  {
+                    !this.state.pressMore
+                      ? <TouchableHighlight underlayColor="#efefef" onPress={this.fetchMore.bind(this)}>
+                        <View style={styles.moreBox}>
+                          <Text style={styles.more}>更多</Text>
+                          <FontIcon name="angle-down" size={Font(13)} color={'#666'} />
+                        </View>
+                      </TouchableHighlight>
+                      : <TouchableHighlight underlayColor="#efefef" onPress={this.openOrderStatus.bind(this, 'total')}>
+                        <View style={styles.moreBox}>
+                          <Text style={styles.more}>查看全部</Text>
+                          <FontIcon name="angle-right" size={Font(13)} color={'#666'} />
+                        </View>
+                      </TouchableHighlight>
+                  }
+                </View>
+                : <View style={styles.indicatorBox}><ActivityIndicator /></View>
+            }
+          </View>
+        </View>
+      </ScrollView>
+    );
+  }
+
+  /**
+   * 元器件页面
+   */
+  renderYQJ() {
+    return (
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.head}>
+          <TouchableHighlight underlayColor="#e9e9e9" onPress={this.openOrderStatus.bind(this, 'total')}>
+            <View style={styles.orderLink}>
+              <Text style={styles.leftText}>元器件订单</Text>
+              <View style={styles.linkRight}>
+                <Text style={styles.rightText}>全部订单</Text>
+                <FontIcon name="angle-right" size={Font(16)} color="#d5d5d5" />
+              </View>
+            </View>
+          </TouchableHighlight>
+          <Line />
+          <View style={styles.statusBox}>
+            <Status icon="handshake-o" title="待确认" iconColor="#6cc0f1" press={this.openOrderStatus.bind(this, 'ok')} />
+            <Status icon="cc-paypal" title="待付款" iconColor="#a358f7" press={this.openOrderStatus.bind(this, 'pay')} />
+            <Status icon="truck" title="待收货" iconColor="#edd867" press={this.openOrderStatus.bind(this, 'receive')} />
+            <Status icon="institution" title="退款/售后" iconColor="#ec7979" press={this.openOrderStatus.bind(this, 'sale')} />
+          </View>
+        </View>
+       
+      </ScrollView>
+    );
+  }
+
+  
+  /**
+   * @param  {需要显示的segment 索引} index
+   * 点击顶部的标签，切换显示的页面
+   */
+  showScreen(index) {
+    let content;
+    switch (index) {
+      case 0:
+        content = this.renderPCB();
+        break;
+      case 1:
+        content = this.renderYQJ();
+        break;
+      default:
+        break;
+    }
+    return content;
+  }
   render() {
     if (!this.state.loginInfo) {
       return (
@@ -217,60 +329,12 @@ class Order extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <SegmentedControlIOS values={['PCB', '元器件']} tintColor={'#fff'} selectedIndex={0} style={styles.segment} onValueChange={(e) => {
-            console.log(e)
-          }} />
+          <SegmentedControlIOS values={['PCB', '元器件']} tintColor={'#fff'} selectedIndex={this.state.selectedIndex} style={styles.segment} onChange={(e) => this.setState({
+            selectedIndex: e.nativeEvent.selectedSegmentIndex
+          })} />
 
         </View>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.head}>
-            <TouchableHighlight underlayColor="#e9e9e9" onPress={this.openOrderStatus.bind(this, 'total')}>
-              <View style={styles.orderLink}>
-                <Text style={styles.leftText}>我的订单</Text>
-                <View style={styles.linkRight}>
-                  <Text style={styles.rightText}>全部订单</Text>
-                  <FontIcon name="angle-right" size={Font(16)} color="#d5d5d5" />
-                </View>
-              </View>
-            </TouchableHighlight>
-            <Line />
-            <View style={styles.statusBox}>
-              <Status icon="handshake-o" title="待确认" iconColor="#6cc0f1" press={this.openOrderStatus.bind(this, 'ok')} />
-              <Status icon="cc-paypal" title="待付款" iconColor="#a358f7" press={this.openOrderStatus.bind(this, 'pay')} />
-              <Status icon="truck" title="待收货" iconColor="#edd867" press={this.openOrderStatus.bind(this, 'receive')} />
-              <Status icon="institution" title="退款/售后" iconColor="#ec7979" press={this.openOrderStatus.bind(this, 'sale')} />
-            </View>
-          </View>
-          <View>
-            <View style={styles.latelyOrder}>
-              <Text style={styles.latelyText}>最近订单</Text>
-            </View>
-            <View style={styles.latelyList}>
-              {
-                this.state.orderData
-                  ? <View>
-                    {this.renderRow()}
-                    {
-                      !this.state.pressMore
-                        ? <TouchableHighlight underlayColor="#efefef" onPress={this.fetchMore.bind(this)}>
-                          <View style={styles.moreBox}>
-                            <Text style={styles.more}>更多</Text>
-                            <FontIcon name="angle-down" size={Font(13)} color={theme6} />
-                          </View>
-                        </TouchableHighlight>
-                        : <TouchableHighlight underlayColor="#efefef" onPress={this.openOrderStatus.bind(this, 'total')}>
-                          <View style={styles.moreBox}>
-                            <Text style={styles.more}>查看全部</Text>
-                            <FontIcon name="angle-right" size={Font(13)} color={theme6} />
-                          </View>
-                        </TouchableHighlight>
-                    }
-                  </View>
-                  : <View style={styles.indicatorBox}><ActivityIndicator /></View>
-              }
-            </View>
-          </View>
-        </ScrollView>
+        {this.showScreen(this.state.selectedIndex)}
       </View>
     );
   }
@@ -318,6 +382,17 @@ const styles = EStyleSheet.create({
   },
   head: {
     backgroundColor: '#fff',
+  },
+  inquireBox: {
+    paddingVertical: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff'
+  },
+  inquire: {
+    marginTop: 10,
+    fontSize: Font(13),
+    color: '#444'
   },
   orderLink: {
     height: 35,
@@ -368,8 +443,8 @@ const styles = EStyleSheet.create({
     alignItems: 'center',
   },
   more: {
-    fontSize: Font(13),
-    color: '$theme6',
+    fontSize: Font(12),
+    color: '#666',
     marginRight: 3
   },
   list: {
@@ -379,6 +454,11 @@ const styles = EStyleSheet.create({
   itemHead: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  headLeft: {
+    flex: 1,
+    flexDirection: 'row',
     alignItems: 'center'
   },
   title: {
