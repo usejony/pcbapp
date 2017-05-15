@@ -22,18 +22,19 @@ import Button from './button';
 import Request from './request';
 import config from './config';
 import Font from './normSize';
+import IconBtn from './iconBtn';
 
 const { width } = Dimensions.get('window');
 class Enter extends Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: "登录",
     headerRight: (
-      <Button title="注册" onPress={() => navigation.navigate('EnrollScreen', { user: '独宠' })} style={{ marginRight: 15 }} tintColor="#FFF" size={Font(15)} />
+      <Button title="注册" onPress={() => navigation.navigate('EnrollScreen')} style={{ marginRight: 8,paddingVertical: 6, paddingHorizontal: 8 }} tintColor="#FFF" size={Font(15)} />
     ),
     headerLeft: (
-      <Icon name={"ios-close"} size={Font(35)} color={'#fff'} style={{ marginLeft: 15 }} onPress={
-        () => navigation.goBack(null)
-      } />
+      <IconBtn name="ios-close" onPress={() => {
+          navigation.goBack(null);
+        }} style={{marginLeft: 5}}/>
     )
   });
   constructor(props) {
@@ -55,7 +56,7 @@ class Enter extends Component {
    */
   loginIn() {
     let { userName, password } = this.state;
-    if(userName === '' || password === '') {
+    if (userName === '' || password === '') {
       Alert.alert('账户名或密码不能为空');
       return;
     }
@@ -64,21 +65,21 @@ class Enter extends Component {
       password
     };
     const url = config.api.base + config.api.account;
-    Request.Post(url,params)
+    Request.Post(url, params)
       .then(data => {
-        if(data && data.success) {
+        if (data && data.success) {
           //当成功获取到用户信息的时候，将用户的信息保存到本地storage;
           storage.save({
             key: 'loginInfo',
             data: data
           });
-          console.log('成功获取到的数据：',data);
+          console.log('成功获取到的数据：', data);
           DeviceEventEmitter.emit('logined');
           this.props.navigation.goBack(null);
         }
       })
       .catch(err => {
-        console.log('登录失败！没有获取到用户信息:',err);
+        console.log('登录失败！没有获取到用户信息:', err);
       });
   }
 
@@ -88,9 +89,9 @@ class Enter extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar barStyle='light-content' animated={true}/>
+        <StatusBar barStyle='light-content' animated={true} />
         <View style={styles.loginBox}>
-          <View style={[styles.inpBox, { borderBottomWidth: StyleSheet.hairlineWidth }]}>
+          <View style={[styles.inpBox]}>
             <Text style={styles.title}>账号</Text>
             <TextInput
               style={styles.input}
@@ -114,7 +115,7 @@ class Enter extends Component {
         <TouchableOpacity style={styles.err} onPress={this.loginFail.bind(this)} activeOpacity={0.6}>
           <Text style={styles.errText}>无法登录？</Text>
         </TouchableOpacity>
-         <Toast ref="toast" opacity={0.5} position="top" positionValue={250} style={{ padding: 5 }} />
+        <Toast ref="toast" opacity={0.5} position="top" positionValue={250} style={{ padding: 5 }} />
       </View>
     );
   }
@@ -140,9 +141,9 @@ class Enroll extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar barStyle='light-content' animated={true}/>
+        <StatusBar barStyle='light-content' animated={true} />
         <View style={styles.loginBox}>
-          <View style={[styles.inpBox, { borderBottomWidth: StyleSheet.hairlineWidth }]}>
+          <View style={[styles.inpBox]}>
             <Text style={styles.title}>账号</Text>
             <TextInput
               style={styles.input}
@@ -177,8 +178,6 @@ const LoginNav = StackNavigator({
   }
 }, {
     initialRouteName: 'EnterScreen',
-    // mode: 'card',
-    // headerMode: 'screen',
     navigationOptions: {
       headerStyle: { backgroundColor: "#47B2EA" },
       headerTintColor: '#fff',
@@ -209,19 +208,19 @@ const styles = EStyleSheet.create({
   loginBox: {
     marginLeft: 15,
     marginTop: 15,
-    borderColor: '#eee',
-    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   inpBox: {
+    height: 35,
     flexDirection: 'row',
-    paddingBottom: 12,
+    alignItems: 'center',
     marginTop: 15,
-    borderColor: '#eee',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: '#ddd'
   },
   input: {
     flex: 1,
     marginLeft: 15,
-    fontSize: Font(13)
+    fontSize: Font(13),
   },
   title: {
     color: '#555',

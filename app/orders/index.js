@@ -8,7 +8,8 @@ import {
   TouchableHighlight,
   ActivityIndicator,
   LayoutAnimation,
-  DeviceEventEmitter
+  DeviceEventEmitter,
+  SegmentedControlIOS,
 } from 'react-native';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 import { NavigationActions } from 'react-navigation';
@@ -74,7 +75,7 @@ class Order extends Component {
 
   //在组件销毁的时候需要移除的事件
   componentWillUnmount() {
-      DeviceEventEmitter.removeAllListeners();
+    DeviceEventEmitter.removeAllListeners();
   }
 
 
@@ -178,22 +179,22 @@ class Order extends Component {
         navigation.dispatch(navAction);
         break;
       case 'ok':
-        nav.action = NavigationActions.navigate({ routeName: 'OkScreen'});
+        nav.action = NavigationActions.navigate({ routeName: 'OkScreen' });
         navAction = NavigationActions.navigate(nav);
         navigation.dispatch(navAction);
         break;
       case 'pay':
-        nav.action = NavigationActions.navigate({ routeName: 'PayScreen'});
+        nav.action = NavigationActions.navigate({ routeName: 'PayScreen' });
         navAction = NavigationActions.navigate(nav);
         navigation.dispatch(navAction);
         break;
       case 'receive':
-        nav.action = NavigationActions.navigate({ routeName: 'ReceiveScreen'});
+        nav.action = NavigationActions.navigate({ routeName: 'ReceiveScreen' });
         navAction = NavigationActions.navigate(nav);
         navigation.dispatch(navAction);
         break;
       default:
-        nav.action = NavigationActions.navigate({ routeName: 'SaleScreen'});
+        nav.action = NavigationActions.navigate({ routeName: 'SaleScreen' });
         navAction = NavigationActions.navigate(nav);
         navigation.dispatch(navAction);
     }
@@ -204,7 +205,7 @@ class Order extends Component {
         <View style={styles.container}>
           <Header title="订单" />
           <View style={styles.hintCont}>
-            <Image source={require('../../imgs/fetchFailed.png')} style={styles.statusImg}/>
+            <Image source={require('../../imgs/fetchFailed.png')} style={styles.statusImg} />
             <Text style={styles.hintText}>登录可查看订单、等详细信息</Text>
             <TouchableHighlight underlayColor={theme7} style={styles.loginBtn} onPress={this.login.bind(this)}>
               <Text style={styles.loginText}>登录/注册</Text>
@@ -215,7 +216,12 @@ class Order extends Component {
     }
     return (
       <View style={styles.container}>
-        <Header title="订单" />
+        <View style={styles.header}>
+          <SegmentedControlIOS values={['PCB', '元器件']} tintColor={'#fff'} selectedIndex={0} style={styles.segment} onValueChange={(e) => {
+            console.log(e)
+          }} />
+
+        </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.head}>
             <TouchableHighlight underlayColor="#e9e9e9" onPress={this.openOrderStatus.bind(this, 'total')}>
@@ -252,7 +258,7 @@ class Order extends Component {
                             <FontIcon name="angle-down" size={Font(13)} color={theme6} />
                           </View>
                         </TouchableHighlight>
-                        : <TouchableHighlight underlayColor="#efefef" onPress={this.openOrderStatus.bind(this,'total')}>
+                        : <TouchableHighlight underlayColor="#efefef" onPress={this.openOrderStatus.bind(this, 'total')}>
                           <View style={styles.moreBox}>
                             <Text style={styles.more}>查看全部</Text>
                             <FontIcon name="angle-right" size={Font(13)} color={theme6} />
@@ -276,12 +282,21 @@ const styles = EStyleSheet.create({
     flex: 1,
     backgroundColor: '#efefef',
   },
+  header: {
+    height: 64,
+    backgroundColor: '$theme6',
+    alignItems: 'center'
+  },
+  segment: {
+    width: 150,
+    marginTop: 26
+  },
   hintCont: {
     flex: 1,
     backgroundColor: '#eee',
     justifyContent: 'center',
     alignItems: 'center',
-    
+
   },
   hintText: {
     color: '#666',
