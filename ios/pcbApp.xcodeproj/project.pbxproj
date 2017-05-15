@@ -272,6 +272,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		B0E5A8771EC5D5FC00FBE197 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F6D9B22A718A4D15990AA9CF /* BVLinearGradient.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = BVLinearGradient;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -607,6 +614,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		B0E5A8741EC5D5FC00FBE197 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B0E5A8781EC5D5FC00FBE197 /* libBVLinearGradient.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -724,7 +739,11 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+<<<<<<< HEAD
 					ProductGroup = 7C16EB891EC5D5970064E4FC /* Products */;
+=======
+					ProductGroup = B0E5A8741EC5D5FC00FBE197 /* Products */;
+>>>>>>> fb1c75c9af83e9330c4db20b50304bbbb8282e3f
 					ProjectRef = F6D9B22A718A4D15990AA9CF /* BVLinearGradient.xcodeproj */;
 				},
 				{
@@ -996,6 +1015,13 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B0E5A8781EC5D5FC00FBE197 /* libBVLinearGradient.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBVLinearGradient.a;
+			remoteRef = B0E5A8771EC5D5FC00FBE197 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

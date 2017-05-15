@@ -4,14 +4,19 @@ import {
   Text,
   TextInput,
   StyleSheet,
+	dismissKeyboard
 } from 'react-native';
 
 import Font from '../../../common/normSize';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import Button from '../../../common/button';
 
 export default class Nickname extends Component {
   static navigationOptions = () => ({
-    title: '昵称'
+    title: '昵称',
+		headerRight: (
+			<Button title="保存" onPress={() => null} style={{marginRight: 10}}/>
+		)
   });
   state = {
     nickname: this.props.navigation.state.params.nickname
@@ -34,6 +39,9 @@ export default class Nickname extends Component {
             }}
             />
         </View>
+				<Button title="隐藏键盘" onPress={()=>
+				dismissKeyboard
+					}/>
       </View>
     );
   }

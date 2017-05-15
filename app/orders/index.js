@@ -249,13 +249,13 @@ class Order extends Component {
                         ? <TouchableHighlight underlayColor="#efefef" onPress={this.fetchMore.bind(this)}>
                           <View style={styles.moreBox}>
                             <Text style={styles.more}>更多</Text>
-                            <FontIcon name="angle-down" size={Font(13)} color="#00d7a7" />
+                            <FontIcon name="angle-down" size={Font(13)} color={theme6} />
                           </View>
                         </TouchableHighlight>
                         : <TouchableHighlight underlayColor="#efefef" onPress={this.openOrderStatus.bind(this,'total')}>
                           <View style={styles.moreBox}>
                             <Text style={styles.more}>查看全部</Text>
-                            <FontIcon name="angle-right" size={Font(13)} color="#00d7a7" />
+                            <FontIcon name="angle-right" size={Font(13)} color={theme6} />
                           </View>
                         </TouchableHighlight>
                     }

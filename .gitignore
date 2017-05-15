@@ -52,3 +52,4 @@ fastlane/Preview.html
 fastlane/screenshots
 .vscode/
 ios/bundle/
+ios/pcbApp.xcodeproj/project.pbxproj

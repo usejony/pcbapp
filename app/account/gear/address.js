@@ -41,7 +41,7 @@ export default class Address extends Component {
             <View style={styles.handleBox}>
               <TouchableWithoutFeedback onPress={() => null}>
                 <View style={styles.setNormal}>
-                  <Icon name={item.normal ? "ios-radio-button-on" : "ios-radio-button-off"} color="#666" size={20} />
+                  <Icon name={item.normal ? "ios-radio-button-off" : "ios-radio-button-on"} color={theme5} size={20} />
                   <Text style={styles.setText}>设为默认地址a </Text>
                 </View>
               </TouchableWithoutFeedback>
@@ -76,7 +76,7 @@ const styles = EStyleSheet.create({
   },
   btn: {
     width,
-    height: 40,
+    height: 45,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#d15656',
