@@ -7,6 +7,10 @@ import Font from './normSize';
 const { width } = Dimensions.get('window');
 // create a component
 class Header extends Component {
+  static PropTypes = {
+    leftIcon: PropTypes.element,
+    rightIcon: PropTypes.element,
+  }
   render() {
     return (
       <View style={[styles.header,this.props.style]}>

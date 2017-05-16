@@ -1,6 +1,6 @@
 //评论页面
 import React, { Component } from 'react';
-import { View, Text, StatusBar, TextInput, ScrollView, Alert } from 'react-native';
+import { View, Text, StatusBar, TextInput, ScrollView, Alert, Keyboard } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 import Button from '../../common/button';
@@ -10,6 +10,7 @@ class Comment extends Component {
     title: '评论',
     headerLeft: (
       <Button title="关闭" onPress={() => {
+        
         navigation.goBack(null);
       }} style={{padding: 15}} tintColor={theme6}/>
     )
@@ -17,10 +18,30 @@ class Comment extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      fucus: false,
       comment: '',
       submiting: false
     }
   }
+
+  /**
+   * 输入框获取焦点事件
+   */
+  onFocus() {
+    this.setState({
+      focus: true,
+    });
+  }
+
+  /**
+   * 输入框失去焦点事件
+   */
+  onBlur() {
+    this.setState({
+      focus: false,
+    });
+  }
+
   submit() {
     if(this.state.comment === '') {
       return Alert.alert('评论内容不能为空');
@@ -42,6 +63,8 @@ class Comment extends Component {
         <StatusBar barStyle="default" animated={true} />
         <ScrollView keyboardShouldPersistTaps="always">
           <TextInput
+            onFocus={this.onFocus.bind(this)}
+            onBlur={this.onBlur.bind(this)}
             style={styles.textInp}
             multiline={true}
             value={this.state.comment}

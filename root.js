@@ -29,6 +29,22 @@ global.theme7 = '#3997CF';
 global.theme6 = '#47B2EA';
 global.theme5 = '#73C4EF';
 global.theme4 = '#9CD6F4';
+
+const options = {
+  pickerConfirmBtnText: '完成',
+  pickerTitleText: '',
+  pickerCancelBtnText: '取消',
+  pickerConfirmBtnColor: [71, 178, 250, 1],
+  pickerCancelBtnColor: [71, 185, 250, 1],
+  pickerTitleColor: [0, 0, 53, 1],
+  pickerToolBarBg: [240, 240, 240, 1],
+  pickerBg: [255,255,255,1],
+  pickerToolBarFontSize: 13,
+  pickerFontSize: 13,
+  pickerFontColor: [31, 31, 31, 1]
+};
+
+global.pickerOptions = options;
 // create a component
 const RootNav = StackNavigator({
   AppScreen: {

@@ -14,6 +14,7 @@ import GearNav from './app/account/gear/gear';
 import OrderStatus from './app/orders/orderstatus/orderStatus';
 import Header from './common/header';
 import Font from './common/normSize';
+import Inquire from './app/orders/inquire';
 
 const Nav = StackNavigator({
   MainPageScreen: {
@@ -36,6 +37,9 @@ const Nav = StackNavigator({
   GearScreen: {
     screen: GearNav,
   },
+  InquireScreen: {
+    screen: Inquire,
+  }
 }, {
     headerMode: 'screen',
     navigationOptions: {

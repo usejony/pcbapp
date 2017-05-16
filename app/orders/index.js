@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  StyleSheet,
   Image,
   ScrollView,
   TouchableHighlight,
@@ -119,6 +120,10 @@ class Order extends Component {
     });
   }
 
+  onReorder() {
+    //新建返单
+  }
+
   renderRow() {
     let { itemsData } = this.state;
     let { navigate } = this.props.navigation;
@@ -136,8 +141,8 @@ class Order extends Component {
               </View>
               <Text style={[styles.text]}>下单日期：{item.date}</Text>
               <Text style={[styles.text]}>总价：￥{item.totalCharge}</Text>
-              <View>
-                <Button title={'新建返单'} onPress={() => null}/>
+              <View style={styles.orderHandle}>
+                <Button title={'新建返单'} size={Font(10)} tintColor={"#777"} onPress={this.onReorder.bind(this)} style={styles.handleBtn}/>
               </View>
             </View>
           </TouchableHighlight>
@@ -209,22 +214,30 @@ class Order extends Component {
   }
 
   /**
+   * 估价
+   */
+  inquire() {
+    const { navigate } = this.props.navigation;
+    navigate('InquireScreen');
+  }
+
+  /**
    * PCB页面
    */
   renderPCB() {
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
-        <TouchableHighlight underlayColor={'#e9e9e9'} onPress={() => null}>
+        <TouchableHighlight underlayColor={'#e9e9e9'} onPress={this.inquire.bind(this)}>
           <View style={styles.inquireBox}>
             <FontIcon name="rocket" size={25} color={theme6}/>
-            <Text style={styles.inquire}>询价！给出你心中完美的价格</Text>
+            <Text style={styles.inquire}>快速询价</Text>
           </View>
         </TouchableHighlight>
         <Line/>
         <View style={styles.head}>
           <TouchableHighlight underlayColor="#e9e9e9" onPress={this.openOrderStatus.bind(this, 'total')}>
             <View style={styles.orderLink}>
-              <Text style={styles.leftText}>我的订单</Text>
+              <Text style={styles.leftText}>pcb订单</Text>
               <View style={styles.linkRight}>
                 <Text style={styles.rightText}>全部订单</Text>
                 <FontIcon name="angle-right" size={Font(16)} color="#d5d5d5" />
@@ -399,6 +412,21 @@ const styles = EStyleSheet.create({
     paddingHorizontal: 7,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  orderHandle: {
+    flex: 1,
+    marginTop: 3,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end'
+  },
+  handleBtn: {
+    paddingHorizontal: 8,
+    paddingVertical: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: 3,
+    borderColor: '#888'
   },
   leftText: {
     fontSize: Font(13),

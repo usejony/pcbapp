@@ -13,20 +13,6 @@ import FontIcon from 'react-native-vector-icons/FontAwesome';
 
 import Font from '../../../common/normSize';
 
-const options = {
-  pickerConfirmBtnText: '完成',
-  pickerCancelBtnText: '取消',
-  pickerTitleText: '选择性别',
-  pickerConfirmBtnColor: [71, 178, 250, 1],
-  pickerCancelBtnColor: [71, 185, 250, 1],
-  pickerTitleColor: [0, 0, 53, 1],
-  pickerToolBarBg: [230, 230, 230, 1],
-  pickerBg: [225, 225, 225, 1],
-  pickerToolBarFontSize: Font(14),
-  pickerFontSize: Font(14),
-  pickerFontColor: [31, 31, 31, 1]
-}
-
 export default class Birthday extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: '性别',
@@ -49,7 +35,7 @@ export default class Birthday extends Component {
    */
   showModal() {
     Picker.init({
-      ...options,
+      ...pickerOptions,
       pickerData: ['男', '女'],
       selectedValue: [this.state.gender],
       onPickerSelect: (choose) => {
