@@ -135,14 +135,14 @@ class Order extends Component {
               <View style={styles.itemHead}>
                 <View style={styles.headLeft}>
                   <Text style={styles.title}>{item.orderNumber}</Text>
-                  <FontIcon name="angle-right" size={18} color="#cecece" style={{marginLeft: 15}}/>
+                  <FontIcon name="angle-right" size={18} color="#cecece" style={{ marginLeft: 15 }} />
                 </View>
                 <Text style={styles.status}>{item.status}</Text>
               </View>
               <Text style={[styles.text]}>下单日期：{item.date}</Text>
               <Text style={[styles.text]}>总价：￥{item.totalCharge}</Text>
               <View style={styles.orderHandle}>
-                <Button title={'新建返单'} size={Font(10)} tintColor={"#777"} onPress={this.onReorder.bind(this)} style={styles.handleBtn}/>
+                <Button title={'新建返单'} size={Font(10)} tintColor={"#777"} onPress={this.onReorder.bind(this)} style={styles.handleBtn} />
               </View>
             </View>
           </TouchableHighlight>
@@ -201,15 +201,11 @@ class Order extends Component {
         navAction = NavigationActions.navigate(nav);
         navigation.dispatch(navAction);
         break;
-      case 'receive':
+      default:
         nav.action = NavigationActions.navigate({ routeName: 'ReceiveScreen' });
         navAction = NavigationActions.navigate(nav);
         navigation.dispatch(navAction);
         break;
-      default:
-        nav.action = NavigationActions.navigate({ routeName: 'SaleScreen' });
-        navAction = NavigationActions.navigate(nav);
-        navigation.dispatch(navAction);
     }
   }
 
@@ -227,24 +223,29 @@ class Order extends Component {
   renderPCB() {
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
-        <TouchableHighlight underlayColor={'#e9e9e9'} onPress={this.inquire.bind(this)}>
+        {/*<TouchableHighlight underlayColor={'#e9e9e9'} onPress={this.inquire.bind(this)}>
           <View style={styles.inquireBox}>
-            <FontIcon name="rocket" size={25} color={theme6}/>
+            <FontIcon name="rocket" size={25} color={theme6} />
             <Text style={styles.inquire}>快速询价</Text>
           </View>
-        </TouchableHighlight>
-        <Line/>
+        </TouchableHighlight>*/}
         <View style={styles.head}>
           <TouchableHighlight underlayColor="#e9e9e9" onPress={this.openOrderStatus.bind(this, 'total')}>
             <View style={styles.orderLink}>
               <Text style={styles.leftText}>pcb订单</Text>
               <View style={styles.linkRight}>
                 <Text style={styles.rightText}>全部订单</Text>
-                <FontIcon name="angle-right" size={Font(16)} color="#d5d5d5" />
+                <FontIcon name="angle-right" size={Font(16)} color={theme7} />
               </View>
             </View>
           </TouchableHighlight>
           <Line />
+          <View style={styles.statusBox}>
+            <Status icon="rocket" title="在线估价" iconColor={theme6} press={this.inquire.bind(this)} />
+            <Status icon="clock-o" title="待确认" iconColor={theme6} press={this.openOrderStatus.bind(this,'ok')} />
+            <Status icon="cc-paypal" title="待付款" iconColor="#a358f7" press={this.openOrderStatus.bind(this, 'pay')} />
+            <Status icon="truck" title="待收货" iconColor="#edd867" press={this.openOrderStatus.bind(this, 'receive')} />
+          </View>
         </View>
         <View>
           <View style={styles.latelyList}>
@@ -288,24 +289,23 @@ class Order extends Component {
               <Text style={styles.leftText}>元器件订单</Text>
               <View style={styles.linkRight}>
                 <Text style={styles.rightText}>全部订单</Text>
-                <FontIcon name="angle-right" size={Font(16)} color="#d5d5d5" />
+                <FontIcon name="angle-right" size={Font(16)} color={theme7} />
               </View>
             </View>
           </TouchableHighlight>
           <Line />
           <View style={styles.statusBox}>
-            <Status icon="handshake-o" title="待确认" iconColor="#6cc0f1" press={this.openOrderStatus.bind(this, 'ok')} />
+            <Status icon="clock-o" title="待确认" iconColor="#6cc0f1" press={this.openOrderStatus.bind(this, 'ok')} />
             <Status icon="cc-paypal" title="待付款" iconColor="#a358f7" press={this.openOrderStatus.bind(this, 'pay')} />
             <Status icon="truck" title="待收货" iconColor="#edd867" press={this.openOrderStatus.bind(this, 'receive')} />
-            <Status icon="institution" title="退款/售后" iconColor="#ec7979" press={this.openOrderStatus.bind(this, 'sale')} />
           </View>
         </View>
-       
+
       </ScrollView>
     );
   }
 
-  
+
   /**
    * @param  {需要显示的segment 索引} index
    * 点击顶部的标签，切换显示的页面
@@ -396,17 +396,17 @@ const styles = EStyleSheet.create({
   head: {
     backgroundColor: '#fff',
   },
-  inquireBox: {
-    paddingVertical: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff'
-  },
-  inquire: {
-    marginTop: 10,
-    fontSize: Font(13),
-    color: '#444'
-  },
+  // inquireBox: {
+  //   paddingVertical: 10,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   backgroundColor: '#fff'
+  // },
+  // inquire: {
+  //   marginTop: 10,
+  //   fontSize: Font(13),
+  //   color: '#444'
+  // },
   orderLink: {
     height: 35,
     paddingHorizontal: 7,
@@ -441,7 +441,7 @@ const styles = EStyleSheet.create({
   },
   rightText: {
     fontSize: Font(11),
-    color: '#888',
+    color: '$theme7',
     marginRight: 3
   },
   statusBox: {

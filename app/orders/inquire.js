@@ -309,6 +309,14 @@ export default class Inquire extends Component {
     })
   }
 
+  /**
+   * 向后台发送数据，后台计算出价格并将价格返回到前台显示出来；
+   */
+  onCount() {
+    let formData = new FormData();
+    formData.append('');
+  }
+
 
   /**
    * 当输入框获得焦点的事件
@@ -371,7 +379,7 @@ export default class Inquire extends Component {
             <Text style={styles.price}>{this.state.price}</Text>
           </View>
           <View style={[styles.handleBox,]}>
-            <Button title="计算价格" style={styles.priceHandle} onPress={() => null} />
+            <Button title="计算价格" style={styles.priceHandle} onPress={this.onCount.bind(this)} />
           </View>
         </View>
       </View>
@@ -418,11 +426,12 @@ class Input extends Component {
 const styles = EStyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#efefef',
+    backgroundColor: '#fff',
   },
   content: {
     backgroundColor: '#fff',
-    paddingVertical: 10,
+    paddingBottom: 50
+    
   },
   head: {
     height: 50,
@@ -508,7 +517,7 @@ const styles = EStyleSheet.create({
   },
   handleBox: {
     width: width / 2 -0.5,
-    height: 50,
+    height: 40,
     backgroundColor: '#fff',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -521,7 +530,7 @@ const styles = EStyleSheet.create({
   },
   priceHandle: {
     flex: 1,
-    height: 50,
+    height: 40,
     justifyContent: 'center',
     alignItems: 'center'
   }

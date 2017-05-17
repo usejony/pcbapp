@@ -7,7 +7,6 @@ import Total from './totalOrder';
 import Ok from './waitOk';
 import Pay from './waitPay';
 import Receive from './waitReceive';
-import Sale from './afterSale'; 
 import Font from '../../../common/normSize';
 
 const tabNav = TabNavigator({
@@ -35,12 +34,6 @@ const tabNav = TabNavigator({
       title: '待收货'
     }
   },
-  SaleScreen: {
-    screen: Sale,
-    navigationOptions: {
-      title: '退款/售后'
-    }
-  }
 },{
   tabBarComponent: TabBarTop,
   tabBarPosition: 'top',
@@ -50,8 +43,8 @@ const tabNav = TabNavigator({
     activeTintColor: '#47B2EA',
     inactiveTintColor: '#222',
     pressOpacity: 0.8,
-    scrollEnabled: true,
-    tabStyle: {width: 80,height: 35,paddingHorizontal:0},
+
+    tabStyle: {height: 35,paddingHorizontal:0},
     indicatorStyle: {backgroundColor: "#47B2EA"},
     style: { backgroundColor: '#f6f6f6'},
     labelStyle: {

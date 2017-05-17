@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Dimensions,
+  PixelRatio,
   ScrollView,
   View,
   Text,
@@ -8,7 +9,8 @@ import {
   Modal,
   Animated,
   TouchableOpacity,
-  DeviceEventEmitter
+  DeviceEventEmitter,
+  TouchableHighlight,
 } from 'react-native';
 
 import FontIcon from 'react-native-vector-icons/FontAwesome';
@@ -123,7 +125,7 @@ export default class Account extends Component {
           }
         ]} />
         <TouchableOpacity onPress={this.gearTouch.bind(this)} style={styles.gearBtn}>
-          <FontIcon name="gear" size={Font(20)} color="#fff" />
+          <FontIcon name="gear" size={Font(16)} color="#fff" />
         </TouchableOpacity>
       </Animated.View>
     );
@@ -169,18 +171,48 @@ export default class Account extends Component {
               }
             </TouchableOpacity>
           </View>
+          <View style={styles.chunck}>
+            <TouchableHighlight style={styles.card} underlayColor="#efefef" onPress={() => null}>
+              <View style={styles.touchBox}>
+                <Text style={styles.useableLimit}>
+                  {data ? data.useableLimit : 0.00}
+                  <Text style={styles.unit}>元</Text>
+                </Text>
+                <Text style={styles.bottomText}>钱包</Text>
+              </View>
+            </TouchableHighlight>
+            <TouchableHighlight underlayColor="#efefef" style={[styles.card, { marginHorizontal: 1 / PixelRatio.get() }]} onPress={() => null}>
+              <View style={styles.touchBox}>
+                <Text style={styles.privilege}>
+                  {data ? data.useableLimit : 0}
+                  <Text style={styles.unit}>个</Text>
+                </Text>
+                <Text style={styles.bottomText}>优惠</Text>
+              </View>
+            </TouchableHighlight>
+            <TouchableHighlight underlayColor="#efefef" style={styles.card} onPress={() => null}>
+              <View style={styles.touchBox}>
+                <Text style={styles.integral}>
+                  {data ? data.integral : 0}
+                  <Text style={styles.unit}>分</Text>
+                </Text>
+                <Text style={styles.bottomText}>积分</Text>
+              </View>
+            </TouchableHighlight >
+          </View >
           <View style={styles.tools}>
-            <Item icon="bandcamp" iconColor="#f6af2d" title="余额" info={data ? "￥" + data.useableLimit : null} press={() => null} />
+            {/*<Item icon="bandcamp" iconColor="#f6af2d" title="余额" info={data ? "￥" + data.useableLimit : null} press={() => null} />
             <Line left={13} />
             <Item icon="server" iconColor="#b245f8" title="积分" info={data ? data.integral : null} press={() => null} />
-            <Line left={13} />
+            <Line left={13} />*/}
             <Item icon="credit-card-alt" iconColor="#52db52" title="信用额度" info={data ? data.creditLimit : null} press={() => null} />
+            <Item icon="map-marker" iconColor="#3694de" title="收货地址" info={data ? data.creditLimit : null} press={() => null} />
           </View>
           <View style={styles.tools}>
             {/*code...*/}
           </View>
-        </ScrollView>
-      </View>
+        </ScrollView >
+      </View >
     )
   }
 }
@@ -251,5 +283,40 @@ const styles = EStyleSheet.create({
   tools: {
     marginTop: 12,
     backgroundColor: '#fff'
+  },
+  chunck: {
+    height: 70,
+    backgroundColor: '#eee',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  card: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  useableLimit: {
+    fontSize: Font(16),
+    color: '#dda337',
+  },
+  privilege: {
+    fontSize: Font(16),
+    color: '#e44825',
+  },
+  integral: {
+    fontSize: Font(16),
+    color: '#1cc61c',
+  },
+  unit: {
+    fontSize: Font(8),
+  },
+  bottomText: {
+    fontSize: Font(10),
+    color: '#666',
+    marginTop: 5
+  },
+  touchBox: {
+    alignItems: 'center'
   }
 });
