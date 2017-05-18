@@ -1219,6 +1219,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = www.pcbpp.bnapp;
 				PRODUCT_NAME = pcbApp;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1246,6 +1247,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = www.pcbpp.bnapp;
 				PRODUCT_NAME = pcbApp;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

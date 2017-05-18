@@ -23,6 +23,7 @@ import Request from './request';
 import config from './config';
 import Font from './normSize';
 import IconBtn from './iconBtn';
+import CloseKey from './closeKeyboard';
 
 const { width } = Dimensions.get('window');
 class Enter extends Component {
@@ -33,6 +34,7 @@ class Enter extends Component {
     ),
     headerLeft: (
       <IconBtn name="ios-close" onPress={() => {
+        CloseKey();
           navigation.goBack(null);
         }} style={{marginLeft: 5}}/>
     )
@@ -73,8 +75,9 @@ class Enter extends Component {
             key: 'loginInfo',
             data: data
           });
-          console.log('成功获取到的数据：', data);
+          // console.log('成功获取到的数据：', data);
           DeviceEventEmitter.emit('logined');
+          CloseKey();
           this.props.navigation.goBack(null);
         }
       })

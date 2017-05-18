@@ -7,11 +7,15 @@ import {
   StatusBar,
   ListView,
   Image,
-  ActivityIndicator
+  ActivityIndicator,
+  Animated,
+  Modal,
 } from 'react-native';
 import Request from '../../common/request';
 import config from '../../common/config';
 import Font from '../../common/normSize';
+import BottomTabBar from './detailNavTabBar';
+import Commentbox from './commenbox';
 
 let cacheResult = {
   page: 0,
@@ -29,6 +33,7 @@ class NewsComment extends Component {
     this.state = {
       commentList: ds.cloneWithRows([]),
       isLoading: false,
+      modalVisible: false,
     }
   }
   componentWillMount() {
@@ -112,10 +117,27 @@ class NewsComment extends Component {
     return cacheResult.items.length < cacheResult.total;
   }
 
-  renderSeparator(sectionId,rowId) {
+  renderSeparator(sectionId, rowId) {
     return (
-      <View style={styles.separator} key={rowId}/>
+      <View style={styles.separator} key={rowId} />
     );
+  }
+
+  goDetail() {
+    const { goBack } = this.props.navigation;
+    goBack()
+  }
+
+  showCommentBox() {
+    this.setState({
+      modalVisible: true
+    })
+  }
+
+  closeModal(e) {
+    this.setState({
+      modalVisible: false
+    });
   }
   render() {
     return (
@@ -132,6 +154,10 @@ class NewsComment extends Component {
           renderFooter={this.renderFooter.bind(this)}
           renderSeparator={this.renderSeparator.bind(this)}
         />
+        <Modal animationType={'fade'} style={styles.modal} transparent={true} visible={this.state.modalVisible} onRequestClose={this.closeModal.bind(this)}>
+          <Commentbox closeModal={this.closeModal.bind(this)} />
+        </Modal>
+        <BottomTabBar icon="file-text" text={'正文'} iconPress={this.goDetail.bind(this)} showComment={this.showCommentBox.bind(this)} />
       </View>
     );
   }

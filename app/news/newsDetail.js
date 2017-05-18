@@ -7,37 +7,50 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
+  Modal,
+  Keyboard,
+  DeviceEventEmitter,
+  Animated
 } from 'react-native';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 
 import Footer from '../../common/newsFooter';
-import BottomTabBar from './detailNavTabBar'
+import BottomTabBar from './detailNavTabBar';
 import Font from '../../common/normSize';
+import Commentbox from './commenbox';
 
 const { width } = Dimensions.get('window');
 export default class NewsDetails extends Component {
-  /*static navigationOptions = ({ navigation, screenProps }) => ({
-    title: '详情',
-    headerLeft: (
-      <TouchableOpacity activeOpacity={1} onPress={() => {
-        navigation.goBack()
-      }} >
-        <FontIcon name="angle-left" size={28} color="#fff" style={{ paddingHorizontal: 15 }} />
-      </TouchableOpacity>
-    )
-  });*/
   constructor(props) {
     super(props);
     this.state = {
-
+      modalVisible: false,
     }
   }
+
+  goComment() {
+    const { navigate } = this.props.navigation;
+    navigate('NewsCommentScreen')
+  }
+
+  showCommentBox() {
+    this.setState({
+      modalVisible: true
+    })
+  }
+
+  closeModal(e) {
+    this.setState({
+      modalVisible: false
+    });
+  }
+
   render() {
     const data = this.props.navigation.state.params.data;
     return (
       <View style={styles.container}>
-        <StatusBar barStyle="default" animated={true}/>
+        <StatusBar barStyle="default" animated={true} />
         <ScrollView>
           <View style={styles.scrollView}>
             <Text style={styles.title}>{data.title}</Text>
@@ -47,6 +60,10 @@ export default class NewsDetails extends Component {
           </View>
           <Footer />
         </ScrollView>
+        <Modal animationType={'fade'} style={styles.modal} transparent={true} visible={this.state.modalVisible} onRequestClose={this.closeModal.bind(this)}>
+          <Commentbox closeModal={this.closeModal.bind(this)} />
+        </Modal>
+        <BottomTabBar icon="comments-o" text={'520'} showComment={this.showCommentBox.bind(this)} iconPress={this.goComment.bind(this)} />
       </View>
     );
   }
@@ -85,5 +102,9 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     marginTop: 10,
     alignSelf: 'center'
+  },
+  modal: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,.2)'
   }
 });

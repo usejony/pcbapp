@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions, Animated, TouchableOpacity, DeviceEventEmitter, } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Animated, TouchableOpacity, } from 'react-native';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 
 import Button from '../../common/button';
@@ -29,90 +29,16 @@ class DetailTabBar extends Component {
       });
   }
 
-
-  goNewsDetail() {
-    Animated.timing(
-      this.state.translate,
-      {
-        toValue: 1,
-      }
-    ).start();
-    this.props.navigation.navigate('NewsCommentScreen');
-    console.log('comment.navigation:', this.props.navigation);
-  }
-
-  goNewsComment() {
-    Animated.timing(
-      this.state.translate,
-      {
-        toValue: 0
-      }
-    ).start();
-    this.props.navigation.navigate('NewsDetailScreen');
-  }
-
-  goComment() {
-    storage.load({
-      key: 'loginInfo'
-    }).then(data => {
-      this.props.navigation.navigate('CommentScreen');
-    }).catch(err => {
-      this.props.navigation.navigate('LoginScreen');
-    });
-  }
-
-  /**
-   * 返回
-   */
-  goback() {
-    Animated.timing(
-        this.state.translate,
-        {
-          toValue: 0,
-        }
-      ).start();
-    this.props.navigation.goBack(null);
-  }
-
-
   render() {
     return (
       <View style={styles.commentInp}>
-        
-        <TouchableOpacity activeOpacity={0.9} style={styles.back} onPress={this.goback.bind(this)}>
-          <FontIcon name="angle-left" size={Font(28)} color={theme6}/>
+        <TouchableOpacity activeOpacity={0.9} style={styles.inp} onPress={this.props.showComment}>
+          <Text style={styles.commentText}>评论一下...</Text>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.9} style={styles.inp} onPress={this.goComment.bind(this)}>
-          <FontIcon name="pencil" size={Font(15)} />
-          <Text style={styles.commentText}>评论一下</Text>
+        <TouchableOpacity activeOpacity={0.9} style={styles.commentIcon} onPress={this.props.iconPress}>
+          <FontIcon name={this.props.icon} size={Font(18)} color={theme6} />
+          <Text style={styles.commentText}>{this.props.text}</Text>
         </TouchableOpacity>
-        <View style={styles.tabBar}>
-          <Animated.View style={[
-            styles.tabBox,
-            {
-              transform: [
-                {
-                  translateX: this.state.translate.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, -70]
-                  })
-                }
-              ],
-              opacity: this.state.translate.interpolate({
-                inputRange: [0, 0.5, 1],
-                outputRange: [1, 0, 1]
-              })
-            }]}>
-            <TouchableOpacity activeOpacity={0.9} style={styles.commentIcon} onPress={this.goNewsDetail.bind(this)}>
-              <FontIcon name="commenting-o" size={Font(18)} color={theme6} />
-              <Text style={styles.commentText}>202</Text>
-            </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.9} style={styles.commentIcon} onPress={this.goNewsComment.bind(this)}>
-              <FontIcon name="file-text-o" size={Font(18)} color={theme6} />
-              <Text style={styles.commentText}>正文</Text>
-            </TouchableOpacity>
-          </Animated.View>
-        </View>
       </View>
     );
   }
@@ -128,8 +54,8 @@ const styles = StyleSheet.create({
   },
   commentInp: {
     height: 46,
-    paddingHorizontal: 5,
-    backgroundColor: '#fff',
+    paddingHorizontal: 15,
+    backgroundColor: '#f2f1f1',
     flexDirection: 'row',
     alignItems: 'center',
     borderColor: '#ddd',
@@ -138,16 +64,23 @@ const styles = StyleSheet.create({
   inp: {
     flex: 1,
     height: 30,
+    marginRight: 10,
     flexDirection: 'row',
     alignItems: 'center',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#eee',
+    shadowOpacity: 0.2,
+    shadowColor: '#000',
+    shadowRadius: 2,
+    shadowOffset: { x: 0, y: 0 },
     marginHorizontal: 3,
-    paddingHorizontal: 15,
-    backgroundColor: '#rgba(0,0,0,.1)',
-    borderRadius: 12
+    paddingHorizontal: 20,
+    backgroundColor: '#fff',
+    borderRadius: 5
   },
   commentIcon: {
     height: 40,
-    width: 70,
+    width: 80,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -158,13 +91,6 @@ const styles = StyleSheet.create({
     color: '#666',
     marginLeft: 5
   },
-  tabBar: {
-    width: 70,
-    overflow: 'hidden',
-  },
-  tabBox: {
-    flexDirection: 'row',
-  }
 });
 
 //make this component available to the app

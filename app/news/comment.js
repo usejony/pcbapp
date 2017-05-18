@@ -5,12 +5,13 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 import Button from '../../common/button';
 import Font from '../../common/normSize';
+import CloseKey from '../../common/closeKeyboard';
 class Comment extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: '评论',
     headerLeft: (
       <Button title="关闭" onPress={() => {
-        
+        CloseKey();
         navigation.goBack(null);
       }} style={{padding: 15}} tintColor={theme6}/>
     )
@@ -40,6 +41,13 @@ class Comment extends Component {
     this.setState({
       focus: false,
     });
+  }
+
+  keyboardDidShow(e) {
+    console.log(e.startCoordinates.height)
+  }
+  componentWillMount() {
+    this.keyboardDidShow = Keyboard.addListener('keyboardDidShow',this.keyboardDidShow.bind(this));
   }
 
   submit() {

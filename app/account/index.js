@@ -206,6 +206,7 @@ export default class Account extends Component {
             <Item icon="server" iconColor="#b245f8" title="积分" info={data ? data.integral : null} press={() => null} />
             <Line left={13} />*/}
             <Item icon="credit-card-alt" iconColor="#52db52" title="信用额度" info={data ? data.creditLimit : null} press={() => null} />
+              <Line left={13}/>
             <Item icon="map-marker" iconColor="#3694de" title="收货地址" info={data ? data.creditLimit : null} press={() => null} />
           </View>
           <View style={styles.tools}>

@@ -6,10 +6,10 @@ import FontIcon from 'react-native-vector-icons/FontAwesome';
 import NewsDetail from './newsDetail';
 import NewsComment from './newsComment';
 import Button from '../../common/button';
-import TabBar from './detailNavTabBar';
 import Comment from './comment';
 import LoginModal from '../../common/loginModal';
 import Font from '../../common/normSize';
+import IconBtn from '../../common/iconBtn';
 
 const NewsDetailTab = TabNavigator({
   NewsDetailScreen: {
@@ -26,10 +26,9 @@ const NewsDetailTab = TabNavigator({
   }
 }, {
     initialRouteName: 'NewsDetailScreen',
-    tabBarComponent: (props) => <TabBar {...props} />,
     animationEnabled: true,
     tabBarOptions: {
-      style: { height: 0, backgroundColor: 'red', overflow: 'hidden'}
+      style: { height: 0, backgroundColor: 'red', overflow: 'hidden' }
     }
   });
 
@@ -42,15 +41,21 @@ const NewsDetailStack = StackNavigator({
   },
   LoginScreen: {
     screen: LoginModal,
-    navigationOptions:{
+    navigationOptions: {
       header: null
     }
   }
 }, {
-      mode: 'modal',
-      navigationOptions: ({ navigation, screenProps }) => ({
+    mode: 'modal',
+    navigationOptions: ({ navigation, screenProps }) => ({
       headerStyle: { backgroundColor: '#f9f9f9' },
       headerTitleStyle: { fontSize: Font(15), color: '#333', fontWeight: 'normal' },
+      headerLeft: (
+        <IconBtn name="ios-arrow-back" size={25} color={theme6} style={{ paddingHorizontal: 20, marginLeft: 5 }} onPress={() => {
+          DeviceEventEmitter.emit('iconBack');
+          navigation.goBack(null);
+        }} />
+      )
     })
   });
 
