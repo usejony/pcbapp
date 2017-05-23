@@ -87,12 +87,12 @@ class Info extends Component {
       case 'nickname':
         navigate('NicknameScreen',{nickname: data});
         break;
-      case 'gender':
+      default:
         navigate('GenderScreen',{gender: data});
         break;
-      default:
-        navigate('AddressScreen',{address: data});
-        break;
+      // default:
+      //   navigate('AddressScreen',{address: data});
+      //   break;
     }
   }
   render() {
@@ -132,7 +132,7 @@ class Info extends Component {
                   <FontIcon name="angle-right" size={Font(18)} color="#d5d5d5" />
                 </View>
               </TouchableHighlight>
-              <Line left={12} />
+              {/*<Line left={12} />
               <TouchableHighlight underlayColor="#ededed" onPress={this.goTo.bind(this,'address',data.address)}>
                 <View style={styles.item}>
                   <View style={styles.cont}>
@@ -141,7 +141,7 @@ class Info extends Component {
                   </View>
                   <FontIcon name="angle-right" size={Font(18)} color="#d5d5d5" />
                 </View>
-              </TouchableHighlight>
+              </TouchableHighlight>*/}
             </View>
             : <ActivityIndicator style={{ marginTop: 20 }} />
         }

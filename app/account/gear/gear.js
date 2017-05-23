@@ -22,7 +22,7 @@ import Safety from './safety';
 import Font from '../../../common/normSize';
 import Nickname from './nickName';
 import Gender from './gender';
-import Address from './address';
+import IconBtn from '../../../common/iconBtn';
 
 const { width } = Dimensions.get('window');
 
@@ -70,7 +70,7 @@ const Gear = ({ navigation, screenProps }) => {
 Gear.navigationOptions = ({ navigation, screenProps }) => ({
   title: '设置',
   headerLeft: (
-    <FontIcon name="angle-left" size={Font(25)} color={theme6} style={{ paddingHorizontal: Font(15) }} onPress={() => {
+    <IconBtn name="ios-arrow-back" size={25} color={theme6} onPress={() => {
       navigation.goBack(null);
     }} />
   )
@@ -93,9 +93,6 @@ const GearStack = StackNavigator({
   GenderScreen: {
     screen: Gender
   },
-  AddressScreen: {
-    screen: Address,
-  }
 }, {
     initialRouteName: 'GearScreen',
     mode: 'card',
@@ -105,19 +102,13 @@ const GearStack = StackNavigator({
       headerTintColor: '#00d7a7',
       headerTitleStyle: { color: '#333', fontSize: Font(16) },
       headerLeft: (
-        <FontIcon name="angle-left" size={28} color={theme6} style={{ paddingHorizontal: 15 }} onPress={() => {
-          navigation.goBack(null)
+        <IconBtn name="ios-arrow-back" size={25} color={theme6} onPress={() => {
+          navigation.goBack(null);
         }} />
       )
     })
   });
-/*const GearNav = ({navigation}) => (
-  <View style={{ flex: 1 }}>
-        <StatusBar animated={true} barStyle={'dark-content'} />
-        <GearStack screenProps={navigation} />
-      </View>
-      )*/
-// define your styles
+
 const styles = EStyleSheet.create({
   container: {
     flex: 1,

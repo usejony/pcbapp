@@ -97,6 +97,18 @@ export default class Account extends Component {
     }
   }
 
+  /**
+   * 链接页面方法
+   */
+  toWhere(where,data=null) {
+    const actions = NavigationActions.navigate({
+      routeName: 'AccountMainScreen',
+      params: {},
+      action: NavigationActions.navigate({routeName: where})
+    });
+    this.props.navigation.dispatch(actions);
+  }
+
   //固定渐变头部
   renderFixedHeader() {
     const opacity = this.state.scrollY.interpolate({
@@ -172,7 +184,7 @@ export default class Account extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.chunck}>
-            <TouchableHighlight style={styles.card} underlayColor="#efefef" onPress={() => null}>
+            <TouchableHighlight style={styles.card} underlayColor="#efefef" onPress={this.toWhere.bind(this,'BalanceScreen')}>
               <View style={styles.touchBox}>
                 <Text style={styles.useableLimit}>
                   {data ? data.useableLimit : 0.00}
@@ -181,7 +193,7 @@ export default class Account extends Component {
                 <Text style={styles.bottomText}>钱包</Text>
               </View>
             </TouchableHighlight>
-            <TouchableHighlight underlayColor="#efefef" style={[styles.card, { marginHorizontal: 1 / PixelRatio.get() }]} onPress={() => null}>
+            <TouchableHighlight underlayColor="#efefef" style={[styles.card, { marginHorizontal: 1 / PixelRatio.get() }]} onPress={this.toWhere.bind(this,'FavorableScreen')}>
               <View style={styles.touchBox}>
                 <Text style={styles.privilege}>
                   {data ? data.useableLimit : 0}
@@ -190,7 +202,7 @@ export default class Account extends Component {
                 <Text style={styles.bottomText}>优惠</Text>
               </View>
             </TouchableHighlight>
-            <TouchableHighlight underlayColor="#efefef" style={styles.card} onPress={() => null}>
+            <TouchableHighlight underlayColor="#efefef" style={styles.card} onPress={this.toWhere.bind(this,'IntegralScreen')}>
               <View style={styles.touchBox}>
                 <Text style={styles.integral}>
                   {data ? data.integral : 0}
@@ -207,7 +219,7 @@ export default class Account extends Component {
             <Line left={13} />*/}
             <Item icon="credit-card-alt" iconColor="#52db52" title="信用额度" info={data ? data.creditLimit : null} press={() => null} />
               <Line left={13}/>
-            <Item icon="map-marker" iconColor="#3694de" title="收货地址" info={data ? data.creditLimit : null} press={() => null} />
+            <Item icon="map-marker" iconColor="#3694de" title="收货地址" info={data ? data.creditLimit : null} press={this.toWhere.bind(this,'AddressScreen')} />
           </View>
           <View style={styles.tools}>
             {/*code...*/}
@@ -299,7 +311,7 @@ const styles = EStyleSheet.create({
   },
   useableLimit: {
     fontSize: Font(16),
-    color: '#dda337',
+    color: '#feb150',
   },
   privilege: {
     fontSize: Font(16),

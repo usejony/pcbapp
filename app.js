@@ -15,6 +15,7 @@ import OrderStatus from './app/orders/orderstatus/orderStatus';
 import Header from './common/header';
 import Font from './common/normSize';
 import Inquire from './app/orders/inquire';
+import AccountMain from './app/account/main/main';
 
 const Nav = StackNavigator({
   MainPageScreen: {
@@ -39,6 +40,9 @@ const Nav = StackNavigator({
   },
   InquireScreen: {
     screen: Inquire,
+  },
+  AccountMainScreen: {
+    screen: AccountMain
   }
 }, {
     headerMode: 'screen',

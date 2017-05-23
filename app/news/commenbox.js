@@ -51,7 +51,7 @@ export default class Commenbox extends Component {
       this.state.transY,
       {
         toValue: value,
-        duration: 400,
+        duration: 300,
       }
     ).start();
   }

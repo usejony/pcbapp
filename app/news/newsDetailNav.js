@@ -6,7 +6,7 @@ import FontIcon from 'react-native-vector-icons/FontAwesome';
 import NewsDetail from './newsDetail';
 import NewsComment from './newsComment';
 import Button from '../../common/button';
-import Comment from './comment';
+// import Comment from './comment';
 import LoginModal from '../../common/loginModal';
 import Font from '../../common/normSize';
 import IconBtn from '../../common/iconBtn';
@@ -36,9 +36,9 @@ const NewsDetailStack = StackNavigator({
   NewsDetailTabScreen: {
     screen: NewsDetailTab
   },
-  CommentScreen: {
-    screen: Comment
-  },
+  // CommentScreen: {
+  //   screen: Comment
+  // },
   LoginScreen: {
     screen: LoginModal,
     navigationOptions: {

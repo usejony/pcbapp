@@ -16,6 +16,9 @@ import Font from '../../../common/normSize';
 
 const { width } = Dimensions.get('window');
 export default class Address extends Component {
+  static navigationOptions = ({navigation}) => ({
+    title: '收货地址'
+  });
   state = {}
 
   componentWillMount() {

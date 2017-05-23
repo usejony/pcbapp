@@ -26,6 +26,7 @@ export default class IconBtn extends Component {
 
 const styles = StyleSheet.create({
   touch: {
-    paddingHorizontal: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 5,
   }
 });
