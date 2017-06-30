@@ -23,7 +23,7 @@ export default class Address extends Component {
 
   componentWillMount() {
     this.setState({
-      address: this.props.navigation.state.params.address
+      address: this.props.navigation.state.params.data.address
     });
   }
   addAddress() {

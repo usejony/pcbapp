@@ -4,22 +4,31 @@ import {
   Text,
   TextInput,
   StyleSheet,
-	dismissKeyboard
 } from 'react-native';
 
 import Font from '../../../common/normSize';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Button from '../../../common/button';
+import closeKeyboard from '../../../common/closeKeyboard';
+import IconBtn from '../../../common/iconBtn';
 
 export default class Nickname extends Component {
-  static navigationOptions = () => ({
+  static navigationOptions = ({ navigation }) => ({
     title: '昵称',
-		headerRight: (
-			<Button title="保存" onPress={() => null} style={{marginRight: 10}}/>
-		)
+    headerLeft: (
+      <IconBtn name="ios-arrow-back" size={25} color={theme6} onPress={() => {
+        closeKeyboard();
+        navigation.goBack();
+      }} />
+    ),
   });
   state = {
-    nickname: this.props.navigation.state.params.nickname
+    // data: this.props.navigation.state.params.data
+  }
+  componentWillMount() {
+    this.setState({
+      nickName: this.props.navigation.state.params.data.nickName
+    });
   }
   render() {
     return (
@@ -28,20 +37,19 @@ export default class Nickname extends Component {
           <Text style={styles.label}>昵称：</Text>
           <TextInput
             style={styles.textInp}
-            autoFocus={true}
             clearButtonMode="while-editing"
-            value={this.state.nickname}
+            value={this.state.nickName}
             selectionColor={theme7}
             onChangeText={(text) => {
-              this.setState({
-                nickname: text
-              })
+             this.setState({
+               nickName: text
+             });
             }}
-            />
+          />
         </View>
-				<Button title="隐藏键盘" onPress={()=>
-				dismissKeyboard
-					}/>
+        <Button title="保存" style={styles.submit} tintColor="#fff" size={14} onPress={() => {
+          this.props.navigation.state.params.callback('nickName',this.state.nickName)
+        }} />
       </View>
     );
   }
@@ -74,4 +82,13 @@ const styles = EStyleSheet.create({
     color: '#333',
     marginLeft: 10
   },
+  submit: {
+    marginHorizontal: 100,
+    paddingVertical: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    backgroundColor: '$theme5',
+    marginTop: 20
+  }
 });

@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 
 import FontIcon from 'react-native-vector-icons/FontAwesome';
+import MaterIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NavigationActions } from 'react-navigation';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -33,10 +34,11 @@ export default class Account extends Component {
     }
   }
   componentWillMount() {
+    console.log('willmount')
     storage.load({
       key: 'loginInfo'
     }).then(data => {
-      console.log('找到了注册用户的userId:', data.userId);
+      // console.log('找到了注册用户的信息:', data);
       this.setState({
         data: data.data
       });
@@ -74,11 +76,16 @@ export default class Account extends Component {
   //点击设置按钮打开什么页面。当用户有登录的时候打开设置页面，当用户没有登录的时候打开登录注册页面
   gearTouch() {
     const { navigate } = this.props.screenProps;
-    let that = this;
     if (this.state.data) {
-      return this.props.navigation.navigate('GearScreen');
+      const actions = NavigationActions.navigate({
+        routeName: 'GearScreen',
+        params: {},
+        action: NavigationActions.navigate({ routeName: 'GearHomeScreen',params: {data: this.state.data} })
+      });
+      this.props.navigation.dispatch(actions);
+    } else {
+      navigate('LoginScreen');
     }
-    navigate('LoginScreen');
   }
 
   /**
@@ -89,7 +96,7 @@ export default class Account extends Component {
       const actions = NavigationActions.navigate({
         routeName: "GearScreen",
         params: {},
-        action: NavigationActions.navigate({ routeName: 'InfoScreen' })
+        action: NavigationActions.navigate({ routeName: 'InfoScreen', params: { data: this.state.data}})
       });
       this.props.navigation.dispatch(actions);
     } else {
@@ -100,13 +107,17 @@ export default class Account extends Component {
   /**
    * 链接页面方法
    */
-  toWhere(where,data=null) {
-    const actions = NavigationActions.navigate({
-      routeName: 'AccountMainScreen',
-      params: {},
-      action: NavigationActions.navigate({routeName: where})
-    });
-    this.props.navigation.dispatch(actions);
+  toWhere(where) {
+    if (this.state.data) {
+      const actions = NavigationActions.navigate({
+        routeName: 'AccountMainScreen',
+        params: {},
+        action: NavigationActions.navigate({ routeName: where, params: { data: this.state.data } })
+      });
+      this.props.navigation.dispatch(actions);
+    } else {
+      this.props.screenProps.navigate('LoginScreen');
+    }
   }
 
   //固定渐变头部
@@ -184,30 +195,42 @@ export default class Account extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.chunck}>
-            <TouchableHighlight style={styles.card} underlayColor="#efefef" onPress={this.toWhere.bind(this,'BalanceScreen')}>
+            <TouchableHighlight style={styles.card} underlayColor="#efefef" onPress={this.toWhere.bind(this, 'BalanceScreen')}>
               <View style={styles.touchBox}>
-                <Text style={styles.useableLimit}>
-                  {data ? data.useableLimit : 0.00}
-                  <Text style={styles.unit}>元</Text>
-                </Text>
+                {
+                  this.state.data
+                    ? <Text style={styles.useableLimit}>
+                      {data ? data.useableLimit : 0.00}
+                      <Text style={styles.unit}>元</Text>
+                    </Text>
+                    : <MaterIcon name="wallet" size={20} color="#feb150" />
+                }
                 <Text style={styles.bottomText}>钱包</Text>
               </View>
             </TouchableHighlight>
-            <TouchableHighlight underlayColor="#efefef" style={[styles.card, { marginHorizontal: 1 / PixelRatio.get() }]} onPress={this.toWhere.bind(this,'FavorableScreen')}>
+            <TouchableHighlight underlayColor="#efefef" style={[styles.card, { marginHorizontal: 1 / PixelRatio.get() }]} onPress={this.toWhere.bind(this, 'FavorableScreen')}>
               <View style={styles.touchBox}>
-                <Text style={styles.privilege}>
-                  {data ? data.useableLimit : 0}
-                  <Text style={styles.unit}>个</Text>
-                </Text>
+                {
+                  this.state.data
+                    ? <Text style={styles.privilege}>
+                      {data ? data.useableLimit : 0}
+                      <Text style={styles.unit}>个</Text>
+                    </Text>
+                    : <MaterIcon name="ticket-confirmation" size={20} color="#e44825" />
+                }
                 <Text style={styles.bottomText}>优惠</Text>
               </View>
             </TouchableHighlight>
-            <TouchableHighlight underlayColor="#efefef" style={styles.card} onPress={this.toWhere.bind(this,'IntegralScreen')}>
+            <TouchableHighlight underlayColor="#efefef" style={styles.card} onPress={this.toWhere.bind(this, 'IntegralScreen')}>
               <View style={styles.touchBox}>
-                <Text style={styles.integral}>
-                  {data ? data.integral : 0}
-                  <Text style={styles.unit}>分</Text>
-                </Text>
+                {
+                  this.state.data
+                    ? <Text style={styles.integral}>
+                      {data ? data.integral : 0}
+                      <Text style={styles.unit}>分</Text>
+                    </Text>
+                    : <MaterIcon name="cube" size={20} color="#1cc61c" />
+                }
                 <Text style={styles.bottomText}>积分</Text>
               </View>
             </TouchableHighlight >
@@ -218,8 +241,8 @@ export default class Account extends Component {
             <Item icon="server" iconColor="#b245f8" title="积分" info={data ? data.integral : null} press={() => null} />
             <Line left={13} />*/}
             <Item icon="credit-card-alt" iconColor="#52db52" title="信用额度" info={data ? data.creditLimit : null} press={() => null} />
-              <Line left={13}/>
-            <Item icon="map-marker" iconColor="#3694de" title="收货地址" info={data ? data.creditLimit : null} press={this.toWhere.bind(this,'AddressScreen')} />
+            <Line left={13} />
+            <Item icon="map-marker" iconColor="#3694de" title="收货地址" press={this.toWhere.bind(this, 'AddressScreen')} />
           </View>
           <View style={styles.tools}>
             {/*code...*/}
@@ -315,7 +338,7 @@ const styles = EStyleSheet.create({
   },
   privilege: {
     fontSize: Font(16),
-    color: '#e44825',
+    color: '#fc4444',
   },
   integral: {
     fontSize: Font(16),

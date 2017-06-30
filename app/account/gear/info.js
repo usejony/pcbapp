@@ -14,33 +14,17 @@ class Info extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // loginInfo: null
+      data: null
     }
   }
   componentWillMount() {
-    this.fetchData();
-  }
-
-  //请求用户个人信息
-  fetchData() {
-    const params = {
-      accessToken: '杜超'
-    },
-      url = config.api.base + config.api.account;
-    Request.Get(url, params)
-      .then(data => {
-        this.setState({
-          loginInfo: data.data
-        });
-        console.log(data)
-      })
-      .catch(err => {
-        console.log('请求信息个人信息失败:', err.message);
-      });
+    this.setState({
+      data: this.props.navigation.state.params.data
+    });
   }
 
   componentDidMount() {
-    
+    //code...
   }
 
   /**
@@ -61,12 +45,12 @@ class Info extends Component {
         path: 'avatar'
       }
     };
-    ImagePicker.showImagePicker(options,(res) => {
-      console.log('response:',res);
-      if(res.didCancel) {
+    ImagePicker.showImagePicker(options, (res) => {
+      console.log('response:', res);
+      if (res.didCancel) {
         console.log('cancel');
       } else if (res.error) {
-        console.log('err:',error.message);
+        console.log('err:', error.message);
       } else {
         storage.save({
           key: 'localAvatar',
@@ -78,73 +62,67 @@ class Info extends Component {
       }
     })
   }
+
+  /**
+   * 从当前页面传到下个页面的回调，当个人信息改变的时候执行此回调改变State里存储的信息
+   */
+  changeCallback = (name,value) => {
+    console.log(name,value)
+    let data = {
+      ...this.state.data
+    }
+    data[name] = value;
+    //成功后提交到服务器
+    this.setState({
+      data: data
+    });
+    console.log('oooook')
+  }
+
   /**
    * 点击列表去到不同的页面
    */
-  goTo(screen,data=null) {
+  goTo(screen, ) {
     const { navigate } = this.props.navigation;
-    switch (screen) {
-      case 'nickname':
-        navigate('NicknameScreen',{nickname: data});
-        break;
-      default:
-        navigate('GenderScreen',{gender: data});
-        break;
-      // default:
-      //   navigate('AddressScreen',{address: data});
-      //   break;
-    }
+    navigate(screen, { data: this.state.data, callback: this.changeCallback });
   }
   render() {
-    const data = this.state.loginInfo;
+    const data = this.state.data;
     return (
       <View style={styles.container}>
         <StatusBar barStyle="default" animated={true} />
-        {
-          this.state.loginInfo
-            ? <View style={styles.itemList}>
-              <TouchableHighlight underlayColor="#ededed" onPress={this.changeAvatar.bind(this)}>
-                <View style={styles.item}>
-                  <View style={styles.cont}>
-                    <Text style={styles.title}>头像</Text>
-                    <Image source={{ uri: this.state.localAvatar ? this.state.localAvatar : data.avatar }} style={styles.avatar} />
-                  </View>
-                  <FontIcon name="angle-right" size={Font(18)} color="#d5d5d5" />
-                </View>
-              </TouchableHighlight>
-              <Line left={12} />
-              <TouchableHighlight underlayColor="#ededed" onPress={this.goTo.bind(this,'nickname',data.nickName)}>
-                <View style={styles.item}>
-                  <View style={styles.cont}>
-                    <Text style={styles.title}>昵称</Text>
-                    <Text style={styles.text}>{data.nickName}</Text>
-                  </View>
-                  <FontIcon name="angle-right" size={Font(18)} color="#d5d5d5" />
-                </View>
-              </TouchableHighlight>
-              <Line left={12} />
-              <TouchableHighlight underlayColor="#ededed" onPress={this.goTo.bind(this,'gender',data.gender)}>
-                <View style={styles.item}>
-                  <View style={styles.cont}>
-                    <Text style={styles.title}>性别</Text>
-                    <Text style={styles.text}>{data.gender}</Text>
-                  </View>
-                  <FontIcon name="angle-right" size={Font(18)} color="#d5d5d5" />
-                </View>
-              </TouchableHighlight>
-              {/*<Line left={12} />
-              <TouchableHighlight underlayColor="#ededed" onPress={this.goTo.bind(this,'address',data.address)}>
-                <View style={styles.item}>
-                  <View style={styles.cont}>
-                    <Text style={styles.title}>收货地址</Text>
-                    <Text style={styles.text}>添加/修改</Text>
-                  </View>
-                  <FontIcon name="angle-right" size={Font(18)} color="#d5d5d5" />
-                </View>
-              </TouchableHighlight>*/}
+
+        <View style={styles.itemList}>
+          <TouchableHighlight underlayColor="#ededed" onPress={this.changeAvatar.bind(this)}>
+            <View style={styles.item}>
+              <View style={styles.cont}>
+                <Text style={styles.title}>头像</Text>
+                <Image source={{ uri: this.state.localAvatar ? this.state.localAvatar : data.avatar }} style={styles.avatar} />
+              </View>
+              <FontIcon name="angle-right" size={Font(18)} color="#d5d5d5" />
             </View>
-            : <ActivityIndicator style={{ marginTop: 20 }} />
-        }
+          </TouchableHighlight>
+          <Line left={12} />
+          <TouchableHighlight underlayColor="#ededed" onPress={this.goTo.bind(this, 'NicknameScreen')}>
+            <View style={styles.item}>
+              <View style={styles.cont}>
+                <Text style={styles.title}>昵称</Text>
+                <Text style={styles.text}>{data.nickName}</Text>
+              </View>
+              <FontIcon name="angle-right" size={Font(18)} color="#d5d5d5" />
+            </View>
+          </TouchableHighlight>
+          <Line left={12} />
+          <TouchableHighlight underlayColor="#ededed" onPress={this.goTo.bind(this, 'GenderScreen')}>
+            <View style={styles.item}>
+              <View style={styles.cont}>
+                <Text style={styles.title}>性别</Text>
+                <Text style={styles.text}>{data.gender}</Text>
+              </View>
+              <FontIcon name="angle-right" size={Font(18)} color="#d5d5d5" />
+            </View>
+          </TouchableHighlight>
+        </View>
       </View>
     );
   }

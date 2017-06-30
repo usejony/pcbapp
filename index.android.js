@@ -4,12 +4,12 @@
  * @flow
  */
 
-import React from 'react';
 import {
   AppRegistry,
 } from 'react-native';
 
-import App from './app'
+import App from './app';
+import Root from './root';
 
-AppRegistry.registerComponent('pcbApp', () => App);
+AppRegistry.registerComponent('pcbApp', () => Root);
 

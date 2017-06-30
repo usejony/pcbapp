@@ -14,7 +14,7 @@ Request.Get = (url,params) => {
 }
 
 Request.Post = (url,body) => {
-  const options = _.extend(config.header,{
+  const options = _.assign(config.header,{
     body:JSON.stringify(body)
   });
   return fetch(url,options)

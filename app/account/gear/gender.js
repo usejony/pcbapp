@@ -27,7 +27,7 @@ export default class Birthday extends Component {
     )
   });
   state = {
-    gender: this.props.navigation.state.params.gender,
+    gender: this.props.navigation.state.params.data.gender,
   }
   
   /**

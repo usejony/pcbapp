@@ -9,6 +9,11 @@ import Favorable from './favorable';
 import Integral from './integral';
 import Address from './address';
 import IconBtn from '../../../common/iconBtn';
+// import Gear from '../gear/gear';
+// import Info from '../gear/info';
+// import Safety from '../gear/safety';
+// import Gender from '../gear/gender';
+// import Nickname from '../gear/nickName';
 
 const AccountMain = StackNavigator({
   BalanceScreen: {
@@ -22,7 +27,22 @@ const AccountMain = StackNavigator({
   },
   AddressScreen: {
     screen: Address,
-  }
+  },
+  // GearScreen: {
+  //   screen: Gear
+  // },
+  // InfoScreen: {
+  //   screen: Info
+  // },
+  // SafetyScreen: {
+  //   screen: Safety
+  // },
+  // GenderScreen: {
+  //   screen: Gender
+  // },
+  // NicknameScreen: {
+  //   screen: Nickname
+  // }
 },{
   navigationOptions: ({navigation}) =>  ({
     headerStyle: { backgroundColor: theme6},

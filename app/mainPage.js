@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Platform
+ } from 'react-native';
 
 //第三方组件
-import { TabNavigator } from "react-navigation";
+import { TabNavigator,TabBarBottom } from "react-navigation";
 import Icon from 'react-native-vector-icons/Ionicons';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 
@@ -53,6 +58,9 @@ const Tab = TabNavigator({
   OrdersTab: { screen: OrdersScreen },
   AccountTab: { screen: AccountScreen }
 }, {
+  tabBarComponent: TabBarBottom,
+  tabBarPosition: 'bottom',
+  swipeEnabled: false,
     tabBarOptions: {
       activeTintColor: '#47B2EA'
     },

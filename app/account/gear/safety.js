@@ -8,7 +8,7 @@ import Line from '../../../common/line';
 import Font from '../../../common/normSize';
 class Safety extends Component {
   static navigationOptions = ({navigation}) => ({
-    title: '账户与安全'
+    title: '账户与安全',
   });
   showPhone(phone) {
     let ary = phone.split('');
@@ -44,6 +44,8 @@ class Safety extends Component {
                   <FontIcon name="angle-right" size={Font(18)} color="#d5d5d5" />
                 </View>
               </TouchableHighlight>
+            </View>
+            <View>
             </View>
       </View>
     );

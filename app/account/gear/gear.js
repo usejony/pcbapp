@@ -32,22 +32,27 @@ const Gear = ({ navigation, screenProps }) => {
     navigation.goBack(null);
     DeviceEventEmitter.emit('loginOut');
   }
+  const data = navigation.state.params.data;
+
+  change = () => {
+    alert('1')
+  }
   return (
     <View style={styles.container}>
       <StatusBar barStyle="default" animated={true} />
       <ScrollView>
         <View style={styles.itemList}>
-          <TouchableHighlight underlayColor="#ededed" onPress={() => {
-            navigation.navigate('InfoScreen');
+          {/*<TouchableHighlight underlayColor="#ededed" onPress={() => {
+            navigation.navigate('InfoScreen',{data});
           }}>
             <View style={styles.item}>
               <Text style={styles.title}>个人信息</Text>
               <FontIcon name="angle-right" size={Font(18)} color="#d5d5d5" />
             </View>
           </TouchableHighlight>
-          <Line left={12} />
+          <Line left={12} />*/}
           <TouchableHighlight underlayColor="#ededed" onPress={() => {
-            navigation.navigate('SafetyScreen');
+            navigation.navigate('SafetyScreen',{callback: this.change});
           }}>
             <View style={styles.item}>
               <Text style={styles.title}>账户与安全</Text>
@@ -55,9 +60,6 @@ const Gear = ({ navigation, screenProps }) => {
             </View>
           </TouchableHighlight>
         </View>
-        {/*<TouchableHighlight underlayColor="#f9f9f9" onPress={this.logoutHandle.bind(this)} style={styles.logoutBtn}>
-          <Text style={styles.logoutText}>退出登录</Text>
-        </TouchableHighlight>*/}
         <TouchableHighlight onPress={this.logoutHandle.bind(this)} style={styles.logoutBtn}>
           <LinearGradient colors={['#cd8282', '#cd5050', '#c93333']} style={styles.touchBox} >
             <Text style={styles.logoutText}>退出登录</Text>
@@ -78,7 +80,7 @@ Gear.navigationOptions = ({ navigation, screenProps }) => ({
 
 
 const GearStack = StackNavigator({
-  GearScreen: {
+  GearHomeScreen: {
     screen: Gear
   },
   InfoScreen: {
@@ -106,7 +108,10 @@ const GearStack = StackNavigator({
           navigation.goBack(null);
         }} />
       )
-    })
+    }),
+    onTransitionStart: () => {
+      console.log('加载开始')
+    }
   });
 
 const styles = EStyleSheet.create({
@@ -133,7 +138,7 @@ const styles = EStyleSheet.create({
   logoutBtn: {
     width: width - 100,
     alignSelf: 'center',
-    height: 35,
+    height: 38,
     marginTop: 30,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#ddd',
